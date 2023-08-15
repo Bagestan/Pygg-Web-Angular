@@ -1,0 +1,152 @@
+<div class="wrapper">
+  <nz-card
+    [nzBordered]="false"
+    [nzBodyStyle]="{ padding: 0 }"
+    [nzLoading]="cardLoading"
+  >
+    <nz-page-header
+      class="site-page-header"
+      (nzBack)="onBack()"
+      nzBackIcon
+      nzTitle="Editar Usuário"
+    >
+    </nz-page-header>
+
+    <form nz-form [formGroup]="form" nzLayout="vertical" class="margin1r0">
+      <div class="margin1r0">
+        <nz-avatar class="central" [nzSize]="64" nzIcon="user"> </nz-avatar>
+        <h3 style="text-align: center">
+          {{ this.user ? this.user.email : "Novo Usuário" }}
+        </h3>
+      </div>
+      <nz-row nzGutter="8">
+        <nz-col nzXs="24" nzSm="24">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Email é obrigatório">
+              <nz-form-label> Email</nz-form-label>
+              <nz-input-group>
+                <input
+                  nz-input
+                  formControlName="email"
+                  type="text"
+                  [readonly]="this.user"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col nzXs="24" nzSm="24">
+          <nz-form-item>
+            <nz-form-control [nzErrorTip]="passwordError">
+              <nz-form-label>Mudar Senha:</nz-form-label>
+              <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
+                <input
+                  [type]="passwordVisible ? 'text' : 'password'"
+                  nz-input
+                  formControlName="password"
+                  placeholder="Mudar senha é Opcional"
+                />
+                <ng-template #suffixTemplate>
+                  <span
+                    nz-icon
+                    [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                    (click)="passwordVisible = !passwordVisible"
+                  ></span>
+                </ng-template>
+                <ng-template #passwordError let-control>
+                  <ng-container *ngIf="control.hasError('required')"
+                    >Por favor confirme sua senha!</ng-container
+                  >
+                  <ng-container *ngIf="control.hasError('minlength')"
+                    >Tamanho mínimo 8!</ng-container
+                  >
+                </ng-template>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col nzXs="24" nzSm="24">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Nome da empresa é obrigatório">
+              <nz-form-label nzRequired> Empresa</nz-form-label>
+              <nz-input-group>
+                <input nz-input formControlName="company" type="text" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col nzXs="24" nzSm="24">
+          <div class="d-flex checkbox">
+            <nz-form-item>
+              <nz-form-control
+                nzErrorTip="Nome da empresa é obrigatório"
+                *ngIf="user"
+              >
+                <nz-form-label>
+                  Ativo:
+                  <nz-switch
+                    style="margin-left: 0.5rem"
+                    nzSize="small"
+                    formControlName="disabled"
+                  ></nz-switch>
+                </nz-form-label>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </nz-col>
+
+        <nz-col nzXs="21" nzSm="21">
+          <button nz-button nzBlock nzType="primary" (click)="submitForm()">
+            {{ "SALVAR" }}
+          </button>
+        </nz-col>
+
+        <nz-col nzXs="3" nzSm="3">
+          <button
+            nzBlock
+            nz-button
+            nzDanger
+            nzType="default"
+            nzSize="default"
+            nz-popconfirm
+            nzPopconfirmTitle="Excluir registro?"
+            nzPopoverPlacement="topRight"
+            (nzOnConfirm)="popConfirm()"
+            [nzIcon]="iconTpl"
+          >
+            <span nz-icon nzType="delete" nzTheme="outline"></span>
+          </button>
+        </nz-col>
+      </nz-row>
+    </form>
+  </nz-card>
+</div>
+
+<nz-divider> </nz-divider>
+
+<nz-descriptions *ngIf="user">
+  <nz-descriptions-item nzTitle="Ultimo Login">
+    {{
+      user.metadata?.lastSignInTime
+        ? (user.metadata?.lastSignInTime | date : "dd/MM/yyyy")
+        : "Sem login registrado"
+    }}
+  </nz-descriptions-item>
+</nz-descriptions>
+
+<ng-template #Header>
+  <nz-page-header
+    class="site-page-header"
+    (nzBack)="onBack()"
+    nzBackIcon
+    nzTitle="Editar Usuário"
+  >
+  </nz-page-header>
+</ng-template>
+
+<ng-template #iconTpl>
+  <span nz-icon nzDanger nzType="warning" nzTheme="outline"></span>
+</ng-template>

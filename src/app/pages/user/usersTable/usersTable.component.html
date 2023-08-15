@@ -1,0 +1,67 @@
+<div class="wrapper">
+  <nz-page-header class="site-page-header">
+    <nz-page-header-title>Usuários</nz-page-header-title>
+    <nz-page-header-extra>
+      <nz-space>
+        <button *nzSpaceItem nz-button nzType="primary" (click)="createUser()">
+          <span nz-icon nzType="user-add" nzTheme="outline"></span>
+        </button>
+      </nz-space>
+    </nz-page-header-extra>
+  </nz-page-header>
+  <div>
+    <nz-table
+      nzShowSizeChanger
+      *ngIf="usersList"
+      nzSize="small"
+      #userTable
+      [nzData]="usersList"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="30px">
+            <button
+              nz-button
+              nzSize="default"
+              nzType="default"
+              nzShape="circle"
+            >
+              <span nz-icon nzType="reload" nzTheme="outline"></span>
+            </button>
+          </th>
+          <th nzFilterFn="true">Usuário</th>
+          <th>Empresa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of userTable.data">
+          <td>
+            <button
+              nz-button
+              nzType="primary"
+              nzSize="small"
+              nzShape="circle"
+              (click)="openUser(data.email)"
+            >
+              <span nz-icon nzType="edit" nzTheme="outline"></span>
+            </button>
+          </td>
+          <td (click)="openUser(data.email)">{{ data.email }}</td>
+
+          <td (click)="openUser(data.email)">{{ data.company }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+  <!--  -->
+  <!--  -->
+
+  <ng-template #checksquare>
+    <span nz-icon nzType="check-square" nzTheme="outline"></span>
+  </ng-template>
+
+  <ng-template #closesquare>
+    <span nz-icon nzType="close-square" nzTheme="outline"></span
+  ></ng-template>
+</div>

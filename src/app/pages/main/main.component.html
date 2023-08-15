@@ -1,0 +1,86 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="256px"
+    [nzCollapsedWidth]="0"
+    nzBreakpoint="lg"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo">
+      <img src="../assets/img/favicon.png" alt="logo" />
+      <h1>PYGG WEB</h1>
+    </div>
+    <ul
+      nz-menu
+      nzTheme="dark"
+      nzMode="inline"
+      [nzInlineCollapsed]="isCollapsed"
+    >
+      <li nz-submenu nzOpen nzTitle="PCP" nzIcon="form">
+        <ul>
+          <li nzMatchRouter nz-menu-item routerLink="/main/quality">
+            <span nz-icon nzType="exception"></span>
+            <span>Qualidade</span>
+          </li>
+        </ul>
+        <ul>
+          <li nzMatchRouter nz-menu-item routerLink="/main/charts/">
+            <span nz-icon nzType="area-chart"></span>
+            <span>Graficos</span>
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzOpen nzTitle="Tinturaria" nzIcon="bg-colors">
+        <ul>
+          <li nzMatchRouter nz-menu-item routerLink="/main/calc">
+            <span nz-icon nzType="calculator"></span>
+            <span>Calculo Densidade</span>
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzOpen nzTitle="Configurações" nzIcon="setting">
+        <ul>
+          <li nzMatchRouter nz-menu-item routerLink="/main/user">
+            <span nz-icon nzType="user-add"></span>
+            <span>Usuário</span>
+          </li>
+          <li nzMatchRouter nz-menu-item routerLink="/main/db">
+            <span nz-icon nzType="cloud-server"></span>
+            <span>Banco de Dados</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <nz-row nzJustify="center" class="button--logout">
+      <nz-col>
+        <button nzType="primary" nz-button (click)="auth.signOut()">
+          <span nz-icon nzType="logout" nzTheme="outline"></span> Logout
+        </button>
+      </nz-col>
+    </nz-row>
+  </nz-sider>
+
+  <nz-layout nz-has-sider>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <span
+            class="trigger"
+            nz-icon
+            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></span>
+        </span>
+      </div>
+    </nz-header>
+
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

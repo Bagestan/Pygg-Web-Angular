@@ -1,0 +1,33 @@
+<header>
+  <div class="d-flex spaceBetween">
+    <h2>Graficos</h2>
+    <nz-divider nzType="vertical"></nz-divider>
+  </div>
+</header>
+
+<form
+  nz-form
+  [formGroup]="form"
+  (ngSubmit)="submitForm()"
+  nz-row
+  nzJustify="space-around"
+>
+  <nz-form-item nz-col>
+    <nz-form-label nzFor="date">Período</nz-form-label>
+    <nz-form-control nzErrorTip="Necessário preencher as datas.">
+      <nz-range-picker
+        nzStartPlaceHolder="Data de Início"
+        nzEndPlaceHolder="Data de Fim"
+        nzFormat="dd/MM/yyy"
+        formControlName="date"
+        nz
+      ></nz-range-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col>
+    <button nz-button [nzType]="'primary'">PESQUISAR</button>
+  </nz-form-item>
+</form>
+<nz-divider></nz-divider>
+
+<router-outlet></router-outlet>

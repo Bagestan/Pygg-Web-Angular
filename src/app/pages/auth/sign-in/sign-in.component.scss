@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh);
+  width: calc(100vw);
+}
+
+.wrapper__form {
+  width: 100%;
+  max-width: 25rem;
+  margin: 0 0.5rem;
+}
+
+.login-form-margin {
+  margin-bottom: 1rem;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}

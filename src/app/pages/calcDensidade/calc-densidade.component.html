@@ -1,0 +1,228 @@
+<div class="wrapper">
+  <h2>Calculo Densidade</h2>
+
+  <section class="grid">
+    <div class="flex">
+      <nz-card class="card inputCard">
+        <h2>Receita:</h2>
+
+        <form nz-form [formGroup]="form">
+          <nz-row [nzGutter]="[32, 8]">
+            <nz-col [nzSm]="12" [nzXs]="12">
+              <nz-form-item>
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
+                  >Peso Material</nz-form-label
+                >
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                  <nz-input-number-group [nzAddOnAfter]="kg">
+                    <nz-input-number
+                      formControlName="materialWeight"
+                    ></nz-input-number>
+                  </nz-input-number-group>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzSm]="12" [nzXs]="12">
+              <nz-form-item>
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
+                  >Relação de Banho</nz-form-label
+                >
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                  <nz-input-number-group [nzAddOnAfter]="qtd">
+                    <nz-input-number
+                      formControlName="relacaoBanho"
+                    ></nz-input-number>
+                  </nz-input-number-group>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzSm]="12" [nzXs]="12">
+              <nz-form-item>
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
+                  >Adições Futuras</nz-form-label
+                >
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                  <nz-input-number-group [nzAddOnAfter]="l">
+                    <nz-input-number
+                      formControlName="adicaoFuturas"
+                    ></nz-input-number>
+                  </nz-input-number-group>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzSm]="12" [nzXs]="12">
+              <nz-form-item>
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
+                  >Sal/Sulfato</nz-form-label
+                >
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                  <nz-input-number-group [nzAddOnAfter]="gL">
+                    <nz-input-number
+                      formControlName="sulfato"
+                    ></nz-input-number>
+                  </nz-input-number-group>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzSm]="12" [nzXs]="12">
+              <nz-form-item>
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
+                  >Barrilha</nz-form-label
+                >
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                  <nz-input-number-group [nzAddOnAfter]="gL">
+                    <nz-input-number
+                      formControlName="barrilha"
+                    ></nz-input-number>
+                  </nz-input-number-group>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzSm]="12" [nzXs]="12">
+              <nz-form-item>
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
+                  >Alcali</nz-form-label
+                >
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                  <nz-input-number-group [nzAddOnAfter]="gL">
+                    <nz-input-number formControlName="alcali"></nz-input-number>
+                  </nz-input-number-group>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzSm]="12" [nzXs]="12">
+              <nz-form-item>
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
+                  >Soda Cáustica</nz-form-label
+                >
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                  <nz-input-number-group [nzAddOnAfter]="gL">
+                    <nz-input-number
+                      formControlName="sodaCaustica"
+                    ></nz-input-number>
+                  </nz-input-number-group>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzSm]="12" [nzXs]="12">
+              <nz-form-item>
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
+                  >Densidade Medida</nz-form-label
+                >
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                  <nz-input-number-group [nzAddOnAfter]="gL">
+                    <nz-input-number
+                      formControlName="densidadeMedida"
+                    ></nz-input-number>
+                  </nz-input-number-group>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+          </nz-row>
+        </form>
+      </nz-card>
+    </div>
+
+    <div class="card">
+      <nz-list nzSize="small" nzBordered [nzHeader]="acrescentar">
+        <nz-list-item>
+          <span>Sal/Sulfato:</span>
+          {{ calcService.addSalSul | suffix }}
+        </nz-list-item>
+        <nz-list-item>
+          <span>Barrilha:</span>
+          {{ calcService.addBarrilha | suffix }}
+        </nz-list-item>
+        <nz-list-item>
+          <span>Alcali:</span>
+          {{ calcService.addAlcali | suffix }}
+        </nz-list-item>
+        <nz-list-item>
+          <span>Soda Cáustica:</span>
+          {{ calcService.addSodaCau | suffix }}
+        </nz-list-item>
+      </nz-list>
+
+      <div class="addWater">
+        <h2>{{ calcService.addWaterLbl }}</h2>
+      </div>
+
+      <div class="volBanho">
+        <h3>
+          VOLUME DE BANHO DA RECEITA
+          {{ calcService.volBanho | formatNumber }} LITROS
+        </h3>
+      </div>
+    </div>
+  </section>
+  <div class="grid reverse">
+    <div class="card">
+      <nz-list nzSize="small" nzBordered [nzHeader]="contact">
+        <nz-list-item>
+          <span>Volume Real da Máquina:</span>
+          {{ calcService.volMaq | suffix : "L" }}
+        </nz-list-item>
+        <nz-list-item>
+          <span>Eletrólito da Receita:</span>
+          {{ calcService.eletro | suffix : "Kg" }}
+        </nz-list-item>
+        <nz-list-item>
+          <span>Barrilha da Receita:</span>
+          {{ calcService.barrilha | suffix : "Kg" }}
+        </nz-list-item>
+        <nz-list-item>
+          <span>Alcali da Receita:</span>
+          {{ calcService.alcali | suffix : "Kg" }}
+        </nz-list-item>
+        <nz-list-item>
+          <span>Soda da Receita:</span>
+          {{ calcService.sodaCau | suffix : "Kg" }}
+        </nz-list-item>
+        <nz-list-item>
+          <span>Volume/Água a Mais/Menos:</span>
+          {{ calcService.volAgua | suffix : "L" }}
+        </nz-list-item>
+      </nz-list>
+    </div>
+    <div class="card">
+      <nz-result [nzIcon]="infoIcon" [nzTitle]="infoLabel"> </nz-result>
+    </div>
+  </div>
+</div>
+
+<ng-template #contact>
+  <h2>Calculos</h2>
+</ng-template>
+
+<ng-template #acrescentar>
+  <h2>Acrescentar</h2>
+</ng-template>
+
+<ng-template #infoIcon>
+  <span
+    style="font-size: 3rem"
+    nz-icon
+    nzType="exclamation-circle"
+    nzTheme="fill"
+  ></span>
+</ng-template>
+
+<ng-template #infoLabel>
+  <h3>Os valores devem ser respeitados e seguidos.</h3>
+</ng-template>
+
+<ng-template #kg>
+  <div class="suffix">Kg</div>
+</ng-template>
+
+<ng-template #qtd>
+  <div class="suffix">Qtd</div>
+</ng-template>
+
+<ng-template #l>
+  <div class="suffix">L</div>
+</ng-template>
+
+<ng-template #gL>
+  <div class="suffix">g/L</div>
+</ng-template>

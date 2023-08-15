@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+.d-flex {
+  display: flex;
+}
+
+.spaceBetween {
+  justify-content: space-between;
+}
+
+nz-sider .ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.marginZero {
+  margin: 0 !important;
+}
+
+.central {
+  margin: 0 auto !important;
+}
+
+nz-page-header {
+  padding: 0 0.5rem !important;
+}

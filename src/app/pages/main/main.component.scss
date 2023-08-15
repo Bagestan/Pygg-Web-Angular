@@ -1,0 +1,105 @@
+:host {
+  display: flex;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  --viewport-width: 100vw;
+}
+
+.app-layout {
+  height: 100vh;
+  height: min-content;
+}
+
+nz-content {
+  margin: 1rem !important;
+}
+
+.menu-sidebar {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  box-shadow: 0.125rem 0 0.375rem rgba(0, 21, 41, 0.35);
+}
+
+.header-trigger {
+  height: 4rem;
+  padding: 1.25rem 1.5rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s, padding 0s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.sidebar-logo {
+  position: relative;
+  height: 4rem;
+  padding-left: 1.5rem;
+  overflow: hidden;
+  line-height: 4rem;
+  background: #001529;
+  transition: all 0.3s;
+}
+
+.sidebar-logo img {
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+  vertical-align: middle;
+}
+
+.sidebar-logo h1 {
+  display: inline-block;
+  margin: 0 0 0 1.25rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+  vertical-align: middle;
+}
+
+.headerLogo {
+  display: block;
+}
+
+nz-header {
+  padding: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.app-header {
+  position: relative;
+  height: 4rem;
+  padding: 0;
+  background: #fff;
+  box-shadow: 0 0.063rem 0.25rem rgba(0, 21, 41, 0.08);
+}
+
+.inner-content {
+  padding: 1rem !important;
+  background: #fff;
+  height: calc(100vh - 6rem);
+  overflow: auto;
+}
+
+.button--logout {
+  margin-top: auto !important;
+  margin-bottom: 1.5rem;
+}
+
+@media only screen and (max-width: 575px) {
+  .inner-content {
+    padding: 1rem !important;
+  }
+
+  nz-content {
+    margin: 0.5rem !important;
+  }
+}

@@ -1,0 +1,63 @@
+<nz-page-header class="site-page-header" nzBackIcon>
+  <nz-page-header-title>Consulta</nz-page-header-title>
+  <nz-page-header-extra>
+    <nz-space>
+      <button nz-button nzType="primary" (click)="populateForm()">
+        <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
+        PARTIDA
+      </button>
+    </nz-space>
+  </nz-page-header-extra>
+</nz-page-header>
+
+<nz-table
+  #table
+  nzSize="small"
+  nzShowSizeChanger
+  [nzPageSizeOptions]="[10, 25, 50, 100, 200]"
+  [nzData]="qualityTableData"
+  [nzLoading]="isLoadingData"
+  [nzTotal]="totalItems"
+  [nzPageIndex]="currentPage"
+  (nzPageIndexChange)="onPageChange($event)"
+>
+  <thead>
+    <tr>
+      <th nzWidth="30px">
+        <button
+          nz-button
+          nzSize="default"
+          nzType="default"
+          nzShape="circle"
+          (click)="getQualityTableData()"
+        >
+          <span nz-icon nzType="reload" nzTheme="outline"></span>
+        </button>
+      </th>
+      <th>Partida</th>
+      <th>Cliente</th>
+      <th>Artigo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      (click)="populateForm(data.ID_CLI, data.S_QUA)"
+      *ngFor="let data of table.data"
+      [ngStyle]="{ color: data.RESOL ? TrueResol : FalseResol }"
+    >
+      <td>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle">
+          <span nz-icon nzType="edit" nzTheme="outline"></span>
+        </button>
+      </td>
+      <td>{{ data.CD_OP }}</td>
+      <td>{{ data.NM_CLI }}</td>
+      <td>{{ data.DS_ART }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<app-modal-quality
+  *ngIf="isModalVisible"
+  [isModalVisible]="isModalVisible"
+  (isModalVisibleChange)="modalVisibility($event)"
+></app-modal-quality>

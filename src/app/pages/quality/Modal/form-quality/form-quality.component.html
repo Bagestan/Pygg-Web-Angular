@@ -1,0 +1,129 @@
+<form nz-form [formGroup]="form" nzLayout="vertical">
+  <nz-row nzGutter="8">
+    <nz-col nzXs="12" nzSm="8">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Partida é obrigatória">
+          <nz-form-label nzRequired> Partida:</nz-form-label>
+          <nz-input-group>
+            <input nz-input formControlName="CD_OP" type="number" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <nz-col nzXs="12" nzSm="8">
+      <nz-form-item>
+        <nz-form-label nzRequired> Data:</nz-form-label>
+        <nz-form-control nzErrorTip="Data é obrigatória">
+          <nz-input-group>
+            <nz-date-picker
+              class="w-100"
+              nzFormat="dd/MM/yyy"
+              formControlName="D_QUA"
+            ></nz-date-picker>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <nz-col nzXs="24" nzSm="8">
+      <nz-form-item>
+        <nz-form-label nzRequired> Cod Cliente:</nz-form-label>
+        <nz-form-control nzErrorTip="Código do cliente é obrigatório">
+          <nz-input-group>
+            <input
+              nz-element
+              (blur)="getNmCli()"
+              nz-input
+              formControlName="CD_CLI"
+              type="number"
+              nz-element
+              #button="nzElement"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <nz-form-item hidden>
+      <nz-input-group>
+        <input nz-input formControlName="ID_CLI" />
+      </nz-input-group>
+    </nz-form-item>
+
+    <nz-form-item hidden>
+      <nz-input-group>
+        <input nz-input formControlName="S_QUA" />
+      </nz-input-group>
+    </nz-form-item>
+
+    <nz-col nzXs="24" nzSm="24">
+      <nz-form-item>
+        <nz-form-label nzRequired> Nome do Cliente:</nz-form-label>
+        <nz-form-control nzErrorTip="Nome do cliente é obrigatório">
+          <nz-input-group
+            nz-tooltip
+            nzTooltipTitle="O Cliente é preenchido pelo código"
+            [nzTooltipOrigin]="button.elementRef"
+            nzTooltipPlacement="bottom"
+          >
+            <input type="text" nz-input formControlName="NM_CLI" readonly />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <nz-col nzXs="24" nzSm="24">
+      <nz-form-item>
+        <nz-form-label nzRequired> Artigo:</nz-form-label>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="text" nz-input formControlName="DS_ART" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <nz-col nzXs="24" nzSm="24">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Defeito é obrigatório">
+          <nz-form-label nzRequired> Defeito:</nz-form-label>
+
+          <textarea
+            type="text"
+            nz-input
+            placeholder="Descrição detalhada do Defeito"
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+            formControlName="DS_DEF"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+  </nz-row>
+
+  <nz-row nzJustify="space-around" nzAlign="middle">
+    <nz-col nzXs="12" nzSm="12">
+      <nz-form-item>
+        <nz-form-label nzErrorTip="Responsável é obrigatório" nzRequired>
+          Responsável:</nz-form-label
+        >
+        <nz-form-control>
+          <input
+            nzErrorTip="Responsável é obrigatório"
+            type="text"
+            nz-input
+            formControlName="NM_RESP"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <nz-col nzXs="8" nzSm="8" nzOffset="3">
+      <nz-form-item>
+        <nz-input-group>
+          <label nz-checkbox formControlName="RESOL">Resolvido</label>
+        </nz-input-group>
+      </nz-form-item>
+    </nz-col>
+  </nz-row>
+</form>

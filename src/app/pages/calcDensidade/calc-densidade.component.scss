@@ -1,0 +1,80 @@
+.wrapper {
+  max-width: 960px;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.d-flex {
+  display: flex;
+}
+
+nz-card {
+  border-color: #dddddd;
+  background-color: #ffffff;
+  border-radius: 0.2rem;
+}
+
+nz-list {
+  border-color: #dddddd;
+  background-color: #ffffff;
+  border-radius: 0.2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.card {
+  margin: 0.75rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.addWater {
+  margin: 2rem;
+}
+
+.volBanho {
+  border: 1px solid #dddddd;
+  border-radius: 0.2rem;
+  background-color: #fafafa;
+  h3 {
+    color: blue;
+  }
+}
+
+.suffix {
+  width: 24px;
+}
+
+nz-list {
+  padding-top: 1rem;
+}
+
+nz-result {
+  padding: 1rem;
+}
+
+h2 {
+  text-align: center;
+}
+
+@media (min-width: 576px) {
+  nz-col {
+    max-height: 5rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .flex {
+    flex-wrap: wrap;
+  }
+
+  .reverse {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}

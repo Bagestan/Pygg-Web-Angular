@@ -1,0 +1,80 @@
+<nz-modal
+  [nzFooter]="modalFooter"
+  [(nzVisible)]="isModalVisible"
+  [nzContent]="modalContent"
+  (nzOnCancel)="showModal(false)"
+  nzCentered="true"
+>
+  <ng-template #modalContent>
+    <nz-tabset nzCentered (nzSelectChange)="onChangeTab($event)">
+      <nz-tab nzTitle="Qualidade">
+        <app-form-quality
+          (formQualityEvent)="form = $event"
+          (closeModalEvent)="showModal($event)"
+        ></app-form-quality>
+      </nz-tab>
+
+      <nz-tab nzTitle="Ações:" [nzDisabled]="disabledTab">
+        <app-actions
+          (actionFormEvent)="actionForm = $event"
+          (closeModalEvent)="showModal($event)"
+          (editActionFormEvent)="editActionForm = $event"
+          [editActionForm]="editActionForm"
+        ></app-actions>
+      </nz-tab>
+    </nz-tabset>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="d-flex spaceBetween">
+      <button (click)="backCancelButton()" nz-button nzType="default">
+        <span class="marginZero" nz-icon nzType="left" nzTheme="outline"></span
+        >VOLTAR
+      </button>
+      <nz-button-group nzGap="0.625rem">
+        <button
+          nz-button
+          nzDanger
+          nzType="default"
+          [nzSize]="size"
+          nz-popconfirm
+          nzPopconfirmTitle="Excluir registro?"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="popConfirm()"
+          [nzIcon]="iconTpl"
+          [disabled]="disabledTab"
+          *ngIf="!tabIndex || editActionForm"
+        >
+          <span nz-icon nzType="delete" nzTheme="outline"></span>
+        </button>
+
+        <button
+          nz-button
+          nzType="primary"
+          type="submit"
+          (click)="primaryButton()"
+        >
+          <span
+            *ngIf="tabIndex && !editActionForm"
+            class="marginZero"
+            nz-icon
+            nzType="plus"
+            nzTheme="outline"
+          ></span>
+
+          {{ tabIndex && !editActionForm ? "AÇÃO" : "SALVAR" }}
+          <span
+            *ngIf="!tabIndex || editActionForm"
+            nz-icon
+            nzType="save"
+            nzTheme="outline"
+          ></span>
+        </button>
+      </nz-button-group>
+    </div>
+  </ng-template>
+</nz-modal>
+
+<ng-template #iconTpl>
+  <span nz-icon nzDanger nzType="warning" nzTheme="outline"></span>
+</ng-template>

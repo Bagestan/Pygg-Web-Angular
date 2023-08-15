@@ -1,0 +1,21 @@
+{
+  "targets": {
+    "pygg-1d30b": {
+      "hosting": {
+        "PYGG": [
+          "pygg-1d30b"
+        ]
+      }
+    },
+    "pygg-angular": {
+      "hosting": {
+        "PYGG": [
+          "pygg-angular"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "pygg-angular"
+  }
+}

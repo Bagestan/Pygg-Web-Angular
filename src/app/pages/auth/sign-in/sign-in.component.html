@@ -1,0 +1,69 @@
+<div class="wrapper">
+  <nz-card class="wrapper__form">
+    <h1 nz-typography>PYGG</h1>
+    <form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submit()">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Por favor, preencha seu email!">
+          <nz-input-group nzPrefixIcon="mail">
+            <input
+              type="text"
+              nz-input
+              formControlName="email"
+              placeholder="Email"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="passwordError">
+          <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              nz-input
+              formControlName="password"
+              placeholder="Senha"
+            />
+            <ng-template #suffixTemplate>
+              <span
+                nz-icon
+                [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                (click)="passwordVisible = !passwordVisible"
+              ></span>
+            </ng-template>
+            <ng-template #passwordError let-control>
+              <ng-container *ngIf="control.hasError('required')"
+                >Por favor confirme sua senha!</ng-container
+              >
+              <ng-container *ngIf="control.hasError('minlength')"
+                >Tamanho mínimo 8!</ng-container
+              >
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+          <label nz-checkbox formControlName="rememberMe">
+            <span>Lembrar</span>
+          </label>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <a routerLink="/auth/request-password" class="login-form-forgot"
+            >Esqueci a senha</a
+          >
+        </div>
+      </div>
+      <button
+        nz-button
+        class="login-form-button login-form-margin"
+        [nzType]="'primary'"
+        [nzLoading]="isLoading"
+      >
+        <span nz-icon nzType="login" nzTheme="outline"></span>
+        Entrar
+      </button>
+      <!-- Ou
+      <a routerLink="/auth/singUp" disabled>Realizar Cadastro</a> -->
+    </form>
+  </nz-card>
+</div>
