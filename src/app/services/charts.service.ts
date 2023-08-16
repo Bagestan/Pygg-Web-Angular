@@ -1,18 +1,17 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChartsService {
-  chartInfo: any;
+  chartDataEmitter = new EventEmitter<string[]>();
+  private chartdata!: string[];
 
-  saveChartInfo(data: any) {
-    this.chartInfo = data;
+  saveChartData(data: string[]) {
+    this.chartdata = data;
+    this.chartDataEmitter.emit(data);
   }
 
-  getChartInfo() {
-    return this.chartInfo;
-  }
+  getChartData() {}
   constructor() {}
 }

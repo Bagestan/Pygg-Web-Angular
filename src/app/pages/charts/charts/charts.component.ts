@@ -46,7 +46,7 @@ export class ChartsComponent implements OnInit {
   }
 
   openChart(data: string[]) {
-    this.chartService.saveChartInfo(data);
+    this.chartService.saveChartData(data);
     this.router.navigate(['main/charts/bars']);
   }
 
