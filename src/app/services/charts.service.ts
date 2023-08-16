@@ -4,14 +4,11 @@ import { EventEmitter, Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ChartsService {
-  chartDataEmitter = new EventEmitter<string[]>();
+  static chartDataEmitter = new EventEmitter<string[]>();
+
   private chartdata!: string[];
 
   saveChartData(data: string[]) {
-    this.chartdata = data;
-    this.chartDataEmitter.emit(data);
+    ChartsService.chartDataEmitter.emit((this.chartdata = data));
   }
-
-  getChartData() {}
-  constructor() {}
 }

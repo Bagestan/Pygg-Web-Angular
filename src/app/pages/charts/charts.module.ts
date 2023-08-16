@@ -6,6 +6,7 @@ import { ChartsRoutingModule } from './charts-routing.module';
 import { ProfitByClientComponent } from './profit-by-client/profit-by-client.component';
 import { ChartsComponent } from './charts/charts.component';
 
+import { NgChartsModule } from 'ng2-charts';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -22,6 +23,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     DatePipe,
     ReactiveFormsModule,
     ChartsRoutingModule,
+    NgChartsModule,
     NzDividerModule,
     NzFormModule,
     NzInputModule,

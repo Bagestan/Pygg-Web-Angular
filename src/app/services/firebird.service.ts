@@ -24,6 +24,19 @@ export class FireBirdService {
     this.getToken();
   }
 
+  getChartData(startDate: string, endDate: string): Observable<profitData[]> {
+    return this.httpClient.post<profitData[]>(
+      `${this.API}charts/profitByClient`,
+      {
+        startDate: startDate,
+        endDate: endDate,
+      },
+      {
+        headers: this.header,
+      }
+    );
+  }
+
   getToken() {
     this.auth.idToken$.pipe(takeUntil(this.destroy$)).subscribe((result) => {
       this.token = result;
@@ -89,21 +102,6 @@ export class FireBirdService {
       `${this.API}quality/qualityAction/${id}/${squa}`,
       { headers: this.header }
     );
-  }
-
-  getChartData(startDate: string, endDate: string): Observable<profitData[]> {
-    return this.httpClient
-      .post<profitData[]>(
-        `${this.API}charts/profitByClient`,
-        {
-          startDate: startDate,
-          endDate: endDate,
-        },
-        {
-          headers: this.header,
-        }
-      )
-      .pipe(first());
   }
 
   updateQuality(data: FormGroup) {
