@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
 import { FireBirdService } from 'src/app/services/firebird.service';
-import { ChartsService } from '../../../services/charts.service';
 
 @Component({
   selector: 'app-profit-by-client',
