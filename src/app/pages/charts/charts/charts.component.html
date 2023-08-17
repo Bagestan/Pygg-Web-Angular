@@ -5,28 +5,49 @@
   </div>
 </header>
 
-<form
-  nz-form
-  [formGroup]="form"
-  (ngSubmit)="submitForm()"
-  nz-row
-  nzJustify="space-around"
->
-  <nz-form-item nz-col>
-    <nz-form-label nzFor="date">Período</nz-form-label>
-    <nz-form-control nzErrorTip="Necessário preencher as datas.">
-      <nz-range-picker
-        nzStartPlaceHolder="Data de Início"
-        nzEndPlaceHolder="Data de Fim"
-        nzFormat="dd/MM/yyy"
-        formControlName="date"
-        nz
-      ></nz-range-picker>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item nz-col>
-    <button nz-button [nzType]="'primary'">PESQUISAR</button>
-  </nz-form-item>
+<form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+  <nz-row nz-row [nzGutter]="[24, 24]" nzAlign="bottom">
+    <nz-col nzXs="24" nzSm="12">
+      <nz-form-item>
+        <nz-form-label nzXs="24" nzSm="24" nzMd="4" nzFor="date"
+          >Período</nz-form-label
+        >
+
+        <nz-form-control
+          nzXs="24"
+          nzSm="24"
+          nzMd="20"
+          nzErrorTip="Necessário preencher as datas."
+        >
+          <nz-range-picker
+            nzStartPlaceHolder="Data de Início"
+            nzEndPlaceHolder="Data de Fim"
+            nzFormat="dd/MM/yyy"
+            formControlName="date"
+          ></nz-range-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+    <nz-col nzXs="8" nzSm="7">
+      <nz-form-item>
+        <nz-form-label nzXs="24" nzSm="24" nzMd="12" nzFor="chartLimit"
+          >Nº Registros</nz-form-label
+        >
+        <nz-form-control nzXs="24" nzSm="24" nzMd="12">
+          <nz-select
+            formControlName="chartLimit"
+            [nzOptions]="chartLimitOptions"
+          >
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+    <nz-col nzXs="16" nzSm="4">
+      <nz-form-item nz-col>
+        <button nz-button [nzType]="'primary'">PESQUISAR</button>
+      </nz-form-item>
+    </nz-col>
+  </nz-row>
 </form>
 <nz-divider></nz-divider>
 

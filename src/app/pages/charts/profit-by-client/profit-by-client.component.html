@@ -1,4 +1,4 @@
-<div class="canvas">
+<div class="canvas" style="position: relative; height: 100%">
   <canvas
     baseChart
     class="chart"
@@ -6,6 +6,7 @@
     [plugins]="barChartPlugins"
     [options]="barChartOptions"
     [type]="barChartType"
+    responsive="true"
   >
     (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)" >
   </canvas>

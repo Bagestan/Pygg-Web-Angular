@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ChartFilter } from '../models/chartModels';
 
 @Component({
   selector: 'app-charts',
@@ -14,6 +15,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ChartsComponent implements OnInit {
   date = null;
   form!: FormGroup;
+
+  chartLimitOptions = [
+    { label: 10, value: 10 },
+    { label: 20, value: 20 },
+    { label: 30, value: 30 },
+    { label: 40, value: 40 },
+    { label: 50, value: 50 },
+    { label: 60, value: 60 },
+    { label: 70, value: 70 },
+    { label: 80, value: 80 },
+    { label: 90, value: 90 },
+    { label: 100, value: 100 },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -27,16 +41,19 @@ export class ChartsComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       date: [null, Validators.required],
+      chartLimit: [10, Validators.required],
     });
   }
 
   submitForm() {
     if (this.form.valid) {
       this.form.controls;
-      const chartData = [
-        this.formatarData(this.form.get('date')?.value[0]),
-        this.formatarData(this.form.get('date')?.value[1]),
-      ];
+      const chartData: ChartFilter = {
+        startDate: this.formatarData(this.form.get('date')?.value[0]),
+        endDate: this.formatarData(this.form.get('date')?.value[1]),
+        maxChartItems: this.form.get('chartLimit')?.value,
+      };
+
       this.openChart(chartData);
     } else {
       this.nzMessage.warning('Verifique as informações do formulário');
@@ -44,7 +61,7 @@ export class ChartsComponent implements OnInit {
     }
   }
 
-  openChart(data: string[]) {
+  openChart(data: ChartFilter) {
     this.chartService.saveChartData(data);
     this.router.navigate(['main/charts/bars']);
   }

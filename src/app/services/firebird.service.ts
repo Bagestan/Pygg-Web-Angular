@@ -8,7 +8,7 @@ import {
   qualityTableData,
 } from '../pages/quality/models/qualityData';
 import { AuthService } from './auth.service';
-import { profitData } from '../pages/charts/models/profitByClient';
+import { ProfitData } from '../pages/charts/models/chartModels';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +24,8 @@ export class FireBirdService {
     this.getToken();
   }
 
-  getChartData(startDate: string, endDate: string): Observable<profitData[]> {
-    return this.httpClient.post<profitData[]>(
+  getChartData(startDate: string, endDate: string): Observable<ProfitData[]> {
+    return this.httpClient.post<ProfitData[]>(
       `${this.API}charts/profitByClient`,
       {
         startDate: startDate,

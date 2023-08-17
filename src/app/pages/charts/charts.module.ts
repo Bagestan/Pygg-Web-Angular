@@ -15,6 +15,8 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   declarations: [ProfitByClientComponent, ChartsComponent],
@@ -32,6 +34,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzButtonModule,
     NzIconModule,
     NzGridModule,
+    NzSelectModule,
+    NzCheckboxModule,
   ],
   providers: [DatePipe],
 })

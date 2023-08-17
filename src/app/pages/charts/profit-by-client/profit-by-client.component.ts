@@ -5,6 +5,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { FireBirdService } from 'src/app/services/firebird.service';
 import { ChartsService } from '../../../services/charts.service';
+import { ChartFilter } from '../models/chartModels';
 
 @Component({
   selector: 'app-profit-by-client',
@@ -19,8 +20,6 @@ export class ProfitByClientComponent implements OnInit {
   public barChartData!: ChartData<'bar'>;
   public barChartOptions: ChartConfiguration['options'];
 
-  maxChartItems = 10;
-
   constructor(private firebirdService: FireBirdService) {}
 
   ngOnInit(): void {
@@ -30,30 +29,32 @@ export class ProfitByClientComponent implements OnInit {
   startDate!: string;
   endDate!: string;
 
-  getChartData(data: string[]) {
-    this.firebirdService.getChartData(data[0], data[1]).subscribe((result) => {
-      console.log(result);
+  getChartData(data: ChartFilter) {
+    this.firebirdService
+      .getChartData(data.startDate, data.endDate)
+      .subscribe((result) => {
+        console.log(result);
 
-      const clientName = Object.values(
-        result.map((item) => item.NM_CLI).slice(0, this.maxChartItems)
-      );
-      const profitValue = Object.values(
-        result.map((item) => item.LUC).slice(0, this.maxChartItems)
-      );
-      const billingQuantity = Object.values(
-        result.map((item) => item.Q_FAT).slice(0, this.maxChartItems)
-      );
-      const billingValue = Object.values(
-        result.map((item) => item.V_FAT).slice(0, this.maxChartItems)
-      );
+        const clientName = Object.values(
+          result.map((item) => item.NM_CLI).slice(0, data.maxChartItems)
+        );
+        const profitValue = Object.values(
+          result.map((item) => item.LUC).slice(0, data.maxChartItems)
+        );
+        const billingQuantity = Object.values(
+          result.map((item) => item.Q_FAT).slice(0, data.maxChartItems)
+        );
+        const billingValue = Object.values(
+          result.map((item) => item.V_FAT).slice(0, data.maxChartItems)
+        );
 
-      this.populateChart(
-        clientName,
-        profitValue,
-        billingQuantity,
-        billingValue
-      );
-    });
+        this.populateChart(
+          clientName,
+          profitValue,
+          billingQuantity,
+          billingValue
+        );
+      });
   }
 
   populateChart(
@@ -68,28 +69,31 @@ export class ProfitByClientComponent implements OnInit {
         {
           data: profitValue,
           label: 'Lucro',
+          backgroundColor: '#62c162',
         },
         {
           data: billingQuantity,
           label: 'Quantidade Faturamento',
+          backgroundColor: '#27c8ff',
         },
         {
           data: billingValue,
           label: 'Valor Faturamento',
+          backgroundColor: '#0c58ff',
         },
       ],
     };
     this.barChartOptions = {
       responsive: true,
+      aspectRatio: 2,
+
       scales: {
         x: {},
         y: {},
       },
       plugins: {
-        legend: {
-          display: false,
-        },
-
+        legend: {},
+        datalabels: { display: false },
         tooltip: {
           callbacks: {
             label: function (context: any) {
