@@ -6,6 +6,7 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { FireBirdService } from 'src/app/services/firebird.service';
 import { ChartsService } from '../../../services/charts.service';
 import { ChartFilter } from '../models/chartModels';
+import { Colors } from 'chart.js';
 
 @Component({
   selector: 'app-profit-by-client',
@@ -38,7 +39,14 @@ export class ProfitByClientComponent implements OnInit {
         const clientName = Object.values(
           result.map((item) => item.NM_CLI).slice(0, data.maxChartItems)
         );
-        const profitValue = Object.values(
+
+        const abbreviatedName = Object.values(
+          result
+            .map((item) => item.NM_CLI.split(' ')[0])
+            .slice(0, data.maxChartItems)
+        );
+
+        let profitValue = Object.values(
           result.map((item) => item.LUC).slice(0, data.maxChartItems)
         );
         const billingQuantity = Object.values(
@@ -50,6 +58,7 @@ export class ProfitByClientComponent implements OnInit {
 
         this.populateChart(
           clientName,
+          abbreviatedName,
           profitValue,
           billingQuantity,
           billingValue
@@ -59,12 +68,13 @@ export class ProfitByClientComponent implements OnInit {
 
   populateChart(
     clientName: string[],
+    abbreviatedName: string[],
     profitValue: number[],
     billingQuantity: number[],
     billingValue: number[]
   ) {
     this.barChartData = {
-      labels: clientName,
+      labels: abbreviatedName,
       datasets: [
         {
           data: profitValue,
@@ -86,14 +96,32 @@ export class ProfitByClientComponent implements OnInit {
     this.barChartOptions = {
       responsive: true,
       scales: {
-        x: { display: false, stacked: true },
+        x: { stacked: true },
         y: { stacked: true },
       },
       plugins: {
         legend: {},
-        datalabels: {},
+        datalabels: {
+          color: '#fff',
+          formatter: (value) => {
+            let formattedValue = value;
+
+            if (value >= 1_000_000_000) {
+              formattedValue = (value / 1_000_000_000).toFixed(1) + 'B';
+            } else if (value >= 1_000_000) {
+              formattedValue = (value / 1_000_000).toFixed(1) + 'M';
+            } else if (value >= 1_000) {
+              formattedValue = (value / 1_000).toFixed(1) + 'K';
+            }
+
+            return formattedValue;
+          },
+        },
         tooltip: {
           callbacks: {
+            title: function (context) {
+              return clientName[context[0].dataIndex];
+            },
             label: function (context: any) {
               let label = context.dataset.label || '';
               if (label) label += ': ';
