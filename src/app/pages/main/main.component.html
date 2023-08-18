@@ -1,12 +1,10 @@
 <nz-layout class="app-layout">
   <nz-sider
-    class="menu-sidebar"
     nzCollapsible
     nzWidth="256px"
+    class="menu-sidebar"
     [nzCollapsedWidth]="0"
-    nzBreakpoint="lg"
     [(nzCollapsed)]="isCollapsed"
-    [nzTrigger]="null"
   >
     <div class="sidebar-logo">
       <img src="../assets/img/favicon.png" alt="logo" />
@@ -63,20 +61,7 @@
       </nz-col>
     </nz-row>
   </nz-sider>
-
-  <nz-layout nz-has-sider>
-    <nz-header>
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-          <span
-            class="trigger"
-            nz-icon
-            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-          ></span>
-        </span>
-      </div>
-    </nz-header>
-
+  <nz-layout>
     <nz-content>
       <div class="inner-content">
         <router-outlet></router-outlet>

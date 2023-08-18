@@ -85,15 +85,13 @@ export class ProfitByClientComponent implements OnInit {
     };
     this.barChartOptions = {
       responsive: true,
-      aspectRatio: 2,
-
       scales: {
-        x: {},
-        y: {},
+        x: { display: false, stacked: true },
+        y: { stacked: true },
       },
       plugins: {
         legend: {},
-        datalabels: { display: false },
+        datalabels: {},
         tooltip: {
           callbacks: {
             label: function (context: any) {

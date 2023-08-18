@@ -1,12 +1,12 @@
-<div class="canvas" style="position: relative; height: 100%">
+<div class="boxCanvas">
   <canvas
+    style="border: 1px solid tomato"
     baseChart
     class="chart"
     [data]="barChartData"
     [plugins]="barChartPlugins"
     [options]="barChartOptions"
     [type]="barChartType"
-    responsive="true"
   >
     (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)" >
   </canvas>
