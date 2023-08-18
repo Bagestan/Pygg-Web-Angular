@@ -4,16 +4,15 @@ import { BaseChartDirective } from 'ng2-charts';
 
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { FireBirdService } from 'src/app/services/firebird.service';
-import { ChartsService } from '../../../services/charts.service';
+import { ChartsService } from 'src/app/services/charts.service';
 import { ChartFilter } from '../models/chartModels';
-import { Colors } from 'chart.js';
 
 @Component({
-  selector: 'app-profit-by-client',
-  templateUrl: './profit-by-client.component.html',
-  styleUrls: ['./profit-by-client.component.scss'],
+  selector: 'app-bars',
+  templateUrl: './bars.component.html',
+  styleUrls: ['./bars.component.scss'],
 })
-export class ProfitByClientComponent implements OnInit {
+export class BarsComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public barChartType: ChartType = 'bar';
@@ -100,7 +99,6 @@ export class ProfitByClientComponent implements OnInit {
         y: { stacked: true },
       },
       plugins: {
-        legend: {},
         datalabels: {
           color: '#fff',
           formatter: (value) => {
@@ -113,7 +111,6 @@ export class ProfitByClientComponent implements OnInit {
             } else if (value >= 1_000) {
               formattedValue = (value / 1_000).toFixed(1) + 'K';
             }
-
             return formattedValue;
           },
         },

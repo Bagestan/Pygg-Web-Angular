@@ -29,6 +29,8 @@ export class ChartsComponent implements OnInit {
     { label: 100, value: 100 },
   ];
 
+  chartTypeOptions = ['bars', 'stackedBars', 'doughnut'];
+
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
