@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+
 import { BaseChartDirective } from 'ng2-charts';
 
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-import { FireBirdService } from 'src/app/services/firebird.service';
+import { ChartDataType } from '../models/chartModels';
 import { ChartsService } from 'src/app/services/charts.service';
-import { ChartFilter } from '../models/chartModels';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-bars',
+  selector: 'bars-chart',
   templateUrl: './bars.component.html',
   styleUrls: ['./bars.component.scss'],
 })
@@ -20,88 +21,35 @@ export class BarsComponent implements OnInit {
   public barChartData!: ChartData<'bar'>;
   public barChartOptions: ChartConfiguration['options'];
 
-  constructor(private firebirdService: FireBirdService) {}
-
-  ngOnInit(): void {
-    ChartsService.chartDataEmitter.subscribe((data) => this.getChartData(data));
-  }
-
+  stacked = false;
   startDate!: string;
   endDate!: string;
 
-  getChartData(data: ChartFilter) {
-    this.firebirdService
-      .getChartData(data.startDate, data.endDate)
-      .subscribe((result) => {
-        console.log(result);
+  constructor(private router: Router) {}
 
-        const clientName = Object.values(
-          result.map((item) => item.NM_CLI).slice(0, data.maxChartItems)
-        );
+  ngOnInit() {
+    console.log('iniciou');
 
-        const abbreviatedName = Object.values(
-          result
-            .map((item) => item.NM_CLI.split(' ')[0])
-            .slice(0, data.maxChartItems)
-        );
-
-        let profitValue = Object.values(
-          result.map((item) => item.LUC).slice(0, data.maxChartItems)
-        );
-        const billingQuantity = Object.values(
-          result.map((item) => item.Q_FAT).slice(0, data.maxChartItems)
-        );
-        const billingValue = Object.values(
-          result.map((item) => item.V_FAT).slice(0, data.maxChartItems)
-        );
-
-        this.populateChart(
-          clientName,
-          abbreviatedName,
-          profitValue,
-          billingQuantity,
-          billingValue
-        );
-      });
+    ChartsService.barsChartDataEmitter.subscribe((data) => {
+      this.populateChart(data);
+    });
   }
 
-  populateChart(
-    clientName: string[],
-    abbreviatedName: string[],
-    profitValue: number[],
-    billingQuantity: number[],
-    billingValue: number[]
-  ) {
+  populateChart(chartDataSet: ChartDataType) {
     this.barChartData = {
-      labels: abbreviatedName,
-      datasets: [
-        {
-          data: profitValue,
-          label: 'Lucro',
-          backgroundColor: '#62c162',
-        },
-        {
-          data: billingQuantity,
-          label: 'Quantidade Faturamento',
-          backgroundColor: '#27c8ff',
-        },
-        {
-          data: billingValue,
-          label: 'Valor Faturamento',
-          backgroundColor: '#0c58ff',
-        },
-      ],
+      labels: chartDataSet.label,
+      datasets: chartDataSet.datasets,
     };
     this.barChartOptions = {
       responsive: true,
       scales: {
-        x: { stacked: true },
-        y: { stacked: true },
+        x: { stacked: this.stacked },
+        y: { stacked: this.stacked },
       },
       plugins: {
         datalabels: {
           color: '#fff',
-          formatter: (value) => {
+          formatter: (value: any) => {
             let formattedValue = value;
 
             if (value >= 1_000_000_000) {
@@ -116,8 +64,8 @@ export class BarsComponent implements OnInit {
         },
         tooltip: {
           callbacks: {
-            title: function (context) {
-              return clientName[context[0].dataIndex];
+            title: function (context: any) {
+              return chartDataSet.label[context[0].dataIndex];
             },
             label: function (context: any) {
               let label = context.dataset.label || '';

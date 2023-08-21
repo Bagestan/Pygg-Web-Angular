@@ -5,7 +5,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { Router } from '@angular/router';
-import { ChartFilter } from '../models/chartModels';
+import { ChartDataType } from './models/chartModels';
+import { FireBirdService } from 'src/app/services/firebird.service';
 
 @Component({
   selector: 'app-charts',
@@ -13,10 +14,11 @@ import { ChartFilter } from '../models/chartModels';
   styleUrls: ['./charts.component.scss'],
 })
 export class ChartsComponent implements OnInit {
-  date = null;
   form!: FormGroup;
+  chartDataSet!: ChartDataType;
 
   chartLimitOptions = [
+    { label: 5, value: 5 },
     { label: 10, value: 10 },
     { label: 20, value: 20 },
     { label: 30, value: 30 },
@@ -29,7 +31,11 @@ export class ChartsComponent implements OnInit {
     { label: 100, value: 100 },
   ];
 
-  chartTypeOptions = ['bars', 'stackedBars', 'doughnut'];
+  chartTypeOptions = [
+    { value: 'bars', label: 'Barras' },
+    { value: 'stackedBars', label: 'Barras Combinadas' },
+    { value: 'doughnut', label: 'Donut' },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -37,35 +43,46 @@ export class ChartsComponent implements OnInit {
     private formService: FormService,
     private nzMessage: NzMessageService,
     private chartService: ChartsService,
-    private router: Router
+    private router: Router,
+    private firebirdService: FireBirdService
   ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
       date: [null, Validators.required],
       chartLimit: [10, Validators.required],
+      chartType: ['doughnut', Validators.required],
     });
   }
 
   submitForm() {
     if (this.form.valid) {
       this.form.controls;
-      const chartData: ChartFilter = {
+      const chartForm = {
         startDate: this.formatarData(this.form.get('date')?.value[0]),
         endDate: this.formatarData(this.form.get('date')?.value[1]),
         maxChartItems: this.form.get('chartLimit')?.value,
+        chartType: this.form.get('chartType')?.value,
       };
 
-      this.openChart(chartData);
+      console.log(chartForm.chartType);
+      switch (chartForm.chartType) {
+        case 'doughnut': {
+          this.chartService.getDoughnutChartData(chartForm);
+          this.openChart(chartForm.chartType);
+        }
+      }
+
+      this.chartService.getBarsChartData(chartForm);
+      this.openChart(chartForm.chartType);
     } else {
       this.nzMessage.warning('Verifique as informações do formulário');
       this.formService.validateAllFormFields(this.form);
     }
   }
 
-  openChart(data: ChartFilter) {
-    this.chartService.saveChartData(data);
-    this.router.navigate(['main/charts/bars']);
+  openChart(chartType: string) {
+    this.router.navigate([`main/charts/${chartType}`]);
   }
 
   resetForm(): void {

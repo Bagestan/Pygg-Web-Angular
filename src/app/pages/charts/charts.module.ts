@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ChartsRoutingModule } from './charts-routing.module';
-import { ChartsComponent } from './charts/charts.component';
-import { BarsComponent } from './Bars-Chart/Bars.component';
+import { ChartsComponent } from './charts.component';
+import { BarsComponent } from './Bars-Chart/bars.component';
+import { DoughnutComponent } from './doughnut-Chart/doughnut.component';
 
 import { NgChartsModule } from 'ng2-charts';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -18,12 +19,13 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
-import { DoughnutComponent } from './doughnut-Chart/doughnut.component';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @NgModule({
   declarations: [BarsComponent, ChartsComponent, DoughnutComponent],
   imports: [
     CommonModule,
+    FormsModule,
     DatePipe,
     ReactiveFormsModule,
     ChartsRoutingModule,
@@ -39,6 +41,7 @@ import { DoughnutComponent } from './doughnut-Chart/doughnut.component';
     NzSelectModule,
     NzCheckboxModule,
     NzCollapseModule,
+    NzSwitchModule,
   ],
   providers: [DatePipe],
 })

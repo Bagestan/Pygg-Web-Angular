@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BarsComponent } from './Bars.component';
+import { BarsComponent } from './bars.component';
 
 describe('BarsComponent', () => {
   let component: BarsComponent;
