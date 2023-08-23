@@ -51,7 +51,7 @@ export class ChartsComponent implements OnInit {
     this.form = this.fb.group({
       date: [null, Validators.required],
       chartLimit: [10, Validators.required],
-      chartType: ['doughnut', Validators.required],
+      chartType: ['bars', Validators.required],
     });
   }
 
@@ -65,15 +65,14 @@ export class ChartsComponent implements OnInit {
         chartType: this.form.get('chartType')?.value,
       };
 
-      console.log(chartForm.chartType);
       switch (chartForm.chartType) {
         case 'doughnut': {
-          this.chartService.getDoughnutChartData(chartForm);
+          this.chartService.getChartData(chartForm);
           this.openChart(chartForm.chartType);
         }
       }
 
-      this.chartService.getBarsChartData(chartForm);
+      this.chartService.getChartData(chartForm);
       this.openChart(chartForm.chartType);
     } else {
       this.nzMessage.warning('Verifique as informações do formulário');

@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import Pt from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
 
 import { ptBR } from 'date-fns/locale';
 
@@ -22,8 +23,6 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { NZ_DATE_LOCALE, NZ_I18N, pt_BR } from 'ng-zorro-antd/i18n';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageModule } from 'ng-zorro-antd/message';
-
-import { registerLocaleData } from '@angular/common';
 
 registerLocaleData(Pt);
 
