@@ -10,6 +10,38 @@
   <nz-collapse-panel [nzHeader]="ChartFilterHeader" [nzActive]="true">
     <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
       <nz-row nz-row [nzGutter]="[24, 24]" nzAlign="bottom">
+        <nz-col nzXs="8" nzSm="7">
+          <nz-form-item>
+            <nz-form-label nzXs="24" nzSm="24" nzMd="12" nzFor="chartLimit"
+              >Tipo de Gráfico</nz-form-label
+            >
+            <nz-form-control nzXs="24" nzSm="24" nzMd="12">
+              <nz-select
+                formControlName="chartType"
+                [nzOptions]="chartTypeOptions"
+              >
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col nzXs="8" nzSm="7">
+          <nz-form-item>
+            <nz-form-label nzXs="24" nzSm="24" nzMd="12" nzFor="chartLimit"
+              >Dados</nz-form-label
+            >
+            <nz-form-control nzXs="24" nzSm="24" nzMd="12">
+              <nz-select
+                formControlName="chartDataOptions"
+                [nzOptions]="chartDataOptions"
+              >
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <nz-row nz-row [nzGutter]="[24, 24]" nzAlign="bottom">
         <nz-col nzXs="24" nzSm="12">
           <nz-form-item>
             <nz-form-label nzXs="24" nzSm="24" nzMd="4" nzFor="date"
@@ -23,21 +55,6 @@
                 nzFormat="dd/MM/yyy"
                 formControlName="date"
               ></nz-range-picker>
-            </nz-form-control>
-          </nz-form-item>
-        </nz-col>
-
-        <nz-col nzXs="8" nzSm="7">
-          <nz-form-item>
-            <nz-form-label nzXs="24" nzSm="24" nzMd="12" nzFor="chartLimit"
-              >Tipo de Gráfico</nz-form-label
-            >
-            <nz-form-control nzXs="24" nzSm="24" nzMd="12">
-              <nz-select
-                formControlName="chartType"
-                [nzOptions]="chartTypeOptions"
-              >
-              </nz-select>
             </nz-form-control>
           </nz-form-item>
         </nz-col>

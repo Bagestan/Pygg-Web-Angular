@@ -21,8 +21,8 @@ export class DoughnutComponent implements OnInit {
 
   populateChart(ChartData: ChartDataType) {
     this.doughnutChartData = {
-      labels: this.ChartData.label,
-      datasets: this.ChartData.datasets,
+      labels: ChartData.abbreviatedLabel,
+      datasets: ChartData.datasets,
     };
   }
 

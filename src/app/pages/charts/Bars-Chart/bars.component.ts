@@ -21,34 +21,31 @@ export class BarsComponent implements OnInit {
   public barChartData!: ChartData<'bar'>;
   public barChartOptions: ChartConfiguration['options'];
 
-  stacked = false;
   startDate!: string;
   endDate!: string;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit() {
-    console.log('iniciou');
-
     ChartsService.barsChartDataEmitter.subscribe((data) => {
-      this.populateChart(data);
+      const stacked = data.chartType === 'stackedBars';
+      this.populateChart(data, stacked);
     });
   }
 
-  populateChart(chartDataSet: ChartDataType) {
+  populateChart(chartDataSet: ChartDataType, stacked: boolean) {
     this.barChartData = {
-      labels: chartDataSet.label,
+      labels: chartDataSet.abbreviatedLabel,
       datasets: chartDataSet.datasets,
     };
     this.barChartOptions = {
       responsive: true,
       scales: {
-        x: { stacked: this.stacked },
-        y: { stacked: this.stacked },
+        x: { stacked: stacked },
+        y: { stacked: stacked },
       },
       plugins: {
         datalabels: {
-          color: '#fff',
           formatter: (value: any) => {
             let formattedValue = value;
 

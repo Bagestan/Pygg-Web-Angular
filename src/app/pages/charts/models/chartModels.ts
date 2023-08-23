@@ -13,7 +13,6 @@ export interface ChartFilter {
 }
 
 export interface ChartDataType {
-  chartType: 'bars' | 'stackedBars' | 'doughnut';
   label: string[];
   abbreviatedLabel: string[];
   datasets: Datasets[];

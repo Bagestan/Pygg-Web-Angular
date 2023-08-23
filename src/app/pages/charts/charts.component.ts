@@ -5,8 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { Router } from '@angular/router';
-import { ChartDataType } from './models/chartModels';
-import { FireBirdService } from 'src/app/services/firebird.service';
+import { ChartDataType, ChartFilter } from './models/chartModels';
 
 @Component({
   selector: 'app-charts',
@@ -37,14 +36,15 @@ export class ChartsComponent implements OnInit {
     { value: 'doughnut', label: 'Donut' },
   ];
 
+  chartDataOptions = [{ value: 'profitByClient', label: 'Lucro por Cliente' }];
+
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private formService: FormService,
     private nzMessage: NzMessageService,
     private chartService: ChartsService,
-    private router: Router,
-    private firebirdService: FireBirdService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +52,7 @@ export class ChartsComponent implements OnInit {
       date: [null, Validators.required],
       chartLimit: [10, Validators.required],
       chartType: ['doughnut', Validators.required],
+      chartDataOptions: ['profitByClient', Validators.required],
     });
   }
 
@@ -65,24 +66,32 @@ export class ChartsComponent implements OnInit {
         chartType: this.form.get('chartType')?.value,
       };
 
-      console.log(chartForm.chartType);
-      switch (chartForm.chartType) {
-        case 'doughnut': {
-          this.chartService.getDoughnutChartData(chartForm);
-          this.openChart(chartForm.chartType);
-        }
-      }
-
-      this.chartService.getBarsChartData(chartForm);
-      this.openChart(chartForm.chartType);
+      this.openChart(chartForm.chartType, chartForm);
     } else {
       this.nzMessage.warning('Verifique as informações do formulário');
       this.formService.validateAllFormFields(this.form);
     }
   }
 
-  openChart(chartType: string) {
-    this.router.navigate([`main/charts/${chartType}`]);
+  openChart(chartType: string, chartForm: ChartFilter) {
+    switch (chartType) {
+      case 'doughnut': {
+        this.chartService.getDoughnutChartData(chartForm);
+        this.router.navigate([`main/charts/doughnut`]);
+
+        break;
+      }
+      case 'bars': {
+        this.chartService.getBarsChartData(chartForm);
+        this.router.navigate([`main/charts/bars`]);
+
+        break;
+      }
+      case 'stackedBars': {
+        this.chartService.getBarsChartData(chartForm);
+        this.router.navigate([`main/charts/bars`]);
+      }
+    }
   }
 
   resetForm(): void {

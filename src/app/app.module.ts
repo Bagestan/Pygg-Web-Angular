@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
+import { registerLocaleData } from '@angular/common';
+
 import Pt from '@angular/common/locales/pt';
 
 import { ptBR } from 'date-fns/locale';
@@ -24,7 +26,6 @@ import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 
 import { NgChartsModule } from 'ng2-charts';
-import { registerLocaleData } from '@angular/common';
 
 registerLocaleData(Pt);
 

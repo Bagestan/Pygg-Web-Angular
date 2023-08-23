@@ -1,26 +1,31 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ChartDataType, ChartFilter } from '../pages/charts/models/chartModels';
 import { FireBirdService } from './firebird.service';
-import { ChartType } from 'chart.js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChartsService {
   static barsChartDataEmitter = new EventEmitter();
+  static doughnutChartDataEmitter = new EventEmitter<ChartDataType>();
 
   constructor(private firebirdService: FireBirdService) {}
 
-  getFirebirdData(startDate: string, endDate: string) {
+  getChartData(startDate: string, endDate: string) {
     return this.firebirdService.getChartData(startDate, endDate);
   }
 
   getDoughnutChartData(data: ChartFilter) {
-    const result = this.getFirebirdData(data.startDate, data.endDate);
+    this.getBarsChartData(data);
+    // return this.getChartData(data.startDate, data.endDate).subscribe(
+    //   (result) => {
+    //     console.log(result);
+    //   }
+    // );
   }
 
   getBarsChartData(data: ChartFilter) {
-    this.getFirebirdData(data.startDate, data.endDate).subscribe((result) => {
+    this.getChartData(data.startDate, data.endDate).subscribe((result) => {
       const chartDataSet = {
         label: Object.values(
           result.map((item) => item.NOME_CLIENTE).slice(0, data.maxChartItems)
@@ -38,7 +43,7 @@ export class ChartsService {
               result.map((item) => item.LUCRO).slice(0, data.maxChartItems)
             ),
             label: 'Lucro',
-            backgroundColor: '#62c162',
+            // backgroundColor: ['#62c162', '#27c8ff', '#0c58ff'],
           },
 
           {
@@ -48,7 +53,7 @@ export class ChartsService {
                 .slice(0, data.maxChartItems)
             ),
             label: 'Quantidade Faturamento',
-            backgroundColor: '#27c8ff',
+            // backgroundColor: '#27c8ff',
           },
 
           {
@@ -58,16 +63,12 @@ export class ChartsService {
                 .slice(0, data.maxChartItems)
             ),
             label: 'Quantidade Faturamento',
-            backgroundColor: '#0c58ff',
+            // backgroundColor: '#0c58ff',
           },
         ],
         chartType: data.chartType,
       };
-      this.saveChartData(chartDataSet);
+      ChartsService.barsChartDataEmitter.emit(chartDataSet);
     });
-  }
-
-  saveChartData(chartDataSet: ChartDataType) {
-    ChartsService.barsChartDataEmitter.emit(chartDataSet);
   }
 }
