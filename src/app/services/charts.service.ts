@@ -1,7 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ChartDataType, ChartFilter } from '../pages/charts/models/chartModels';
 import { FireBirdService } from './firebird.service';
-import { ChartType } from 'chart.js';
 
 @Injectable({
   providedIn: 'root',

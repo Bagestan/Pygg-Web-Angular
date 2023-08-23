@@ -23,7 +23,6 @@ import { NZ_DATE_LOCALE, NZ_I18N, pt_BR } from 'ng-zorro-antd/i18n';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 
-import { NgChartsModule } from 'ng2-charts';
 import { registerLocaleData } from '@angular/common';
 
 registerLocaleData(Pt);
@@ -32,7 +31,6 @@ registerLocaleData(Pt);
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    NgChartsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
