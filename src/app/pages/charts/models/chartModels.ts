@@ -1,8 +1,8 @@
 export interface ProfitData {
-  clientName: string;
-  billingValue: number;
-  billingQuantity: number;
-  profitValue: number;
+  CLIENTNAME: string;
+  BILLINGVALUE: number;
+  BILLINGQUANTITY: number;
+  PROFITVALUE: number;
 }
 
 export interface ChartFilter {

@@ -43,8 +43,7 @@ export class ChartsComponent implements OnInit {
     private formService: FormService,
     private nzMessage: NzMessageService,
     private chartService: ChartsService,
-    private router: Router,
-    private firebirdService: FireBirdService
+    private router: Router
   ) {}
 
   ngOnInit(): void {

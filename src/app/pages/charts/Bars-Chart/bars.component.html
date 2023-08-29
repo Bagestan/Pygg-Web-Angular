@@ -1,24 +1,24 @@
-<div id="pivotgrid-demo">
-  <dx-chart id="sales-chart">
-    <dxo-common-series-settings type="bar"></dxo-common-series-settings>
-    <dxo-size [height]="200"></dxo-size>
-    <dxo-adaptive-layout [width]="450"></dxo-adaptive-layout>
-    <dxo-tooltip [enabled]="true" format="currency"></dxo-tooltip>
-  </dx-chart>
-
-  <dx-pivot-grid
-    id="pivotgrid"
-    [allowSortingBySummary]="true"
-    [allowFiltering]="true"
-    [showBorders]="true"
-    [allowSortingBySummary]="true"
-    [showColumnGrandTotals]="false"
-    [showRowGrandTotals]="false"
-    [showRowTotals]="false"
-    [showColumnTotals]="false"
-    [dataSource]="pivotGridDataSource"
+<dx-chart id="chart" title="Lucro e Faturamento" [dataSource]="dataSource">
+  <dxi-series
+    valueField="BILLINGQUANTITY"
+    name="Quantidade Faturamento"
+  ></dxi-series>
+  <dxi-series valueField="BILLINGVALUE" name="Valor Faturamento"> </dxi-series>
+  <dxi-series valueField="PROFITVALUE" name="Lucro"></dxi-series>
+  <dxo-common-series-settings
+    argumentField="FIRSTNAME"
+    type="bar"
+    selectionMode="allArgumentPoints"
+    hoverMode="onlyPoint"
   >
-    <dxo-field-chooser [enabled]="true" [height]="400"></dxo-field-chooser>
-    <dxo-scrolling mode="virtual"></dxo-scrolling>
-  </dx-pivot-grid>
-</div>
+  </dxo-common-series-settings>
+  <dxo-legend verticalAlignment="top" horizontalAlignment="center">
+  </dxo-legend>
+  <dxo-export [enabled]="true"></dxo-export>
+  <dxo-tooltip
+    [enabled]="true"
+    location="edge"
+    [customizeTooltip]="customizeTooltip"
+  >
+  </dxo-tooltip>
+</dx-chart>

@@ -16,7 +16,9 @@ export class ChartsService {
 
   getChartData(form: ChartFilter) {
     this.getFirebirdData(form.startDate, form.endDate).subscribe((result) => {
-      ChartsService.barsChartDataEmitter.emit(result);
+      ChartsService.barsChartDataEmitter.emit(
+        result.slice(0, form.maxChartItems)
+      );
     });
   }
 }
