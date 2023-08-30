@@ -1,0 +1,75 @@
+<dx-pie-chart
+  id="donutChart"
+  [palette]="palette"
+  [paletteExtensionMode]="paletteExtensionMode"
+  type="doughnut"
+  title="Lucro e Faturamento"
+  [innerRadius]="innerRadius"
+  [dataSource]="dataSource"
+>
+  <dxo-legend [visible]="true"></dxo-legend>
+  <dxo-export [enabled]="true"></dxo-export>
+  <dxo-tooltip
+    [enabled]="true"
+    format="currency"
+    [customizeTooltip]="customizeTooltip"
+  ></dxo-tooltip>
+  <dxi-series
+    argumentField="CLIENTNAME"
+    valueField="BILLINGVALUE"
+    name="Faturamento"
+  ></dxi-series>
+  <dxi-series
+    argumentField="CLIENTNAME"
+    valueField="PROFITVALUE"
+    name="Lucro"
+  ></dxi-series>
+  <dxi-series
+    argumentField="CLIENTNAME"
+    valueField="BILLINGQUANTITY"
+    name="Quantidade de Faturamento"
+  ></dxi-series>
+</dx-pie-chart>
+
+<div class="Charts grid-template-columns" *ngFor="let client of dataSource">
+  <dx-pie-chart
+    class=""
+    [id]="'pie-' + client.FIRSTNAME"
+    type="doughnut"
+    [title]="client.CLIENTNAME"
+    palette="Ocean"
+    paletteExtensionMode="blend"
+    [dataSource]="[
+      {
+        argument: 'Valor Faturamento',
+        value: client.BILLINGVALUE
+      },
+      {
+        argument: 'Quantidade Faturamento',
+        value: client.BILLINGQUANTITY
+      },
+      {
+        argument: 'Lucro',
+        value: client.PROFITVALUE
+      }
+    ]"
+  >
+    <dxi-series argumentField="argument" valueField="value">
+      <dxo-label [visible]="true" format="thousands">
+        <dxo-connector [visible]="true"></dxo-connector>
+      </dxo-label>
+    </dxi-series>
+    <dxo-export [enabled]="true"></dxo-export>
+    <dxo-legend
+      [margin]="0"
+      horizontalAlignment="right"
+      verticalAlignment="top"
+    ></dxo-legend>
+    <dxo-tooltip
+      [enabled]="true"
+      [customizeTooltip]="customizeTooltip"
+      format="currency"
+    >
+    </dxo-tooltip>
+  </dx-pie-chart>
+</div>

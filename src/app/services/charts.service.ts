@@ -7,6 +7,10 @@ import { FireBirdService } from './firebird.service';
 })
 export class ChartsService {
   static barsChartDataEmitter = new EventEmitter();
+  static doughnutChartDataEmitter = new EventEmitter();
+
+  static palette = 'Ocean';
+  static paletteExtensionMode = 'Blend';
 
   constructor(private firebirdService: FireBirdService) {}
 
@@ -15,10 +19,33 @@ export class ChartsService {
   }
 
   getChartData(form: ChartFilter) {
+    console.log(form.chartType);
     this.getFirebirdData(form.startDate, form.endDate).subscribe((result) => {
-      ChartsService.barsChartDataEmitter.emit(
-        result.slice(0, form.maxChartItems)
-      );
+      switch (form.chartType) {
+        case 'bar':
+          ChartsService.barsChartDataEmitter.emit(
+            result.slice(0, form.maxChartItems)
+          );
+
+          break;
+        case 'stackedBar':
+          ChartsService.barsChartDataEmitter.emit(
+            result.slice(0, form.maxChartItems)
+          );
+
+          break;
+        case 'fullStackedBar':
+          ChartsService.barsChartDataEmitter.emit(
+            result.slice(0, form.maxChartItems)
+          );
+
+          break;
+        case 'doughnut':
+          ChartsService.doughnutChartDataEmitter.emit(
+            result.slice(0, form.maxChartItems)
+          );
+          break;
+      }
     });
   }
 }

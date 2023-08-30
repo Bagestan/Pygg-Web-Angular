@@ -10,8 +10,11 @@ const routes: Routes = [
     path: '',
     component: ChartsComponent,
     children: [
-      { path: 'bars', component: BarsComponent },
+      { path: 'bar', component: BarsComponent },
+      { path: 'stackedBar', component: BarsComponent },
+      { path: 'fullStackedBar', component: BarsComponent },
       { path: 'doughnut', component: DoughnutComponent },
+      { path: 'individualDoughnut', component: DoughnutComponent },
     ],
   },
 ];

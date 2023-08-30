@@ -20,7 +20,11 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
-import { DxChartModule, DxPivotGridModule } from 'devextreme-angular';
+import {
+  DxChartModule,
+  DxPieChartModule,
+  DxPivotGridModule,
+} from 'devextreme-angular';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { BrowserTransferStateModule } from '@angular/platform-browser';
 
@@ -48,6 +52,7 @@ import { BrowserTransferStateModule } from '@angular/platform-browser';
     DxButtonModule,
     BrowserTransferStateModule,
     DxChartModule,
+    DxPieChartModule,
   ],
   providers: [DatePipe],
 })

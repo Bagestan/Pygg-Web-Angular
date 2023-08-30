@@ -10,13 +10,13 @@
   <nz-collapse-panel [nzHeader]="ChartFilterHeader" [nzActive]="true">
     <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
       <nz-row nz-row [nzGutter]="[24, 24]" nzAlign="bottom">
-        <nz-col nzXs="24" nzSm="12">
+        <nz-col nzXs="24" nzSm="8" nzXl="10" nzLg="8" nzMd="10">
           <nz-form-item>
-            <nz-form-label nzXs="24" nzSm="24" nzMd="4" nzFor="date"
+            <nz-form-label nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzFor="date"
               >Período</nz-form-label
             >
 
-            <nz-form-control nzXs="24" nzSm="24" nzMd="20">
+            <nz-form-control nzXs="24" nzSm="24" nzMd="20" nzLg="18">
               <nz-range-picker
                 nzStartPlaceHolder="Data de Início"
                 nzEndPlaceHolder="Data de Fim"
@@ -27,12 +27,18 @@
           </nz-form-item>
         </nz-col>
 
-        <nz-col nzXs="8" nzSm="7">
+        <nz-col nzXs="8" nzSm="8" nzXl="6" nzLg="7" nzMd="9">
           <nz-form-item>
-            <nz-form-label nzXs="24" nzSm="24" nzMd="12" nzFor="chartLimit"
+            <nz-form-label
+              nzXs="24"
+              nzSm="24"
+              nzMd="8"
+              nzXl="10"
+              nzLg="14"
+              nzFor="chartLimit"
               >Tipo de Gráfico</nz-form-label
             >
-            <nz-form-control nzXs="24" nzSm="24" nzMd="12">
+            <nz-form-control nzXs="24" nzSm="24" nzMd="16" nzXl="14" nzLg="10">
               <nz-select
                 formControlName="chartType"
                 [nzOptions]="chartTypeOptions"
@@ -42,12 +48,12 @@
           </nz-form-item>
         </nz-col>
 
-        <nz-col nzXs="8" nzSm="7">
+        <nz-col nzXs="8" nzSm="5" nzLg="5" nzMd="5">
           <nz-form-item>
-            <nz-form-label nzXs="24" nzSm="24" nzMd="12" nzFor="chartLimit"
+            <nz-form-label nzXs="24" nzSm="24" nzMd="14" nzFor="chartLimit"
               >Nº Registros</nz-form-label
             >
-            <nz-form-control nzXs="24" nzSm="24" nzMd="12">
+            <nz-form-control nzXs="24" nzSm="24" nzMd="10">
               <nz-select
                 formControlName="chartLimit"
                 [nzOptions]="chartLimitOptions"
@@ -57,7 +63,7 @@
           </nz-form-item>
         </nz-col>
 
-        <nz-col nzXs="16" nzSm="4">
+        <nz-col nzXs="16" nzSm="3" nzLg="4" nzXl="3" nzMd="24">
           <nz-form-item nz-col>
             <button nz-button [nzType]="'primary'">PESQUISAR</button>
           </nz-form-item>

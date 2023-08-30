@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DxChartComponent } from 'devextreme-angular';
 
 import { ChartsService } from 'src/app/services/charts.service';
@@ -8,28 +9,21 @@ import { ChartsService } from 'src/app/services/charts.service';
   templateUrl: './bars.component.html',
   styleUrls: ['./bars.component.scss'],
 })
-export class BarsComponent implements OnInit, AfterViewInit {
+export class BarsComponent implements OnInit {
   @ViewChild(DxChartComponent, { static: false }) chart!: DxChartComponent;
-  pivotGridDataSource: any;
 
-  dataSource!: any[];
+  dataSource!: [];
   clientName!: string[];
-
-  customizeTooltip(arg: any) {
-    return {
-      text: `
-      ${arg.originalArgument}
-
-      ${arg.seriesName}: ${arg.valueText}`,
-    };
-  }
-
-  constructor() {}
-
-  ngAfterViewInit(): void {}
+  chartType!: string;
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.route.url.subscribe((data) => {
+      this.chartType = data[0].path;
+    });
+
     ChartsService.barsChartDataEmitter.subscribe((data) => {
+      console.log('🚀 ~ data:', data);
       data.forEach((i: any) => {
         i.FIRSTNAME = i.CLIENTNAME.split(' ')[0];
       });
@@ -39,7 +33,18 @@ export class BarsComponent implements OnInit, AfterViewInit {
   }
 
   populateChart(data: any) {
-    console.log('🚀 ~ data:', data);
     this.dataSource = data;
+  }
+
+  customizeTooltip(arg: any) {
+    return {
+      text: `
+      ${arg.point.data.CLIENTNAME}
+
+      ${arg.seriesName}: ${arg.value.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      })}`,
+    };
   }
 }

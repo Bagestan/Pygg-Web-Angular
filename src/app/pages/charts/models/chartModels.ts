@@ -9,11 +9,21 @@ export interface ChartFilter {
   startDate: string;
   endDate: string;
   maxChartItems: number;
-  chartType: 'bars' | 'stackedBars' | 'doughnut';
+  chartType:
+    | 'bar'
+    | 'stackedBar'
+    | 'doughnut'
+    | 'fullStackedBar'
+    | 'individualDoughnut';
 }
 
 export interface ChartDataType {
-  chartType: 'bars' | 'stackedBars' | 'doughnut';
+  chartType:
+    | 'bar'
+    | 'stackedBar'
+    | 'doughnut'
+    | 'fullStackedBar'
+    | 'individualDoughnut';
   label: string[];
   abbreviatedLabel: string[];
   datasets: Datasets[];

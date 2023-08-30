@@ -1,18 +1,24 @@
-<dx-chart id="chart" title="Lucro e Faturamento" [dataSource]="dataSource">
+<dx-chart
+  id="chart"
+  title="Lucro e Faturamento"
+  [dataSource]="dataSource"
+  palette="Ocean"
+  paletteExtensionMode="Blend"
+>
+  <dxi-series valueField="BILLINGVALUE" name="Valor Faturamento"> </dxi-series>
   <dxi-series
     valueField="BILLINGQUANTITY"
     name="Quantidade Faturamento"
   ></dxi-series>
-  <dxi-series valueField="BILLINGVALUE" name="Valor Faturamento"> </dxi-series>
   <dxi-series valueField="PROFITVALUE" name="Lucro"></dxi-series>
   <dxo-common-series-settings
     argumentField="FIRSTNAME"
-    type="bar"
+    [type]="chartType"
     selectionMode="allArgumentPoints"
     hoverMode="onlyPoint"
   >
   </dxo-common-series-settings>
-  <dxo-legend verticalAlignment="top" horizontalAlignment="center">
+  <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
   </dxo-legend>
   <dxo-export [enabled]="true"></dxo-export>
   <dxo-tooltip
@@ -20,5 +26,7 @@
     location="edge"
     [customizeTooltip]="customizeTooltip"
   >
+    <dxo-format type="fixedPoint" [precision]="2" format="thousands">
+    </dxo-format>
   </dxo-tooltip>
 </dx-chart>

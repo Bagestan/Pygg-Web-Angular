@@ -6,7 +6,6 @@ import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { Router } from '@angular/router';
 import { ChartDataType } from './models/chartModels';
-import { FireBirdService } from 'src/app/services/firebird.service';
 
 @Component({
   selector: 'app-charts',
@@ -32,9 +31,11 @@ export class ChartsComponent implements OnInit {
   ];
 
   chartTypeOptions = [
-    { value: 'bars', label: 'Barras' },
-    { value: 'stackedBars', label: 'Barras Combinadas' },
+    { value: 'bar', label: 'Barras' },
+    { value: 'stackedBar', label: 'Barras Combinadas' },
+    { value: 'fullStackedBar', label: 'Barras Proporcionais' },
     { value: 'doughnut', label: 'Donut' },
+    { value: 'individualDoughnut', label: 'Donut Individual' },
   ];
 
   constructor(
@@ -50,7 +51,7 @@ export class ChartsComponent implements OnInit {
     this.form = this.fb.group({
       date: [null, Validators.required],
       chartLimit: [10, Validators.required],
-      chartType: ['bars', Validators.required],
+      chartType: ['doughnut', Validators.required],
     });
   }
 
@@ -63,13 +64,6 @@ export class ChartsComponent implements OnInit {
         maxChartItems: this.form.get('chartLimit')?.value,
         chartType: this.form.get('chartType')?.value,
       };
-
-      switch (chartForm.chartType) {
-        case 'doughnut': {
-          this.chartService.getChartData(chartForm);
-          this.openChart(chartForm.chartType);
-        }
-      }
 
       this.chartService.getChartData(chartForm);
       this.openChart(chartForm.chartType);
