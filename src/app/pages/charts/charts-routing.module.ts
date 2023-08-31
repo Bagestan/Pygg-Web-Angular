@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DoughnutComponent } from './doughnut-Chart/doughnut.component';
 import { ChartsComponent } from './charts.component';
 import { BarsComponent } from './Bars-Chart/bars.component';
+import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'fullStackedBar', component: BarsComponent },
       { path: 'doughnut', component: DoughnutComponent },
       { path: 'individualDoughnut', component: DoughnutComponent },
+      { path: 'pivotGrid', component: PivotGridComponent },
     ],
   },
 ];

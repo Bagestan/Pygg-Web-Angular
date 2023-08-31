@@ -19,31 +19,41 @@ export class ChartsService {
   }
 
   getChartData(form: ChartFilter) {
-    console.log(form.chartType);
     this.getFirebirdData(form.startDate, form.endDate).subscribe((result) => {
       switch (form.chartType) {
         case 'bar':
           ChartsService.barsChartDataEmitter.emit(
-            result.slice(0, form.maxChartItems)
+            form.maxChartItems ? result.slice(0, form.maxChartItems) : result
           );
 
           break;
+
         case 'stackedBar':
           ChartsService.barsChartDataEmitter.emit(
             result.slice(0, form.maxChartItems)
           );
 
           break;
+
         case 'fullStackedBar':
           ChartsService.barsChartDataEmitter.emit(
             result.slice(0, form.maxChartItems)
           );
 
           break;
+
         case 'doughnut':
           ChartsService.doughnutChartDataEmitter.emit(
             result.slice(0, form.maxChartItems)
           );
+
+          break;
+
+        case 'pivotGrid':
+          ChartsService.barsChartDataEmitter.emit(
+            form.maxChartItems ? result.slice(0, form.maxChartItems) : result
+          );
+
           break;
       }
     });

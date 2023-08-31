@@ -27,9 +27,15 @@ import {
 } from 'devextreme-angular';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { BrowserTransferStateModule } from '@angular/platform-browser';
+import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
 
 @NgModule({
-  declarations: [BarsComponent, ChartsComponent, DoughnutComponent],
+  declarations: [
+    BarsComponent,
+    ChartsComponent,
+    DoughnutComponent,
+    PivotGridComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

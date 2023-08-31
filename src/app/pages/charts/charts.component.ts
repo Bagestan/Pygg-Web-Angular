@@ -13,6 +13,8 @@ import { ChartDataType } from './models/chartModels';
   styleUrls: ['./charts.component.scss'],
 })
 export class ChartsComponent implements OnInit {
+  collapsePanel = true;
+
   form!: FormGroup;
   chartDataSet!: ChartDataType;
 
@@ -28,6 +30,7 @@ export class ChartsComponent implements OnInit {
     { label: 80, value: 80 },
     { label: 90, value: 90 },
     { label: 100, value: 100 },
+    { label: 'Todos', value: 0 },
   ];
 
   chartTypeOptions = [
@@ -36,6 +39,7 @@ export class ChartsComponent implements OnInit {
     { value: 'fullStackedBar', label: 'Barras Proporcionais' },
     { value: 'doughnut', label: 'Donut' },
     { value: 'individualDoughnut', label: 'Donut Individual' },
+    { value: 'pivotGrid', label: 'pivotGrid' },
   ];
 
   constructor(
@@ -51,7 +55,7 @@ export class ChartsComponent implements OnInit {
     this.form = this.fb.group({
       date: [null, Validators.required],
       chartLimit: [10, Validators.required],
-      chartType: ['doughnut', Validators.required],
+      chartType: ['pivotGrid', Validators.required],
     });
   }
 
@@ -67,6 +71,7 @@ export class ChartsComponent implements OnInit {
 
       this.chartService.getChartData(chartForm);
       this.openChart(chartForm.chartType);
+      this.collapsePanel = false;
     } else {
       this.nzMessage.warning('Verifique as informações do formulário');
       this.formService.validateAllFormFields(this.form);

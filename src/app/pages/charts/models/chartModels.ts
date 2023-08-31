@@ -3,6 +3,9 @@ export interface ProfitData {
   BILLINGVALUE: number;
   BILLINGQUANTITY: number;
   PROFITVALUE: number;
+  FIRSTNAME: string;
+  D_DOC: string;
+  DATE: Date;
 }
 
 export interface ChartFilter {
@@ -14,7 +17,8 @@ export interface ChartFilter {
     | 'stackedBar'
     | 'doughnut'
     | 'fullStackedBar'
-    | 'individualDoughnut';
+    | 'individualDoughnut'
+    | 'pivotGrid';
 }
 
 export interface ChartDataType {
