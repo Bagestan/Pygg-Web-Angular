@@ -12,22 +12,11 @@ export interface ChartFilter {
   startDate: string;
   endDate: string;
   maxChartItems: number;
-  chartType:
-    | 'bar'
-    | 'stackedBar'
-    | 'doughnut'
-    | 'fullStackedBar'
-    | 'individualDoughnut'
-    | 'pivotGrid';
+  chartType: ChartType['chartType'];
 }
 
 export interface ChartDataType {
-  chartType:
-    | 'bar'
-    | 'stackedBar'
-    | 'doughnut'
-    | 'fullStackedBar'
-    | 'individualDoughnut';
+  chartType: ChartType['chartType'];
   label: string[];
   abbreviatedLabel: string[];
   datasets: Datasets[];
@@ -37,4 +26,14 @@ export interface Datasets {
   data: number[];
   label: string;
   backgroundColor?: string;
+}
+
+export interface ChartType {
+  chartType:
+    | 'bar'
+    | 'stackedBar'
+    | 'doughnut'
+    | 'fullStackedBar'
+    | 'individualDoughnut'
+    | 'pivotGrid';
 }
