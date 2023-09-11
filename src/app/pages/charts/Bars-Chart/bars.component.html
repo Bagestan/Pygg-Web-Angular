@@ -5,17 +5,31 @@
   palette="Ocean"
   paletteExtensionMode="Blend"
 >
-  <dxi-series valueField="BILLINGVALUE" name="Valor Faturamento"> </dxi-series>
-  <dxi-series
-    valueField="BILLINGQUANTITY"
-    name="Quantidade Faturamento"
-  ></dxi-series>
-  <dxi-series valueField="PROFITVALUE" name="Lucro"></dxi-series>
+  <ng-container
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingValue"
+  >
+    <dxi-series valueField="BillingValue" name="Valor Faturamento"></dxi-series>
+  </ng-container>
+  <ng-container
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingQuantity"
+  >
+    <dxi-series
+      valueField="BillingQuantity"
+      name="Quantidade Faturamento"
+    ></dxi-series>
+  </ng-container>
+  <ng-container
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].Profit"
+  >
+    <dxi-series valueField="Profit" name="Lucro"></dxi-series>
+  </ng-container>
+
   <dxo-common-series-settings
-    argumentField="FIRSTNAME"
+    argumentField="firstName"
     [type]="chartType"
     selectionMode="allArgumentPoints"
     hoverMode="onlyPoint"
+    maxPointCount="5"
   >
   </dxo-common-series-settings>
   <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">

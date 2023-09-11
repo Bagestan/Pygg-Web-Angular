@@ -14,6 +14,45 @@
   >
     <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
       <nz-row nz-row [nzGutter]="[24, 24]" nzAlign="bottom">
+        <nz-col nzXs="24" nzSm="24" nzXl="10" nzLg="12" nzMd="12" nzXXl="6">
+          <nz-form-item>
+            <nz-form-label
+              nzXs="12"
+              nzSm="24"
+              nzXl="6"
+              nzMd="4"
+              nzLg="4"
+              nzFor="date"
+              >Dados</nz-form-label
+            >
+
+            <nz-form-control nzXs="12" nzSm="24" nzMd="20" nzLg="18">
+              <nz-select
+                formControlName="chartDataOptions"
+                [nzOptions]="chartDataOptions"
+                (ngModelChange)="getChartFieldsOption($event)"
+              >
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col nzXs="24" nzSm="24" nzXl="12" nzLg="12" nzMd="12" nzXXl="18">
+          <nz-form-item>
+            <!-- <nz-form-label nzXs="12" nzSm="24" nzMd="4" nzLg="6" nzFor="date"
+                >Dados</nz-form-label
+              > -->
+
+            <nz-form-control nzXs="24" nzSm="24" nzMd="24" nzLg="24">
+              <nz-checkbox-group
+                formControlName="chartFields"
+              ></nz-checkbox-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <nz-row nz-row [nzGutter]="[24, 24]" nzAlign="bottom">
         <nz-col nzXs="24" nzSm="12" nzXl="10" nzLg="8" nzMd="12" nzXXl="6">
           <nz-form-item>
             <nz-form-label nzXs="12" nzSm="24" nzMd="4" nzLg="6" nzFor="date"

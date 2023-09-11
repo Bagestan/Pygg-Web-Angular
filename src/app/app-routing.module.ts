@@ -12,7 +12,7 @@ const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo('auth');
 const redirectUnauthorizedToMain = () => redirectLoggedInTo('main');
 
 const routes: Routes = [
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
   {
     path: 'auth',
     loadChildren: () =>

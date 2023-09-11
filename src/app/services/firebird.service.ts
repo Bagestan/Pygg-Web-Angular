@@ -8,7 +8,7 @@ import {
   qualityTableData,
 } from '../pages/quality/models/qualityData';
 import { AuthService } from './auth.service';
-import { ProfitData } from '../pages/charts/models/chartModels';
+import { ChartFilter, ProfitData } from '../pages/charts/models/chartModels';
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +24,16 @@ export class FireBirdService {
     this.getToken();
   }
 
-  getChartData(startDate: string, endDate: string): Observable<ProfitData[]> {
+  getChartData(data: ChartFilter): Observable<ProfitData[]> {
     return this.httpClient.post<ProfitData[]>(
       `${this.API}charts/profitByClient`,
       {
-        startDate: startDate,
-        endDate: endDate,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        maxChartItems: data.maxChartItems,
+        chartType: data.chartType,
+        chartData: data.chartData,
+        chartFields: data.chartFields,
       },
       {
         headers: this.header,
@@ -57,8 +61,6 @@ export class FireBirdService {
     id?: number,
     returnData?: string
   ): Observable<any> {
-    console.log(this.header);
-
     const data = {
       table: table,
       columnToFilter: columnToFilter || undefined,

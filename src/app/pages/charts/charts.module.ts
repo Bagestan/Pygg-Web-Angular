@@ -26,7 +26,6 @@ import {
   DxPivotGridModule,
 } from 'devextreme-angular';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
-import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
 
 @NgModule({
@@ -56,7 +55,6 @@ import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
     NzSwitchModule,
     DxPivotGridModule,
     DxButtonModule,
-    BrowserTransferStateModule,
     DxChartModule,
     DxPieChartModule,
   ],

@@ -15,42 +15,41 @@
     [customizeTooltip]="customizeTooltip"
   ></dxo-tooltip>
   <dxi-series
-    argumentField="CLIENTNAME"
-    valueField="BILLINGVALUE"
+    argumentField="firstName"
+    valueField="BillingValue"
     name="Faturamento"
   ></dxi-series>
   <dxi-series
-    argumentField="CLIENTNAME"
-    valueField="PROFITVALUE"
+    argumentField="firstName"
+    valueField="Profit"
     name="Lucro"
   ></dxi-series>
   <dxi-series
-    argumentField="CLIENTNAME"
-    valueField="BILLINGQUANTITY"
+    argumentField="firstName"
+    valueField="BillingQuantity"
     name="Quantidade de Faturamento"
   ></dxi-series>
 </dx-pie-chart>
 
-<div class="Charts grid-template-columns" *ngFor="let client of dataSource">
+<div class="Charts" *ngFor="let client of dataSource">
   <dx-pie-chart
-    class=""
-    [id]="'pie-' + client.FIRSTNAME"
+    [id]="'pie-' + client.firstName"
     type="doughnut"
-    [title]="client.CLIENTNAME"
+    [title]="client.firstName"
     palette="Ocean"
     paletteExtensionMode="blend"
     [dataSource]="[
       {
         argument: 'Valor Faturamento',
-        value: client.BILLINGVALUE
+        value: client.BillingValue
       },
       {
         argument: 'Quantidade Faturamento',
-        value: client.BILLINGQUANTITY
+        value: client.BillingQuantity
       },
       {
         argument: 'Lucro',
-        value: client.PROFITVALUE
+        value: client.Profit
       }
     ]"
   >

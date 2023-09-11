@@ -51,7 +51,9 @@ registerLocaleData(Pt);
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(private i18n: NzI18nService) {}
+  constructor(private i18n: NzI18nService) {
+    this.switchLanguage();
+  }
 
   switchLanguage() {
     this.i18n.setDateLocale(ptBR); // Switch language to Japanese at runtime

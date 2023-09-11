@@ -19,15 +19,10 @@ export class DoughnutComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.url.subscribe((data) => {
-      console.log(data[0].path);
       this.chartType = data[0].path;
     });
 
     ChartsService.doughnutChartDataEmitter.subscribe((data) => {
-      data.forEach((i: any) => {
-        i.FIRSTNAME = i.CLIENTNAME.split(' ')[0];
-      });
-
       this.populateChart(data);
     });
   }
@@ -37,8 +32,12 @@ export class DoughnutComponent implements OnInit {
   }
 
   customizeTooltip(arg: any) {
+    console.log('🚀 ~ arg:', arg);
+
     return {
       text: `${arg.argument}
+
+      ${arg.seriesName}
 
       ${arg.value.toLocaleString('pt-BR', {
         style: 'currency',

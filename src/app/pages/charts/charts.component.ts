@@ -5,7 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { Router } from '@angular/router';
-import { ChartDataType } from './models/chartModels';
+import { ChartFilter } from './models/chartModels';
 
 @Component({
   selector: 'app-charts',
@@ -16,9 +16,9 @@ export class ChartsComponent implements OnInit {
   collapsePanel = true;
 
   form!: FormGroup;
-  chartDataSet!: ChartDataType;
 
   chartLimitOptions = [
+    { label: 1, value: 1 },
     { label: 5, value: 5 },
     { label: 10, value: 10 },
     { label: 20, value: 20 },
@@ -42,6 +42,56 @@ export class ChartsComponent implements OnInit {
     { value: 'pivotGrid', label: 'pivotGrid' },
   ];
 
+  chartDataOptions = [
+    { value: 'profitByClient', label: 'Lucro e Faturamento por cliente' },
+    { value: 'option2', label: 'Opção 2' },
+  ];
+
+  chartFieldsOptions = [
+    { value: 'PROFITVALUE', label: 'Lucro', checked: true },
+    { value: 'BILLINGVALUE', label: 'Valor Faturamento', checked: true },
+    {
+      value: 'BILLINGQUANTITY',
+      label: 'Quantidade Faturamento',
+      checked: true,
+    },
+  ];
+
+  getChartFieldsOption(event: string) {
+    switch (event) {
+      case 'profitByClient': {
+        this.chartFieldsOptions = [
+          { value: 'PROFITVALUE', label: 'Lucro', checked: true },
+          { value: 'BILLINGVALUE', label: 'Valor Faturamento', checked: true },
+          {
+            value: 'BILLINGQUANTITY',
+            label: 'Quantidade Faturamento',
+            checked: true,
+          },
+        ];
+        break;
+      }
+      case 'option2': {
+        this.chartFieldsOptions = [
+          {
+            value: 'option1',
+            label: 'option1',
+            checked: true,
+          },
+          {
+            value: 'option2',
+            label: 'option2',
+            checked: true,
+          },
+        ];
+      }
+    }
+
+    this.form.patchValue({
+      chartFields: this.chartFieldsOptions,
+    });
+  }
+
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
@@ -52,21 +102,31 @@ export class ChartsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.buildForm();
+  }
+
+  buildForm() {
     this.form = this.fb.group({
       date: [null, Validators.required],
       chartLimit: [10, Validators.required],
-      chartType: ['pivotGrid', Validators.required],
+      chartType: ['bar', Validators.required],
+      chartDataOptions: ['profitByClient', Validators.required],
+      chartFields: [this.chartFieldsOptions],
     });
   }
 
   submitForm() {
     if (this.form.valid) {
       this.form.controls;
-      const chartForm = {
+      const chartForm: ChartFilter = {
         startDate: this.formatarData(this.form.get('date')?.value[0]),
         endDate: this.formatarData(this.form.get('date')?.value[1]),
         maxChartItems: this.form.get('chartLimit')?.value,
         chartType: this.form.get('chartType')?.value,
+        chartData: this.form.get('chartDataOptions')?.value,
+        chartFields: this.chartFieldsOptions
+          .filter((option) => option.checked)
+          .map((option) => option.value),
       };
 
       this.chartService.getChartData(chartForm);
