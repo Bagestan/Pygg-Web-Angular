@@ -20,21 +20,10 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
-import {
-  DxChartModule,
-  DxPieChartModule,
-  DxPivotGridModule,
-} from 'devextreme-angular';
-import { DxButtonModule } from 'devextreme-angular/ui/button';
-import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
+import { DxChartModule, DxPieChartModule } from 'devextreme-angular';
 
 @NgModule({
-  declarations: [
-    BarsComponent,
-    ChartsComponent,
-    DoughnutComponent,
-    PivotGridComponent,
-  ],
+  declarations: [BarsComponent, ChartsComponent, DoughnutComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -53,8 +42,6 @@ import { PivotGridComponent } from './pivot-grid/pivot-grid.component';
     NzCheckboxModule,
     NzCollapseModule,
     NzSwitchModule,
-    DxPivotGridModule,
-    DxButtonModule,
     DxChartModule,
     DxPieChartModule,
   ],

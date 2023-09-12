@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { ChartFilter, ProfitData } from '../pages/charts/models/chartModels';
+import { ChartFilter } from '../pages/charts/models/chartModels';
 import { FireBirdService } from './firebird.service';
 
 @Injectable({
@@ -39,43 +39,25 @@ export class ChartsService {
   }
 
   chartDataEmitter(form: ChartFilter, chartData: any[]) {
-    console.log(form.maxChartItems);
-
-    const unicClient = new Set();
-    const limitedClients = [];
-
-    for (const item of chartData) {
-      if (!unicClient.has(item.name)) {
-        limitedClients.push(item);
-        unicClient.add(item.name);
-      }
-      if (
-        limitedClients.length >= form.maxChartItems &&
-        form.maxChartItems != 0
-      ) {
-        break;
-      }
-    }
-
     switch (form.chartType) {
       case 'bar':
-        ChartsService.barsChartDataEmitter.emit(limitedClients);
+        ChartsService.barsChartDataEmitter.emit(chartData);
         break;
 
       case 'stackedBar':
-        ChartsService.barsChartDataEmitter.emit(limitedClients);
+        ChartsService.barsChartDataEmitter.emit(chartData);
         break;
 
       case 'fullStackedBar':
-        ChartsService.barsChartDataEmitter.emit(limitedClients);
+        ChartsService.barsChartDataEmitter.emit(chartData);
         break;
 
       case 'doughnut':
-        ChartsService.doughnutChartDataEmitter.emit(limitedClients);
+        ChartsService.doughnutChartDataEmitter.emit(chartData);
         break;
 
       case 'pivotGrid':
-        ChartsService.barsChartDataEmitter.emit(limitedClients);
+        ChartsService.barsChartDataEmitter.emit(chartData);
         break;
     }
   }

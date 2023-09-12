@@ -29,46 +29,6 @@
     valueField="BillingQuantity"
     name="Quantidade de Faturamento"
   ></dxi-series>
+  <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+  </dxo-legend>
 </dx-pie-chart>
-
-<div class="Charts" *ngFor="let client of dataSource">
-  <dx-pie-chart
-    [id]="'pie-' + client.firstName"
-    type="doughnut"
-    [title]="client.firstName"
-    palette="Ocean"
-    paletteExtensionMode="blend"
-    [dataSource]="[
-      {
-        argument: 'Valor Faturamento',
-        value: client.BillingValue
-      },
-      {
-        argument: 'Quantidade Faturamento',
-        value: client.BillingQuantity
-      },
-      {
-        argument: 'Lucro',
-        value: client.Profit
-      }
-    ]"
-  >
-    <dxi-series argumentField="argument" valueField="value">
-      <dxo-label [visible]="true" format="thousands">
-        <dxo-connector [visible]="true"></dxo-connector>
-      </dxo-label>
-    </dxi-series>
-    <dxo-export [enabled]="true"></dxo-export>
-    <dxo-legend
-      [margin]="0"
-      horizontalAlignment="right"
-      verticalAlignment="top"
-    ></dxo-legend>
-    <dxo-tooltip
-      [enabled]="true"
-      [customizeTooltip]="customizeTooltip"
-      format="currency"
-    >
-    </dxo-tooltip>
-  </dx-pie-chart>
-</div>

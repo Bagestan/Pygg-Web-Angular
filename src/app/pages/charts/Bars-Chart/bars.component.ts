@@ -47,4 +47,11 @@ export class BarsComponent implements OnInit {
       })}`,
     };
   }
+
+  customizeText(pointInfo: any) {
+    return
+    `${pointInfo.argument}:
+    ${pointInfo.value}
+    `;
+  }
 }

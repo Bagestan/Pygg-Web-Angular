@@ -32,8 +32,6 @@ export class DoughnutComponent implements OnInit {
   }
 
   customizeTooltip(arg: any) {
-    console.log('🚀 ~ arg:', arg);
-
     return {
       text: `${arg.argument}
 

@@ -14,11 +14,9 @@ import { ChartFilter } from './models/chartModels';
 })
 export class ChartsComponent implements OnInit {
   collapsePanel = true;
-
   form!: FormGroup;
 
   chartLimitOptions = [
-    { label: 1, value: 1 },
     { label: 5, value: 5 },
     { label: 10, value: 10 },
     { label: 20, value: 20 },
@@ -26,9 +24,7 @@ export class ChartsComponent implements OnInit {
     { label: 40, value: 40 },
     { label: 50, value: 50 },
     { label: 60, value: 60 },
-    { label: 70, value: 70 },
     { label: 80, value: 80 },
-    { label: 90, value: 90 },
     { label: 100, value: 100 },
     { label: 'Todos', value: 0 },
   ];
@@ -38,8 +34,6 @@ export class ChartsComponent implements OnInit {
     { value: 'stackedBar', label: 'Barras Combinadas' },
     { value: 'fullStackedBar', label: 'Barras Proporcionais' },
     { value: 'doughnut', label: 'Donut' },
-    { value: 'individualDoughnut', label: 'Donut Individual' },
-    { value: 'pivotGrid', label: 'pivotGrid' },
   ];
 
   chartDataOptions = [
@@ -61,10 +55,10 @@ export class ChartsComponent implements OnInit {
     switch (event) {
       case 'profitByClient': {
         this.chartFieldsOptions = [
-          { value: 'PROFITVALUE', label: 'Lucro', checked: true },
-          { value: 'BILLINGVALUE', label: 'Valor Faturamento', checked: true },
+          { value: 'Profit', label: 'Lucro', checked: true },
+          { value: 'BillingValue', label: 'Valor Faturamento', checked: true },
           {
-            value: 'BILLINGQUANTITY',
+            value: 'BillingQuantity',
             label: 'Quantidade Faturamento',
             checked: true,
           },
@@ -108,10 +102,10 @@ export class ChartsComponent implements OnInit {
   buildForm() {
     this.form = this.fb.group({
       date: [null, Validators.required],
-      chartLimit: [10, Validators.required],
+      chartLimit: [5, Validators.required],
       chartType: ['bar', Validators.required],
       chartDataOptions: ['profitByClient', Validators.required],
-      chartFields: [this.chartFieldsOptions],
+      chartFields: [this.chartFieldsOptions, Validators.required],
     });
   }
 
