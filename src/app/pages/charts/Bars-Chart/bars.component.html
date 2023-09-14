@@ -5,14 +5,20 @@
   palette="Ocean"
   paletteExtensionMode="Blend"
 >
-  <ng-container *ngIf="dataSource && dataSource[0].Profit">
+  <ng-container
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].Profit"
+  >
     <dxi-series valueField="Profit" name="Lucro"></dxi-series>
   </ng-container>
-  <ng-container *ngIf="dataSource && dataSource[0].BillingValue">
+  <ng-container
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingValue"
+  >
     <dxi-series valueField="BillingValue" name="Valor Faturamento">
     </dxi-series>
   </ng-container>
-  <ng-container *ngIf="dataSource && dataSource[0].BillingQuantity">
+  <ng-container
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingQuantity"
+  >
     <dxi-series
       valueField="BillingQuantity"
       name="Quantidade Faturamento"

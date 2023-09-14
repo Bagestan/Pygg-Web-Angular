@@ -53,19 +53,36 @@
       </nz-row>
 
       <nz-row nz-row [nzGutter]="[24, 24]" nzAlign="bottom">
-        <nz-col nzXs="24" nzSm="12" nzXl="10" nzLg="8" nzMd="12" nzXXl="6">
+        <nz-col nzXXl="6" nzXl="6" nzLg="6" nzMd="6" nzSm="6" nzXs="12">
           <nz-form-item>
-            <nz-form-label nzXs="12" nzSm="24" nzMd="4" nzLg="6" nzFor="date"
-              >Período</nz-form-label
+            <nz-form-label nzRequired>Período de</nz-form-label>
+            <nz-form-control
+              nzErrorTip="Data obrigatória"
+              class="ant-form-item-control"
             >
-
-            <nz-form-control nzXs="12" nzSm="24" nzMd="20" nzLg="18">
-              <nz-range-picker
-                nzStartPlaceHolder="Data de Início"
-                nzEndPlaceHolder="Data de Fim"
+              <nz-date-picker
+                nzPlaceHolder="Data inicial"
                 nzFormat="dd/MM/yyy"
-                formControlName="date"
-              ></nz-range-picker>
+                class="w-100"
+                formControlName="startDate"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzXXl="6" nzXl="6" nzLg="6" nzMd="6" nzSm="6" nzXs="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>Até</nz-form-label>
+            <nz-form-control
+              nzErrorTip="Data obrigatória"
+              class="ant-form-item-control"
+            >
+              <nz-date-picker
+                nzPlaceHolder="Data final"
+                nzFormat="dd/MM/yyy"
+                class="w-100"
+                formControlName="endDate"
+                >Até</nz-date-picker
+              >
             </nz-form-control>
           </nz-form-item>
         </nz-col>
@@ -128,4 +145,5 @@
     </form>
   </nz-collapse-panel>
 </nz-collapse>
+
 <router-outlet></router-outlet>

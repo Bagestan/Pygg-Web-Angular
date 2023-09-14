@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChartFilter } from './models/chartModels';
 
 @Component({
@@ -13,7 +13,7 @@ import { ChartFilter } from './models/chartModels';
   styleUrls: ['./charts.component.scss'],
 })
 export class ChartsComponent implements OnInit {
-  collapsePanel = true;
+  collapsePanel!: boolean;
   form!: FormGroup;
 
   chartLimitOptions = [
@@ -51,6 +51,63 @@ export class ChartsComponent implements OnInit {
     },
   ];
 
+  constructor(
+    private fb: FormBuilder,
+    private datePipe: DatePipe,
+    private formService: FormService,
+    private nzMessage: NzMessageService,
+    private chartService: ChartsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.buildForm();
+
+    this.collapsePanel = true;
+
+    this.route.params.subscribe((data) => console.log(data));
+  }
+
+  buildForm() {
+    this.form = this.fb.group({
+      endDate: [new Date(), Validators.required],
+      startDate: [new Date(), Validators.required],
+      chartLimit: [5, Validators.required],
+      chartType: ['bar', Validators.required],
+      chartDataOptions: ['profitByClient', Validators.required],
+      chartFields: [this.chartFieldsOptions, Validators.required],
+    });
+  }
+
+  submitForm() {
+    if (this.form.valid) {
+      this.form.controls;
+
+      const chartForm: ChartFilter = {
+        startDate: this.formatarData(this.form.get('startDate')?.value),
+        endDate: this.formatarData(this.form.get('endDate')?.value),
+        maxChartItems: this.form.get('chartLimit')?.value,
+        chartType: this.form.get('chartType')?.value,
+        chartData: this.form.get('chartDataOptions')?.value,
+        chartFields: this.chartFieldsOptions
+          .filter((option) => option.checked)
+          .map((option) => option.value),
+      };
+
+      this.chartService.getChartData(chartForm);
+      this.openChart(chartForm.chartType);
+      this.collapsePanel = false;
+    } else {
+      this.nzMessage.warning('Verifique as informações do formulário');
+      this.formService.validateAllFormFields(this.form);
+    }
+  }
+
+  openChart(chartType: string) {
+    this.router.navigate([`main/charts/${chartType}`]);
+  }
+
   getChartFieldsOption(event: string) {
     switch (event) {
       case 'profitByClient': {
@@ -84,56 +141,6 @@ export class ChartsComponent implements OnInit {
     this.form.patchValue({
       chartFields: this.chartFieldsOptions,
     });
-  }
-
-  constructor(
-    private fb: FormBuilder,
-    private datePipe: DatePipe,
-    private formService: FormService,
-    private nzMessage: NzMessageService,
-    private chartService: ChartsService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.buildForm();
-  }
-
-  buildForm() {
-    this.form = this.fb.group({
-      date: [null, Validators.required],
-      chartLimit: [5, Validators.required],
-      chartType: ['bar', Validators.required],
-      chartDataOptions: ['profitByClient', Validators.required],
-      chartFields: [this.chartFieldsOptions, Validators.required],
-    });
-  }
-
-  submitForm() {
-    if (this.form.valid) {
-      this.form.controls;
-      const chartForm: ChartFilter = {
-        startDate: this.formatarData(this.form.get('date')?.value[0]),
-        endDate: this.formatarData(this.form.get('date')?.value[1]),
-        maxChartItems: this.form.get('chartLimit')?.value,
-        chartType: this.form.get('chartType')?.value,
-        chartData: this.form.get('chartDataOptions')?.value,
-        chartFields: this.chartFieldsOptions
-          .filter((option) => option.checked)
-          .map((option) => option.value),
-      };
-
-      this.chartService.getChartData(chartForm);
-      this.openChart(chartForm.chartType);
-      this.collapsePanel = false;
-    } else {
-      this.nzMessage.warning('Verifique as informações do formulário');
-      this.formService.validateAllFormFields(this.form);
-    }
-  }
-
-  openChart(chartType: string) {
-    this.router.navigate([`main/charts/${chartType}`]);
   }
 
   resetForm(): void {

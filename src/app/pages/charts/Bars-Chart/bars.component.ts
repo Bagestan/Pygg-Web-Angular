@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DxChartComponent } from 'devextreme-angular';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { ChartsService } from 'src/app/services/charts.service';
 
@@ -16,19 +17,28 @@ export class BarsComponent implements OnInit {
   clientName!: string[];
   chartType!: string;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private message: NzMessageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.route.url.subscribe((data) => {
       this.chartType = data[0].path;
     });
 
-    ChartsService.barsChartDataEmitter.subscribe((data) => {
-      console.log('🚀 ~ data:', data);
+    ChartsService.barsChartDataEmitter.subscribe({
+      next: (data: any) => {
+        if (data.length > 0) {
+          this.dataSource = data;
 
-      this.dataSource = data;
-
-      this.populateChart(data);
+          this.populateChart(data);
+        } else {
+          this.message.error('Nenhum registro encontrado');
+          this.router.navigate(['main/charts']);
+        }
+      },
     });
   }
 
@@ -46,12 +56,5 @@ export class BarsComponent implements OnInit {
         currency: 'BRL',
       })}`,
     };
-  }
-
-  customizeText(pointInfo: any) {
-    return
-    `${pointInfo.argument}:
-    ${pointInfo.value}
-    `;
   }
 }
