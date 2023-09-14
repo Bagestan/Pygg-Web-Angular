@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartData, ChartEvent, ChartType } from 'chart.js';
-import { ChartDataType } from '../models/chartModels';
+import { ActivatedRoute } from '@angular/router';
 import { ChartsService } from 'src/app/services/charts.service';
 
 @Component({
@@ -9,43 +8,40 @@ import { ChartsService } from 'src/app/services/charts.service';
   styleUrls: ['./doughnut.component.scss'],
 })
 export class DoughnutComponent implements OnInit {
-  public doughnutChartData!: ChartData<'doughnut'>;
-  ChartData!: ChartDataType;
+  dataSource!: any;
+  innerRadius = 0.2;
+  chartType!: string;
+
+  palette = ChartsService.palette;
+  paletteExtensionMode = ChartsService.paletteExtensionMode;
+
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    ChartsService.barsChartDataEmitter.subscribe((data) => {
-      this.ChartData = data;
-      this.populateChart(this.ChartData);
+    this.route.url.subscribe((data) => {
+      this.chartType = data[0].path;
     });
+
+    ChartsService.doughnutChartDataEmitter.subscribe((data) => {
+      this.populateChart(data);
+    });
+
   }
 
-  populateChart(ChartData: ChartDataType) {
-    this.doughnutChartData = {
-      labels: ChartData.abbreviatedLabel,
-      datasets: ChartData.datasets,
+  populateChart(data: any) {
+    this.dataSource = data;
+  }
+
+  customizeTooltip(arg: any) {
+    return {
+      text: `${arg.argument}
+
+      ${arg.seriesName}
+
+      ${arg.value.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      })}`,
     };
-  }
-
-  public doughnutChartType: ChartType = 'doughnut';
-
-  // events
-  public chartClicked({
-    event,
-    active,
-  }: {
-    event: ChartEvent;
-    active: object[];
-  }): void {
-    console.log(event, active);
-  }
-
-  public chartHovered({
-    event,
-    active,
-  }: {
-    event: ChartEvent;
-    active: object[];
-  }): void {
-    console.log(event, active);
   }
 }

@@ -12,7 +12,13 @@
     >
     </nz-page-header>
 
-    <form nz-form [formGroup]="form" nzLayout="vertical" class="margin1r0">
+    <form
+      nz-form
+      [formGroup]="form"
+      nzLayout="vertical"
+      class="margin1r0"
+      autocomplete="off"
+    >
       <div class="margin1r0">
         <nz-avatar class="central" [nzSize]="64" nzIcon="user"> </nz-avatar>
         <h3 style="text-align: center">
@@ -29,8 +35,9 @@
                   nz-input
                   formControlName="email"
                   type="text"
-                  [readonly]="this.user"
+                  autocomplete="off"
                 />
+                <!-- [readonly]="this.user" -->
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
@@ -46,6 +53,7 @@
                   nz-input
                   formControlName="password"
                   placeholder="Mudar senha é Opcional"
+                  autocomplete="new-password"
                 />
                 <ng-template #suffixTemplate>
                   <span

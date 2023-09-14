@@ -7,7 +7,6 @@ import { ChartsComponent } from './charts.component';
 import { BarsComponent } from './Bars-Chart/bars.component';
 import { DoughnutComponent } from './doughnut-Chart/doughnut.component';
 
-import { NgChartsModule } from 'ng2-charts';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -21,6 +20,8 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
+import { DxChartModule, DxPieChartModule } from 'devextreme-angular';
+
 @NgModule({
   declarations: [BarsComponent, ChartsComponent, DoughnutComponent],
   imports: [
@@ -29,7 +30,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     DatePipe,
     ReactiveFormsModule,
     ChartsRoutingModule,
-    NgChartsModule,
     NzDividerModule,
     NzFormModule,
     NzInputModule,
@@ -42,6 +42,8 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     NzCheckboxModule,
     NzCollapseModule,
     NzSwitchModule,
+    DxChartModule,
+    DxPieChartModule,
   ],
   providers: [DatePipe],
 })

@@ -1,9 +1,34 @@
-<div class="boxCanvas">
-  <canvas
-    baseChart
-    class="chart"
-    [data]="doughnutChartData"
-    [type]="doughnutChartType"
-  >
-  </canvas>
-</div>
+<dx-pie-chart
+  id="donutChart"
+  [palette]="palette"
+  [paletteExtensionMode]="paletteExtensionMode"
+  type="doughnut"
+  title="Lucro e Faturamento"
+  [innerRadius]="innerRadius"
+  [dataSource]="dataSource"
+>
+  <dxo-legend [visible]="true"></dxo-legend>
+  <dxo-export [enabled]="true"></dxo-export>
+  <dxo-tooltip
+    [enabled]="true"
+    format="currency"
+    [customizeTooltip]="customizeTooltip"
+  ></dxo-tooltip>
+  <dxi-series
+    argumentField="firstName"
+    valueField="BillingValue"
+    name="Faturamento"
+  ></dxi-series>
+  <dxi-series
+    argumentField="firstName"
+    valueField="Profit"
+    name="Lucro"
+  ></dxi-series>
+  <dxi-series
+    argumentField="firstName"
+    valueField="BillingQuantity"
+    name="Quantidade de Faturamento"
+  ></dxi-series>
+  <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+  </dxo-legend>
+</dx-pie-chart>

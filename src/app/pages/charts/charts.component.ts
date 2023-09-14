@@ -4,8 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
-import { Router } from '@angular/router';
-import { ChartDataType, ChartFilter } from './models/chartModels';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ChartFilter } from './models/chartModels';
+
 
 @Component({
   selector: 'app-charts',
@@ -13,8 +14,8 @@ import { ChartDataType, ChartFilter } from './models/chartModels';
   styleUrls: ['./charts.component.scss'],
 })
 export class ChartsComponent implements OnInit {
+  collapsePanel!: boolean;
   form!: FormGroup;
-  chartDataSet!: ChartDataType;
 
   chartLimitOptions = [
     { label: 5, value: 5 },
@@ -24,19 +25,34 @@ export class ChartsComponent implements OnInit {
     { label: 40, value: 40 },
     { label: 50, value: 50 },
     { label: 60, value: 60 },
-    { label: 70, value: 70 },
     { label: 80, value: 80 },
-    { label: 90, value: 90 },
     { label: 100, value: 100 },
+    { label: 'Todos', value: 0 },
   ];
 
   chartTypeOptions = [
-    { value: 'bars', label: 'Barras' },
-    { value: 'stackedBars', label: 'Barras Combinadas' },
+    { value: 'bar', label: 'Barras' },
+    { value: 'stackedBar', label: 'Barras Combinadas' },
+    { value: 'fullStackedBar', label: 'Barras Proporcionais' },
     { value: 'doughnut', label: 'Donut' },
   ];
 
-  chartDataOptions = [{ value: 'profitByClient', label: 'Lucro por Cliente' }];
+  chartDataOptions = [
+    { value: 'profitByClient', label: 'Lucro e Faturamento por cliente' },
+    { value: 'option2', label: 'Opção 2' },
+  ];
+
+  chartFieldsOptions = [
+    { value: 'PROFITVALUE', label: 'Lucro', checked: true },
+    { value: 'BILLINGVALUE', label: 'Valor Faturamento', checked: true },
+    {
+      value: 'BILLINGQUANTITY',
+      label: 'Quantidade Faturamento',
+      checked: true,
+    },
+  ];
+
+ 
 
   constructor(
     private fb: FormBuilder,
@@ -44,29 +60,48 @@ export class ChartsComponent implements OnInit {
     private formService: FormService,
     private nzMessage: NzMessageService,
     private chartService: ChartsService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
+
   ) {}
 
   ngOnInit(): void {
+    this.buildForm();
+
+    this.collapsePanel = true;
+
+    this.route.params.subscribe((data) => console.log(data));
+  }
+
+  buildForm() {
     this.form = this.fb.group({
-      date: [null, Validators.required],
-      chartLimit: [10, Validators.required],
-      chartType: ['doughnut', Validators.required],
+      endDate: [new Date(), Validators.required],
+      startDate: [new Date(), Validators.required],
+      chartLimit: [5, Validators.required],
+      chartType: ['bar', Validators.required],
       chartDataOptions: ['profitByClient', Validators.required],
+      chartFields: [this.chartFieldsOptions, Validators.required],
     });
   }
 
   submitForm() {
     if (this.form.valid) {
       this.form.controls;
-      const chartForm = {
-        startDate: this.formatarData(this.form.get('date')?.value[0]),
-        endDate: this.formatarData(this.form.get('date')?.value[1]),
+
+      const chartForm: ChartFilter = {
+        startDate: this.formatarData(this.form.get('startDate')?.value),
+        endDate: this.formatarData(this.form.get('endDate')?.value),
         maxChartItems: this.form.get('chartLimit')?.value,
         chartType: this.form.get('chartType')?.value,
+        chartData: this.form.get('chartDataOptions')?.value,
+        chartFields: this.chartFieldsOptions
+          .filter((option) => option.checked)
+          .map((option) => option.value),
       };
 
-      this.openChart(chartForm.chartType, chartForm);
+      this.chartService.getChartData(chartForm);
+      this.openChart(chartForm.chartType);
+      this.collapsePanel = false;
     } else {
       this.nzMessage.warning('Verifique as informações do formulário');
       this.formService.validateAllFormFields(this.form);
@@ -92,6 +127,41 @@ export class ChartsComponent implements OnInit {
         this.router.navigate([`main/charts/bars`]);
       }
     }
+  }
+
+  getChartFieldsOption(event: string) {
+    switch (event) {
+      case 'profitByClient': {
+        this.chartFieldsOptions = [
+          { value: 'Profit', label: 'Lucro', checked: true },
+          { value: 'BillingValue', label: 'Valor Faturamento', checked: true },
+          {
+            value: 'BillingQuantity',
+            label: 'Quantidade Faturamento',
+            checked: true,
+          },
+        ];
+        break;
+      }
+      case 'option2': {
+        this.chartFieldsOptions = [
+          {
+            value: 'option1',
+            label: 'option1',
+            checked: true,
+          },
+          {
+            value: 'option2',
+            label: 'option2',
+            checked: true,
+          },
+        ];
+      }
+    }
+
+    this.form.patchValue({
+      chartFields: this.chartFieldsOptions,
+    });
   }
 
   resetForm(): void {

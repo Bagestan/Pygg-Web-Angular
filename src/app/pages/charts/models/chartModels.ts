@@ -1,25 +1,43 @@
 export interface ProfitData {
-  NOME_CLIENTE: string;
-  VALOR_FATURAMENTO: number;
-  QUANTIDADE_FATURAMENTO: number;
-  LUCRO: number;
+  CLIENTNAME: string;
+  BILLINGVALUE?: number;
+  BILLINGQUANTITY?: number;
+  PROFITVALUE?: number;
+  FIRSTNAME: string;
+  D_DOC?: string;
+  DATE: Date;
 }
+
+// export interface ProfitChartData {
+//   name: string;
+//   firstname: string;
+//   date: Date;
+//   dataSeries: [any];
+//   serieName?: string;
+//   serieValue?: number;
+// }
+
+// export interface dataSerie {}
+// profit?: number;
+// billingValue?: number;
+// billingQuantity?: number;
 
 export interface ChartFilter {
   startDate: string;
   endDate: string;
   maxChartItems: number;
-  chartType: 'bars' | 'stackedBars' | 'doughnut';
+  chartType: ChartType['chartType'];
+  chartData: string;
+  chartFields: string[];
+
 }
 
-export interface ChartDataType {
-  label: string[];
-  abbreviatedLabel: string[];
-  datasets: Datasets[];
-}
-
-export interface Datasets {
-  data: number[];
-  label: string;
-  backgroundColor?: string;
+export interface ChartType {
+  chartType:
+    | 'bar'
+    | 'stackedBar'
+    | 'doughnut'
+    | 'fullStackedBar'
+    | 'individualDoughnut'
+    | 'pivotGrid';
 }

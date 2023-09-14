@@ -1,12 +1,47 @@
-<div class="boxCanvas">
-  <canvas
-    baseChart
-    class="chart"
-    [data]="barChartData"
-    [plugins]="barChartPlugins"
-    [options]="barChartOptions"
-    [type]="barChartType"
+<dx-chart
+  id="chart"
+  title="Lucro e Faturamento"
+  [dataSource]="dataSource"
+  palette="Ocean"
+  paletteExtensionMode="Blend"
+>
+  <ng-container
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].Profit"
   >
-    (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)" >
-  </canvas>
-</div>
+    <dxi-series valueField="Profit" name="Lucro"></dxi-series>
+  </ng-container>
+  <ng-container
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingValue"
+  >
+    <dxi-series valueField="BillingValue" name="Valor Faturamento">
+    </dxi-series>
+  </ng-container>
+  <ng-container
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingQuantity"
+  >
+    <dxi-series
+      valueField="BillingQuantity"
+      name="Quantidade Faturamento"
+    ></dxi-series>
+  </ng-container>
+
+  <dxo-common-series-settings
+    argumentField="firstName"
+    [type]="chartType"
+    selectionMode="allArgumentPoints"
+    hoverMode="onlyPoint"
+    maxPointCount="5"
+  >
+  </dxo-common-series-settings>
+  <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+  </dxo-legend>
+  <dxo-export [enabled]="true"></dxo-export>
+  <dxo-tooltip
+    [enabled]="true"
+    location="edge"
+    [customizeTooltip]="customizeTooltip"
+  >
+    <dxo-format type="fixedPoint" [precision]="2" format="thousands">
+    </dxo-format>
+  </dxo-tooltip>
+</dx-chart>

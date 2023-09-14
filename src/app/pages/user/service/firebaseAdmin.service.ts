@@ -2,46 +2,49 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
+import { Observable, filter, switchMap, take } from 'rxjs';
 import { UserAuth, UserData } from 'src/app/pages/user/models/userData';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/AuthService';
 
 @Injectable({
   providedIn: 'root',
 })
 export class firebaseAdminService {
-  userData = new Observable<UserData>();
-  authenticatedUser!: boolean;
+  private readonly API = 'http://localhost:3000/';
 
+  authenticatedUser!: boolean;
+  userData = new Observable<UserData>();
   fireAuth = this.angularAuth;
 
-  private readonly API = 'http://localhost:3000/';
   static getIsPermission: any;
 
   token!: string | null;
-
   header!: HttpHeaders;
 
   constructor(
     private httpClient: HttpClient,
     private auth: AuthService,
     private angularAuth: AngularFireAuth
-  ) {
-    this.auth.idToken$.subscribe((result: string | null) => {
-      this.token = result;
-      this.headerBuilder();
+  ) {}
+
+  getUserToken() {
+    this.auth.idToken$.subscribe((token: string | null) => {
+      this.token = token;
+      return token;
     });
   }
 
   headerBuilder(): void {
-    this.header = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.token}`
-    );
+    const token = this.getUserToken();
+
+    this.header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
+
   // Funções do Firebase Admin //
 
   listUsers() {
+    this.getUserToken();
+    this.headerBuilder();
     return this.httpClient.post<UserData[]>(
       `${this.API}users/listUsers`,
       {},
@@ -50,11 +53,11 @@ export class firebaseAdminService {
   }
 
   userByEmail(email: string) {
+    this.getUserToken();
+    this.headerBuilder();
     return this.httpClient.post<UserData>(
       `${this.API}users/userByEmail`,
-      {
-        email: email,
-      },
+      { email: email },
       { headers: this.header }
     );
   }

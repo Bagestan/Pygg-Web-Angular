@@ -1,14 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, first, takeUntil } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  first,
+  retry,
+  takeUntil,
+  tap,
+  timeout,
+} from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   actionsData,
   deleteData,
   qualityTableData,
 } from '../pages/quality/models/qualityData';
-import { AuthService } from './auth.service';
-import { ProfitData } from '../pages/charts/models/chartModels';
+import { AuthService } from './AuthService';
+import { ChartFilter, ProfitData } from '../pages/charts/models/chartModels';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Injectable({
   providedIn: 'root',
@@ -20,28 +29,50 @@ export class FireBirdService {
   token!: string | null;
   header!: HttpHeaders;
 
-  constructor(private httpClient: HttpClient, private auth: AuthService) {
+  constructor(
+    private httpClient: HttpClient,
+    private auth: AuthService,
+    private message: NzMessageService
+  ) {
     this.getToken();
   }
 
-  getChartData(startDate: string, endDate: string): Observable<ProfitData[]> {
-    return this.httpClient.post<ProfitData[]>(
-      `${this.API}charts/profitByClient`,
-      {
-        startDate: startDate,
-        endDate: endDate,
-      },
-      {
-        headers: this.header,
-      }
-    );
+  getChartData(data: ChartFilter): Observable<ProfitData[]> {
+    return this.httpClient
+      .post<ProfitData[]>(
+        `${this.API}charts/profitByClient`,
+        {
+          startDate: data.startDate,
+          endDate: data.endDate,
+          maxChartItems: data.maxChartItems,
+          chartType: data.chartType,
+          chartData: data.chartData,
+          chartFields: data.chartFields,
+        },
+        {
+          headers: this.header,
+        }
+      )
+      .pipe(
+        retry(2),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      );
   }
 
   getToken() {
-    this.auth.idToken$.pipe(takeUntil(this.destroy$)).subscribe((result) => {
-      this.token = result;
-      this.headerBuilder();
-    });
+    this.auth.idToken$
+      .pipe(
+        takeUntil(this.destroy$),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      )
+      .subscribe((result) => {
+        this.token = result;
+        this.headerBuilder();
+      });
   }
 
   headerBuilder(): void {
@@ -57,8 +88,6 @@ export class FireBirdService {
     id?: number,
     returnData?: string
   ): Observable<any> {
-    console.log(this.header);
-
     const data = {
       table: table,
       columnToFilter: columnToFilter || undefined,
@@ -69,14 +98,28 @@ export class FireBirdService {
       .post<[]>(`${this.API}quality/selectById`, data, {
         headers: this.header,
       })
-      .pipe(first());
+      .pipe(
+        first(),
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      );
   }
 
   findQualityById(ID_CLI: number, S_QUA: number) {
-    return this.httpClient.get<[]>(
-      `${this.API}quality/quality/${ID_CLI}/${S_QUA}`,
-      { headers: this.header }
-    );
+    return this.httpClient
+      .get<[]>(`${this.API}quality/quality/${ID_CLI}/${S_QUA}`, {
+        headers: this.header,
+      })
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      );
   }
 
   qualitySelect(
@@ -85,50 +128,93 @@ export class FireBirdService {
     endDate: unknown,
     hideResolved: boolean
   ) {
-    return this.httpClient.post<[]>(
-      `${this.API}quality/select/PCP_OP_QUA`,
-      {
-        ID_CLI: id,
-        startdate: startDate,
-        enddate: endDate,
-        hideResolved: hideResolved,
-      },
-      { headers: this.header }
-    );
+    return this.httpClient
+      .post<[]>(
+        `${this.API}quality/select/PCP_OP_QUA`,
+        {
+          ID_CLI: id,
+          startdate: startDate,
+          enddate: endDate,
+          hideResolved: hideResolved,
+        },
+        { headers: this.header }
+      )
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      );
   }
 
   getActionQuality(id: number, squa: number) {
-    return this.httpClient.get<[]>(
-      `${this.API}quality/qualityAction/${id}/${squa}`,
-      { headers: this.header }
-    );
+    return this.httpClient
+      .get<[]>(`${this.API}quality/qualityAction/${id}/${squa}`, {
+        headers: this.header,
+      })
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      );
   }
 
   updateQuality(data: FormGroup) {
-    return this.httpClient.post<qualityTableData>(
-      `${this.API}quality/updateQuality`,
-      data,
-      { headers: this.header }
-    );
+    return this.httpClient
+      .post<qualityTableData>(`${this.API}quality/updateQuality`, data, {
+        headers: this.header,
+      })
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      );
   }
 
   updateInsertAction(data: FormGroup) {
-    return this.httpClient.post<[]>(`${this.API}quality/upOrInAction`, data, {
-      headers: this.header,
-    });
+    return this.httpClient
+      .post<[]>(`${this.API}quality/upOrInAction`, data, {
+        headers: this.header,
+      })
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      );
   }
 
   deleteAction(data: actionsData) {
-    return this.httpClient.post<[]>(`${this.API}quality/deleteAction`, data, {
-      headers: this.header,
-    });
+    return this.httpClient
+      .post<[]>(`${this.API}quality/deleteAction`, data, {
+        headers: this.header,
+      })
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      );
   }
 
   delete(deleteData: deleteData) {
-    return this.httpClient.post<[]>(
-      `${this.API}quality/deleteQuality/`,
-      deleteData,
-      { headers: this.header }
-    );
+    return this.httpClient
+      .post<[]>(`${this.API}quality/deleteQuality/`, deleteData, {
+        headers: this.header,
+      })
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (e) => this.message.error(e),
+        })
+      );
   }
 }
