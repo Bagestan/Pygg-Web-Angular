@@ -29,6 +29,7 @@ export interface ChartFilter {
   chartType: ChartType['chartType'];
   chartData: string;
   chartFields: string[];
+
 }
 
 export interface ChartType {
