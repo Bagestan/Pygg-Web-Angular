@@ -1,11 +1,8 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Observable, Subscription, catchError, from, map, of } from 'rxjs';
-import { UserData } from '../pages/user/models/userData';
-import { HttpClient } from '@angular/common/http';
+import { Subscription, catchError, from, of } from 'rxjs';
 import { Auth, idToken } from '@angular/fire/auth';
 import { RealtimeDatabaseService } from '../pages/user/service/realtime-database.service';
 
@@ -39,11 +36,10 @@ export class AuthService implements OnDestroy {
   }
 
   async signOut() {
-    await this.angularAuth.signOut().then(() => this.router.navigate(['']));
+    await this.angularAuth.signOut().then(() => this.router.navigate(['auth']));
   }
 
   // Permission
-
   getIsPermission(): boolean {
     return this.isPermission;
   }
@@ -54,7 +50,7 @@ export class AuthService implements OnDestroy {
 
   updatePermission() {
     this.angularAuth.user.subscribe((result) => {
-      this.database.getPermission(result);
+      // this.isPermission = this.database.getPermission(result);
     });
   }
 }

@@ -19,22 +19,23 @@ export class ChartsService {
   }
 
   getChartData(form: ChartFilter) {
-    this.getFirebirdData(form).subscribe((result) => {
-      console.log('🚀 ~ result:', result);
+    this.getFirebirdData(form).subscribe({
+      next: (result) => {
+        const chartData = result.map((object) => {
+          return {
+            name: object.CLIENTNAME,
+            firstName: object.CLIENTNAME.split(' ')[0],
+            date: object.D_DOC?.split('T')[0],
+            BillingQuantity: object.BILLINGQUANTITY,
+            BillingValue: object.BILLINGVALUE,
+            Profit: object.PROFITVALUE,
+            maxChartItems: form.maxChartItems,
+          };
+        });
 
-      const chartData = result.map((object) => {
-        return {
-          name: object.CLIENTNAME,
-          firstName: object.CLIENTNAME.split(' ')[0],
-          date: object.D_DOC?.split('T')[0],
-          BillingQuantity: object.BILLINGQUANTITY,
-          BillingValue: object.BILLINGVALUE,
-          Profit: object.PROFITVALUE,
-          maxChartItems: form.maxChartItems,
-        };
-      });
-
-      this.chartDataEmitter(form, chartData);
+        this.chartDataEmitter(form, chartData);
+      },
+      error: (e) => console.log(e),
     });
   }
 

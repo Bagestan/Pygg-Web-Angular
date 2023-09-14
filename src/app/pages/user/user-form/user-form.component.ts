@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EMPTY, Subject, catchError, map, switchMap, takeUntil } from 'rxjs';
 import { UserAuth, UserData } from 'src/app/pages/user/models/userData';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/AuthService';
 import { firebaseAdminService } from '../service/firebaseAdmin.service';
 import { RealtimeDatabaseService } from '../service/realtime-database.service';
 import { FormService } from 'src/app/services/utils/form.service';
@@ -34,7 +34,6 @@ export class UserFormComponent implements OnInit {
     private router: Router,
     private fbAdmin: firebaseAdminService,
     private RealtimeDB: RealtimeDatabaseService,
-    private authService: AuthService,
     private formService: FormService
   ) {}
 
@@ -49,6 +48,8 @@ export class UserFormComponent implements OnInit {
     });
 
     this.route.params.pipe(takeUntil(this.destroy$)).subscribe((user: any) => {
+      console.log('🚀 ~ user:', user['user']);
+
       return Object.keys(user).length !== 0
         ? this.getUserData(user['user'])
         : EMPTY;
@@ -63,17 +64,24 @@ export class UserFormComponent implements OnInit {
     this.fbAdmin
       .userByEmail(email)
       .pipe(
-        switchMap((result) =>
-          this.authService.getUserProfile(result.uid).pipe(
-            map((userProfile: UserData) => {
-              this.user = userProfile;
+        switchMap((result) => {
+          return this.RealtimeDB.getUserProfile(result.uid).pipe(
+            map((userProfile: any) => {
+              console.log('🚀 ~ userProfile:', userProfile);
+              const userData: UserData = {
+                company: userProfile[0],
+                uid: userProfile[2],
+                email: userProfile[1],
+              };
+
+              const { company, email, uid } = (this.user = userData);
             }),
             catchError((err) => {
               console.log(err);
               return EMPTY;
             })
-          )
-        ),
+          );
+        }),
         takeUntil(this.destroy$)
       )
       .subscribe({

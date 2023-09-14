@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserData } from 'src/app/pages/user/models/userData';
-import { AuthService } from 'src/app/services/auth.service';
 import { firebaseAdminService } from '../service/firebaseAdmin.service';
+import { RealtimeDatabaseService } from '../service/realtime-database.service';
 
 @Component({
   selector: 'app-user',
@@ -13,17 +13,15 @@ export class UsersTableComponent implements OnInit {
   usersList!: UserData[];
 
   constructor(
-    private authService: AuthService,
     private router: Router,
     private fbAdmin: firebaseAdminService,
-    private route: ActivatedRoute
-  ) {}
-
-  ngOnInit() {
+    private route: ActivatedRoute,
+    private database: RealtimeDatabaseService
+  ) {
     this.getAllUsers();
-
-    this.fbAdmin.listUsers().subscribe((result) => console.log(result));
   }
+
+  ngOnInit() {}
 
   createUser() {
     this.router.navigate([`form/`], { relativeTo: this.route });
@@ -40,10 +38,9 @@ export class UsersTableComponent implements OnInit {
   getAllUsers() {
     this.fbAdmin.listUsers().subscribe((result: UserData[]) => {
       this.usersList = result;
-
       result.forEach((user) => {
-        this.authService.getUserProfile(user.uid).subscribe((result) => {
-          user.company = result?.company;
+        this.database.getUserProfile(user.uid).subscribe((result: any) => {
+          user.company = result[0];
         });
       });
     });
