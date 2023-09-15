@@ -36,8 +36,8 @@
                   formControlName="email"
                   type="text"
                   autocomplete="off"
+                  [readonly]="this.user"
                 />
-                <!-- [readonly]="this.user" -->
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
@@ -58,7 +58,7 @@
                 <ng-template #suffixTemplate>
                   <span
                     nz-icon
-                    [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                    [nzType]="passwordVisible ? 'eye' : 'eye-invisible'"
                     (click)="passwordVisible = !passwordVisible"
                   ></span>
                 </ng-template>
@@ -131,19 +131,18 @@
       </nz-row>
     </form>
   </nz-card>
+  <nz-divider> </nz-divider>
+
+  <nz-descriptions *ngIf="user">
+    <nz-descriptions-item nzTitle="Ultimo Login">
+      {{
+        user.metadata?.lastSignInTime
+          ? (user.metadata?.lastSignInTime | date : "dd/MM/yyyy")
+          : "Sem login registrado"
+      }}
+    </nz-descriptions-item>
+  </nz-descriptions>
 </div>
-
-<nz-divider> </nz-divider>
-
-<nz-descriptions *ngIf="user">
-  <nz-descriptions-item nzTitle="Ultimo Login">
-    {{
-      user.metadata?.lastSignInTime
-        ? (user.metadata?.lastSignInTime | date : "dd/MM/yyyy")
-        : "Sem login registrado"
-    }}
-  </nz-descriptions-item>
-</nz-descriptions>
 
 <ng-template #Header>
   <nz-page-header

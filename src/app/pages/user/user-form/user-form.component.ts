@@ -47,8 +47,6 @@ export class UserFormComponent implements OnInit {
     });
 
     this.route.params.pipe(takeUntil(this.destroy$)).subscribe((user: any) => {
-      console.log('🚀 ~ user:', user['user']);
-
       return Object.keys(user).length !== 0
         ? this.getUserData(user['user'])
         : EMPTY;
@@ -64,19 +62,14 @@ export class UserFormComponent implements OnInit {
       .userByEmail(email)
       .pipe(
         switchMap((result) => {
+          this.user = result;
           return this.RealtimeDB.getUserProfile(result.uid).pipe(
             map((userProfile: any) => {
               console.log('🚀 ~ userProfile:', userProfile);
-              const userData: UserData = {
-                company: userProfile[0],
-                uid: userProfile[2],
-                email: userProfile[1],
-              };
-
-              const { company, email, uid } = (this.user = userData);
+              this.user.company = userProfile.company;
+              console.log('🚀 ~ userProfile.company:', userProfile[0]);
             }),
-            catchError((err) => {
-              console.log(err);
+            catchError(() => {
               return EMPTY;
             })
           );
@@ -93,6 +86,7 @@ export class UserFormComponent implements OnInit {
   }
 
   private populateForm() {
+    console.log('🚀', this.user);
     this.form.patchValue({
       company: this.user.company,
       email: this.user.email,
