@@ -5,11 +5,9 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
-import { registerLocaleData } from '@angular/common';
 
 import Pt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
-
 import { ptBR } from 'date-fns/locale';
 
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';

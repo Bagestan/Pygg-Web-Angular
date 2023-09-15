@@ -27,7 +27,6 @@ export class RealtimeDatabaseService {
     const starCountRef = ref(this.db, 'users/');
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
     });
   }
 
@@ -60,12 +59,11 @@ export class RealtimeDatabaseService {
       .valueChanges()
       .pipe(
         map((user) => {
-          console.log('🚀 ~ user:', user);
           (user as UserData)?.company == 'ACCL';
         })
-      );
-    // .subscribe((isPermission) => {
-    //   return isPermission;
-    // });
+      )
+      .subscribe((isPermission) => {
+        return isPermission;
+      });
   }
 }
