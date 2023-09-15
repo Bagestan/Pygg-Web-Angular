@@ -39,7 +39,6 @@ export class ChartsService {
     });
   }
 
-
   chartDataEmitter(form: ChartFilter, chartData: any[]) {
     switch (form.chartType) {
       case 'bar':
@@ -57,11 +56,6 @@ export class ChartsService {
       case 'doughnut':
         ChartsService.doughnutChartDataEmitter.emit(chartData);
         break;
-
-      case 'pivotGrid':
-        ChartsService.barsChartDataEmitter.emit(chartData);
-        break;
     }
-
   }
 }

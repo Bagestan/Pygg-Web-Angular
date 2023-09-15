@@ -8,20 +8,6 @@ export interface ProfitData {
   DATE: Date;
 }
 
-// export interface ProfitChartData {
-//   name: string;
-//   firstname: string;
-//   date: Date;
-//   dataSeries: [any];
-//   serieName?: string;
-//   serieValue?: number;
-// }
-
-// export interface dataSerie {}
-// profit?: number;
-// billingValue?: number;
-// billingQuantity?: number;
-
 export interface ChartFilter {
   startDate: string;
   endDate: string;
@@ -29,15 +15,8 @@ export interface ChartFilter {
   chartType: ChartType['chartType'];
   chartData: string;
   chartFields: string[];
-
 }
 
 export interface ChartType {
-  chartType:
-    | 'bar'
-    | 'stackedBar'
-    | 'doughnut'
-    | 'fullStackedBar'
-    | 'individualDoughnut'
-    | 'pivotGrid';
+  chartType: 'bar' | 'stackedBar' | 'doughnut' | 'fullStackedBar';
 }

@@ -4,9 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChartFilter } from './models/chartModels';
-
 
 @Component({
   selector: 'app-charts',
@@ -52,25 +51,18 @@ export class ChartsComponent implements OnInit {
     },
   ];
 
- 
-
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private formService: FormService,
     private nzMessage: NzMessageService,
     private chartService: ChartsService,
-    private router: Router,
-    private route: ActivatedRoute
-
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
-
     this.collapsePanel = true;
-
-    this.route.params.subscribe((data) => console.log(data));
   }
 
   buildForm() {
@@ -108,25 +100,8 @@ export class ChartsComponent implements OnInit {
     }
   }
 
-  openChart(chartType: string, chartForm: ChartFilter) {
-    switch (chartType) {
-      case 'doughnut': {
-        this.chartService.getDoughnutChartData(chartForm);
-        this.router.navigate([`main/charts/doughnut`]);
-
-        break;
-      }
-      case 'bars': {
-        this.chartService.getBarsChartData(chartForm);
-        this.router.navigate([`main/charts/bars`]);
-
-        break;
-      }
-      case 'stackedBars': {
-        this.chartService.getBarsChartData(chartForm);
-        this.router.navigate([`main/charts/bars`]);
-      }
-    }
+  openChart(chartType: string) {
+    this.router.navigate([`main/charts/${chartType}`]);
   }
 
   getChartFieldsOption(event: string) {
