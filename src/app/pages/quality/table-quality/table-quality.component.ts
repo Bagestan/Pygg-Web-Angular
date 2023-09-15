@@ -89,7 +89,7 @@ export class TableQualityComponent implements OnInit, OnDestroy {
             this.isLoadingData = false;
           } else {
             this.nzMessage.error('Nenhum registro localizado');
-            this.router.navigate(['']);
+            this.router.navigate(['main/quality']);
           }
         },
         () => {

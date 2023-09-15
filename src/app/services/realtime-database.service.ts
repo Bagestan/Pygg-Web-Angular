@@ -54,16 +54,14 @@ export class RealtimeDatabaseService {
   }
 
   getPermission(result: any) {
+    console.log('🚀 ~ result:', result);
     this.dataBase
       .object(`users/${result?.uid}`)
       .valueChanges()
       .pipe(
         map((user) => {
-          (user as UserData)?.company == 'ACCL';
+          return (user as UserData)?.company == 'ACCL';
         })
-      )
-      .subscribe((isPermission) => {
-        return isPermission;
-      });
+      );
   }
 }

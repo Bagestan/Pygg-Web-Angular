@@ -2,7 +2,7 @@ import { Injectable, OnDestroy, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subscription, catchError, from, of } from 'rxjs';
+import { Subscription, catchError, from, of, Subject } from 'rxjs';
 import { Auth, idToken } from '@angular/fire/auth';
 import { RealtimeDatabaseService } from './realtime-database.service';
 
@@ -42,6 +42,7 @@ export class AuthService implements OnDestroy {
   // Permission
 
   getIsPermission(): boolean {
+    console.log(this.isPermission);
     return this.isPermission;
   }
 
@@ -51,6 +52,7 @@ export class AuthService implements OnDestroy {
 
   updatePermission() {
     this.angularAuth.user.subscribe((result) => {
+      console.log('🚀 ~ result:', result, this.database.getPermission(result));
       this.database.getPermission(result);
     });
   }
