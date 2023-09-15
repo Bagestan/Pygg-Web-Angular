@@ -43,6 +43,7 @@ export class ChartsComponent implements OnInit {
 
   chartFieldsOptions = [
     { value: 'PROFITVALUE', label: 'Lucro', checked: true },
+
     { value: 'BILLINGVALUE', label: 'Valor Faturamento', checked: true },
     {
       value: 'BILLINGQUANTITY',
