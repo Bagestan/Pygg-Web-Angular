@@ -39,6 +39,7 @@ export class ChartsService {
     });
   }
 
+
   chartDataEmitter(form: ChartFilter, chartData: any[]) {
     switch (form.chartType) {
       case 'bar':
@@ -61,5 +62,6 @@ export class ChartsService {
         ChartsService.barsChartDataEmitter.emit(chartData);
         break;
     }
+
   }
 }

@@ -25,6 +25,7 @@ export class DoughnutComponent implements OnInit {
     ChartsService.doughnutChartDataEmitter.subscribe((data) => {
       this.populateChart(data);
     });
+
   }
 
   populateChart(data: any) {

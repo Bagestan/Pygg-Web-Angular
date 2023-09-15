@@ -7,6 +7,7 @@ import { FormService } from 'src/app/services/utils/form.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChartFilter } from './models/chartModels';
 
+
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
@@ -51,6 +52,8 @@ export class ChartsComponent implements OnInit {
     },
   ];
 
+ 
+
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
@@ -59,6 +62,7 @@ export class ChartsComponent implements OnInit {
     private chartService: ChartsService,
     private router: Router,
     private route: ActivatedRoute
+
   ) {}
 
   ngOnInit(): void {
@@ -104,8 +108,25 @@ export class ChartsComponent implements OnInit {
     }
   }
 
-  openChart(chartType: string) {
-    this.router.navigate([`main/charts/${chartType}`]);
+  openChart(chartType: string, chartForm: ChartFilter) {
+    switch (chartType) {
+      case 'doughnut': {
+        this.chartService.getDoughnutChartData(chartForm);
+        this.router.navigate([`main/charts/doughnut`]);
+
+        break;
+      }
+      case 'bars': {
+        this.chartService.getBarsChartData(chartForm);
+        this.router.navigate([`main/charts/bars`]);
+
+        break;
+      }
+      case 'stackedBars': {
+        this.chartService.getBarsChartData(chartForm);
+        this.router.navigate([`main/charts/bars`]);
+      }
+    }
   }
 
   getChartFieldsOption(event: string) {
