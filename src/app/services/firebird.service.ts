@@ -15,9 +15,9 @@ import {
   deleteData,
   qualityTableData,
 } from '../pages/quality/models/qualityData';
-import { AuthService } from './AuthService';
 import { ChartFilter, ProfitData } from '../pages/charts/models/chartModels';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',

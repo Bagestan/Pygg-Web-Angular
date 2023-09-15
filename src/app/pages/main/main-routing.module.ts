@@ -4,9 +4,9 @@ import { CanActivateFn, RouterModule, Routes } from '@angular/router';
 import { QualityModule } from '../quality/quality.module';
 import { CalcDensidadeModule } from '../calcDensidade/calc-densidade.module';
 import { UserModule } from '../user/user.module';
-import { AuthService } from 'src/app/services/AuthService';
 import { ChartsModule } from '../charts/charts.module';
 import { DataBaseModule } from '../database/database.module';
+import { AuthService } from 'src/app/services/auth.service';
 
 const authGuardFn: CanActivateFn = () => {
   const isPermission = inject(AuthService);

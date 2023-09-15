@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserData } from 'src/app/pages/user/models/userData';
-import { firebaseAdminService } from '../service/firebaseAdmin.service';
-import { RealtimeDatabaseService } from '../service/realtime-database.service';
+import { firebaseAdminService } from 'src/app/services/firebaseAdmin.service';
+import { RealtimeDatabaseService } from 'src/app/services/realtime-database.service';
 
 @Component({
   selector: 'app-user',
