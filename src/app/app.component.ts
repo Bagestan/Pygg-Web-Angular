@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { AuthService } from './services/AuthService';
 import { FireBirdService } from './services/firebird.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',

@@ -4,9 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EMPTY, Subject, catchError, map, switchMap, takeUntil } from 'rxjs';
 import { UserAuth, UserData } from 'src/app/pages/user/models/userData';
-import { AuthService } from 'src/app/services/AuthService';
-import { firebaseAdminService } from '../service/firebaseAdmin.service';
-import { RealtimeDatabaseService } from '../service/realtime-database.service';
+import { firebaseAdminService } from 'src/app/services/firebaseAdmin.service';
+import { RealtimeDatabaseService } from 'src/app/services/realtime-database.service';
 import { FormService } from 'src/app/services/utils/form.service';
 
 @Component({

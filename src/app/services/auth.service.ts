@@ -1,13 +1,10 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Observable, Subscription, catchError, from, map, of } from 'rxjs';
-import { UserData } from '../pages/user/models/userData';
-import { HttpClient } from '@angular/common/http';
+import { Subscription, catchError, from, of } from 'rxjs';
 import { Auth, idToken } from '@angular/fire/auth';
-import { RealtimeDatabaseService } from '../pages/user/service/realtime-database.service';
+import { RealtimeDatabaseService } from './realtime-database.service';
 
 @Injectable({
   providedIn: 'root',
