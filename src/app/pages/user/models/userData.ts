@@ -25,5 +25,5 @@ export interface UserAuth {
   email: string;
   password: string;
   uid: string;
-  disabled: boolean;
+  disabled?: boolean;
 }

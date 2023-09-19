@@ -65,9 +65,7 @@ export class UserFormComponent implements OnInit {
           this.user = result;
           return this.RealtimeDB.getUserProfile(result.uid).pipe(
             map((userProfile: any) => {
-              console.log('🚀 ~ userProfile:', userProfile);
-              this.user.company = userProfile.company;
-              console.log('🚀 ~ userProfile.company:', userProfile[0]);
+              this.user.company = userProfile[0];
             }),
             catchError(() => {
               return EMPTY;
@@ -86,7 +84,6 @@ export class UserFormComponent implements OnInit {
   }
 
   private populateForm() {
-    console.log('🚀', this.user);
     this.form.patchValue({
       company: this.user.company,
       email: this.user.email,

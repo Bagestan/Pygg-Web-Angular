@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, map } from 'rxjs';
+import { from } from 'rxjs';
 import { getAuth } from '@firebase/auth';
 import {
   getDatabase,
@@ -25,9 +25,7 @@ export class RealtimeDatabaseService {
 
   teste() {
     const starCountRef = ref(this.db, 'users/');
-    onValue(starCountRef, (snapshot) => {
-      const data = snapshot.val();
-    });
+    onValue(starCountRef, () => {});
   }
 
   getUid() {
@@ -50,18 +48,6 @@ export class RealtimeDatabaseService {
   }
 
   getUserProfile(uid: string) {
-    return this.dataBase.list(`users/${uid}`).valueChanges();
-  }
-
-  getPermission(result: any) {
-    console.log('🚀 ~ result:', result);
-    this.dataBase
-      .object(`users/${result?.uid}`)
-      .valueChanges()
-      .pipe(
-        map((user) => {
-          return (user as UserData)?.company == 'ACCL';
-        })
-      );
+    return this.dataBase.object(`users/${uid}`).valueChanges();
   }
 }
