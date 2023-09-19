@@ -1,20 +1,22 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subscription, catchError, from, of, Subject } from 'rxjs';
+import { catchError, from, of, Subject, takeUntil } from 'rxjs';
 import { Auth, idToken } from '@angular/fire/auth';
 import { RealtimeDatabaseService } from './realtime-database.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnDestroy {
+export class AuthService {
   isPermission = false;
+  allowedCompanies = ['ACCL'];
 
   private auth: Auth = inject(Auth);
   idToken$ = idToken(this.auth);
-  idTokenSubscription: Subscription = new Subscription();
+
+  protected destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private angularAuth: AngularFireAuth,
@@ -42,18 +44,26 @@ export class AuthService implements OnDestroy {
   // Permission
 
   getIsPermission(): boolean {
-    console.log(this.isPermission);
+    this.updatePermission();
     return this.isPermission;
   }
 
-  ngOnDestroy() {
-    this.idTokenSubscription.unsubscribe();
-  }
-
   updatePermission() {
-    this.angularAuth.user.subscribe((result) => {
-      console.log('🚀 ~ result:', result, this.database.getPermission(result));
-      this.database.getPermission(result);
+    this.angularAuth.user.pipe(takeUntil(this.destroy$)).subscribe((result) => {
+      if (result)
+        this.database
+          .getUserProfile(result.uid)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            (data: any) => {
+              this.isPermission = this.allowedCompanies.includes(data.company)
+                ? true
+                : false;
+            },
+            (error) => {
+              return false;
+            }
+          );
     });
   }
 }
