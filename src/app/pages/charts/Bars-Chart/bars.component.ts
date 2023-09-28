@@ -32,8 +32,6 @@ export class BarsComponent implements OnInit {
       next: (data: any) => {
         if (data.length > 0) {
           this.dataSource = data;
-
-          this.populateChart(data);
         } else {
           this.message.error('Nenhum registro encontrado');
           this.router.navigate(['main/charts']);
@@ -42,14 +40,10 @@ export class BarsComponent implements OnInit {
     });
   }
 
-  populateChart(data: []) {
-    this.dataSource = data;
-  }
-
   customizeTooltip(arg: any) {
     return {
       text: `
-      ${arg.point.data.name}
+      ${arg.point.data.argumentField}
 
       ${arg.seriesName}: ${arg.value.toLocaleString('pt-BR', {
         style: 'currency',

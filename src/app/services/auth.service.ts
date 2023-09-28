@@ -60,7 +60,7 @@ export class AuthService {
                 ? true
                 : false;
             },
-            (error) => {
+            () => {
               return false;
             }
           );

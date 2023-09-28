@@ -1,19 +1,18 @@
 <dx-chart
   id="chart"
-  title="Lucro e Faturamento"
   [dataSource]="dataSource"
   palette="Ocean"
   paletteExtensionMode="Blend"
 >
   <ng-container
-    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].Profit"
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].ProfitValue"
   >
-    <dxi-series valueField="Profit" name="Lucro"></dxi-series>
+    <dxi-series valueField="ProfitValue" name="Lucro"></dxi-series>
   </ng-container>
   <ng-container
     *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingValue"
   >
-    <dxi-series valueField="BillingValue" name="Valor Faturamento">
+    <dxi-series valueField="BillingValue" name="Valor de Faturamento">
     </dxi-series>
   </ng-container>
   <ng-container
@@ -21,7 +20,7 @@
   >
     <dxi-series
       valueField="BillingQuantity"
-      name="Quantidade Faturamento"
+      name="Quantidade de Faturamento"
     ></dxi-series>
   </ng-container>
 

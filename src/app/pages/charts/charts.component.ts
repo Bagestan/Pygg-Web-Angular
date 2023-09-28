@@ -5,7 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { Router } from '@angular/router';
-import { ChartFilter } from './models/chartModels';
+import { ChartFilter, FieldsOptions } from './models/chartModels';
 
 @Component({
   selector: 'app-charts',
@@ -37,13 +37,16 @@ export class ChartsComponent implements OnInit {
   ];
 
   chartDataOptions = [
-    { value: 'profitByClient', label: 'Lucro e Faturamento por cliente' },
-    { value: 'option2', label: 'Opção 2' },
+    { value: 'profitByClient', label: 'Resultado por cliente' },
+    {
+      value: 'treatmentTypes',
+      label: 'Resultado por Beneficiamento',
+    },
+    { value: 'option3', label: 'option3' },
   ];
 
-  chartFieldsOptions = [
+  profitByClientFieldsOptions: FieldsOptions[] = [
     { value: 'PROFITVALUE', label: 'Lucro', checked: true },
-
     { value: 'BILLINGVALUE', label: 'Valor Faturamento', checked: true },
     {
       value: 'BILLINGQUANTITY',
@@ -51,6 +54,8 @@ export class ChartsComponent implements OnInit {
       checked: true,
     },
   ];
+
+  chartFieldsOptions: FieldsOptions[] = this.profitByClientFieldsOptions;
 
   constructor(
     private fb: FormBuilder,
@@ -69,11 +74,11 @@ export class ChartsComponent implements OnInit {
   buildForm() {
     this.form = this.fb.group({
       endDate: [new Date(), Validators.required],
-      startDate: [new Date(), Validators.required],
+      startDate: [new Date('2022-09-27'), Validators.required],
       chartLimit: [5, Validators.required],
       chartType: ['bar', Validators.required],
       chartDataOptions: ['profitByClient', Validators.required],
-      chartFields: [this.chartFieldsOptions, Validators.required],
+      chartFields: [this.profitByClientFieldsOptions, Validators.required],
     });
   }
 
@@ -108,18 +113,16 @@ export class ChartsComponent implements OnInit {
   getChartFieldsOption(event: string) {
     switch (event) {
       case 'profitByClient': {
-        this.chartFieldsOptions = [
-          { value: 'Profit', label: 'Lucro', checked: true },
-          { value: 'BillingValue', label: 'Valor Faturamento', checked: true },
-          {
-            value: 'BillingQuantity',
-            label: 'Quantidade Faturamento',
-            checked: true,
-          },
-        ];
+        this.chartFieldsOptions = this.profitByClientFieldsOptions;
         break;
       }
-      case 'option2': {
+
+      case 'treatmentTypes': {
+        this.chartFieldsOptions = this.profitByClientFieldsOptions;
+        break;
+      }
+
+      case 'option3': {
         this.chartFieldsOptions = [
           {
             value: 'option1',

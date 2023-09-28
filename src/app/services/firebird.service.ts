@@ -40,7 +40,7 @@ export class FireBirdService {
   getChartData(data: ChartFilter): Observable<ProfitData[]> {
     return this.httpClient
       .post<ProfitData[]>(
-        `${this.API}charts/profitByClient`,
+        `${this.API}charts/${data.chartData}`,
         {
           startDate: data.startDate,
           endDate: data.endDate,

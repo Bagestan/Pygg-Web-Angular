@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ChartFilter } from '../pages/charts/models/chartModels';
 import { FireBirdService } from './firebird.service';
+import { DxChartTransformService } from './utils/dx-chart-Transform.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,10 @@ export class ChartsService {
   static palette = 'Ocean';
   static paletteExtensionMode = 'Blend';
 
-  constructor(private firebirdService: FireBirdService) {}
+  constructor(
+    private firebirdService: FireBirdService,
+    private dxTransform: DxChartTransformService
+  ) {}
 
   getFirebirdData(form: ChartFilter) {
     return this.firebirdService.getChartData(form);
@@ -21,21 +25,10 @@ export class ChartsService {
   getChartData(form: ChartFilter) {
     this.getFirebirdData(form).subscribe({
       next: (result) => {
-        const chartData = result.map((object) => {
-          return {
-            name: object.CLIENTNAME,
-            firstName: object.CLIENTNAME.split(' ')[0],
-            date: object.D_DOC?.split('T')[0],
-            BillingQuantity: object.BILLINGQUANTITY,
-            BillingValue: object.BILLINGVALUE,
-            Profit: object.PROFITVALUE,
-            maxChartItems: form.maxChartItems,
-          };
-        });
-
+        const chartData = this.dxTransform.DxTransform(result);
         this.chartDataEmitter(form, chartData);
       },
-      error: (e) => console.log(e),
+      error: (error) => console.error(error),
     });
   }
 
