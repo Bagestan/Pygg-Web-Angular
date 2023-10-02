@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { dxChartType } from 'src/app/pages/charts/utils/chartModels';
+import { dxChartType } from 'src/app/pages/lucratividae/utils/chartModels';
 
 @Injectable({
   providedIn: 'root',

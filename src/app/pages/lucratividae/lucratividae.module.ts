@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ChartsRoutingModule } from './charts-routing.module';
-import { ChartsComponent } from './charts.component';
 import { BarsComponent } from './Bars-Chart/bars.component';
 import { DoughnutComponent } from './doughnut-Chart/doughnut.component';
 
@@ -22,15 +20,17 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 
 import { DxChartModule, DxPieChartModule } from 'devextreme-angular';
+import { LucratividadeComponent } from './lucratividae.component';
+import { LucratividadeRoutingModule } from './lucratividae-routing.module';
 
 @NgModule({
-  declarations: [BarsComponent, ChartsComponent, DoughnutComponent],
+  declarations: [BarsComponent, LucratividadeComponent, DoughnutComponent],
   imports: [
     CommonModule,
     FormsModule,
     DatePipe,
     ReactiveFormsModule,
-    ChartsRoutingModule,
+    LucratividadeRoutingModule,
     NzDividerModule,
     NzFormModule,
     NzInputModule,
@@ -49,4 +49,4 @@ import { DxChartModule, DxPieChartModule } from 'devextreme-angular';
   ],
   providers: [DatePipe],
 })
-export class ChartsModule {}
+export class LucratividadeModule {}

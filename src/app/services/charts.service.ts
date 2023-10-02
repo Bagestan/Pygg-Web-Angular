@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { ChartFilter } from '../pages/charts/utils/chartModels';
 import { FireBirdService } from './firebird.service';
 import { DxChartTransformService } from './utils/dx-chart-Transform.service';
+import { ChartFilter } from '../pages/lucratividae/utils/chartModels';
 
 @Injectable({
   providedIn: 'root',

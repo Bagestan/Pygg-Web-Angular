@@ -4,9 +4,9 @@ import { CanActivateFn, RouterModule, Routes } from '@angular/router';
 import { QualityModule } from '../quality/quality.module';
 import { CalcDensidadeModule } from '../calcDensidade/calc-densidade.module';
 import { UserModule } from '../user/user.module';
-import { ChartsModule } from '../charts/charts.module';
 import { DataBaseModule } from '../database/database.module';
 import { AuthService } from 'src/app/services/auth.service';
+import { LucratividadeModule } from '../lucratividae/lucratividae.module';
 
 const authGuardFn: CanActivateFn = () => {
   const isPermission = inject(AuthService);
@@ -43,9 +43,11 @@ const routes: Routes = [
           import('../database/database.module').then(() => DataBaseModule),
       },
       {
-        path: 'charts',
+        path: 'lucratividade',
         loadChildren: () =>
-          import('../charts/charts.module').then(() => ChartsModule),
+          import('../lucratividae/lucratividae.module').then(
+            () => LucratividadeModule
+          ),
       },
     ],
   },

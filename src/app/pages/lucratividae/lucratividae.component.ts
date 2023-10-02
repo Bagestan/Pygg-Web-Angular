@@ -59,11 +59,11 @@ const chartDataOptions = [
 ];
 
 @Component({
-  selector: 'app-charts',
-  templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.scss'],
+  selector: 'app-lucratividade',
+  templateUrl: './lucratividae.component.html',
+  styleUrls: ['./lucratividae.component.scss'],
 })
-export class ChartsComponent implements OnInit {
+export class LucratividadeComponent implements OnInit {
   collapsePanel!: boolean;
   form!: FormGroup;
 

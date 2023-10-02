@@ -3,12 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DoughnutComponent } from './doughnut-Chart/doughnut.component';
 import { BarsComponent } from './Bars-Chart/bars.component';
-import { ChartsComponent } from './charts.component';
+import { LucratividadeComponent } from './lucratividae.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChartsComponent,
+    component: LucratividadeComponent,
     children: [
       { path: 'bar', component: BarsComponent },
       { path: 'stackedBar', component: BarsComponent },
@@ -22,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ChartsRoutingModule {}
+export class LucratividadeRoutingModule {}

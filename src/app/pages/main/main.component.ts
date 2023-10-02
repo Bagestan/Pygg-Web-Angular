@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  isCollapsed = true;
+  isCollapsed = false;
 
   constructor(public auth: AuthService) {}
   ngOnInit(): void {}

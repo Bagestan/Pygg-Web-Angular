@@ -19,8 +19,20 @@
       <li nz-submenu nzOpen nzTitle="PCP" nzIcon="form">
         <ul>
           <li nzMatchRouter nz-menu-item routerLink="/main/quality">
-            <span nz-icon nzType="exception"></span>
+            <!-- <span nz-icon nzType="exception"></span> -->
             <span>Qualidade</span>
+          </li>
+          <li nz-submenu nzTitle="Produtividade">
+            <ng-container #Produtividade></ng-container>
+
+            <ul>
+              <li nz-menu-item>Estamparia</li>
+              <li nz-menu-item>Bordado</li>
+              <li nz-menu-item>Costura</li>
+              <li nz-menu-item>Tituraria</li>
+              <li nz-menu-item>Tecelagem</li>
+              <li nz-menu-item>Revisão</li>
+            </ul>
           </li>
         </ul>
       </li>
@@ -28,7 +40,7 @@
       <li nz-submenu nzOpen nzTitle="Comercial" nzIcon="form">
         <ul>
           <li nzMatchRouter nz-menu-item routerLink="/main/charts/">
-            <span nz-icon nzType="area-chart"></span>
+            <!-- <span nz-icon nzType="area-chart"></span> -->
             <span>Lucratividade</span>
           </li>
         </ul>
@@ -37,7 +49,7 @@
       <li nz-submenu nzOpen nzTitle="Tinturaria" nzIcon="bg-colors">
         <ul>
           <li nzMatchRouter nz-menu-item routerLink="/main/calc">
-            <span nz-icon nzType="calculator"></span>
+            <!-- <span nz-icon nzType="calculator"></span> -->
             <span>Calculo Densidade</span>
           </li>
         </ul>
@@ -46,11 +58,11 @@
       <li nz-submenu nzOpen nzTitle="Configurações" nzIcon="setting">
         <ul>
           <li nzMatchRouter nz-menu-item routerLink="/main/user">
-            <span nz-icon nzType="user-add"></span>
+            <!-- <span nz-icon nzType="user-add"></span> -->
             <span>Usuário</span>
           </li>
           <li nzMatchRouter nz-menu-item routerLink="/main/db">
-            <span nz-icon nzType="cloud-server"></span>
+            <!-- <span nz-icon nzType="cloud-server"></span> -->
             <span>Banco de Dados</span>
           </li>
         </ul>
