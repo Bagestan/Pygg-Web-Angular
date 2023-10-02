@@ -78,7 +78,7 @@ export class UserFormComponent implements OnInit {
         next: () => {
           this.populateForm();
         },
-        error: (err) => console.log(err),
+        error: (error) => console.error(error),
         complete: () => this.onLoading(false),
       });
   }
@@ -112,7 +112,6 @@ export class UserFormComponent implements OnInit {
           : (this.updateUserProfile(user), this.updateAuthUser(userAuth))
         : this.createAuthUser(userAuth);
     } else {
-      console.log('executa');
       this.nzMessage.warning('Verifique as informações do formulário');
       this.formService.validateAllFormFields(this.form);
     }
@@ -210,8 +209,8 @@ export class UserFormComponent implements OnInit {
               () => {
                 this.nzMessage.success('Usuário Excluido');
               },
-              catchError((err) => {
-                console.log(err);
+              catchError((error) => {
+                console.error(error);
                 return EMPTY;
               })
             )

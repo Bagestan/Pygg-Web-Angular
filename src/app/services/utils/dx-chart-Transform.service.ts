@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { dxChartType } from 'src/app/pages/charts/models/chartModels';
+import { dxChartType } from 'src/app/pages/charts/utils/chartModels';
 
 @Injectable({
   providedIn: 'root',
@@ -24,15 +24,34 @@ export class DxChartTransformService {
         ProfitValue: object.PROFITVALUE,
         BillingQuantity: object.BILLINGQUANTITY,
         BillingValue: object.BILLINGVALUE,
+        ProfitPercentage: object.PROFITPERCENTAGE,
       };
       return chartData;
     } else if (object.hasOwnProperty('BENEFNAME')) {
       const chartData: dxChartType = {
         argumentField: object.BENEFNAME,
-        firstName: object.BENEFNAME,
         ProfitValue: object.PROFITVALUE,
         BillingQuantity: object.BILLINGQUANTITY,
         BillingValue: object.BILLINGVALUE,
+        ProfitPercentage: object.PROFITPERCENTAGE,
+      };
+      return chartData;
+    } else if (object.hasOwnProperty('UF')) {
+      const chartData: dxChartType = {
+        argumentField: (object.UF as string).slice(0, 2),
+        ProfitValue: object.PROFITVALUE,
+        BillingQuantity: object.BILLINGQUANTITY,
+        BillingValue: object.BILLINGVALUE,
+        ProfitPercentage: object.PROFITPERCENTAGE,
+      };
+      return chartData;
+    } else if (object.hasOwnProperty('DS_RAMO')) {
+      const chartData: dxChartType = {
+        argumentField: object.DS_RAMO,
+        ProfitValue: object.PROFITVALUE,
+        BillingQuantity: object.BILLINGQUANTITY,
+        BillingValue: object.BILLINGVALUE,
+        ProfitPercentage: object.PROFITPERCENTAGE,
       };
       return chartData;
     } else {

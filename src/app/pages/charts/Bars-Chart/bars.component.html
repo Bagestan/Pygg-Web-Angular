@@ -1,46 +1,58 @@
 <dx-chart
   id="chart"
   [dataSource]="dataSource"
-  palette="Ocean"
   paletteExtensionMode="Blend"
+  [title]="chartTitle"
 >
+  <dxo-export [enabled]="true"></dxo-export>
   <ng-container
     *ngIf="dataSource && dataSource.length > 0 && dataSource[0].ProfitValue"
-  >
-    <dxi-series valueField="ProfitValue" name="Lucro"></dxi-series>
+    ><dxi-series
+      valueField="ProfitValue"
+      name="Lucro"
+      cornerRadius="5"
+      color="#2ECC40"
+    ></dxi-series>
   </ng-container>
   <ng-container
     *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingValue"
-  >
-    <dxi-series valueField="BillingValue" name="Valor de Faturamento">
-    </dxi-series>
+    ><dxi-series
+      valueField="BillingValue"
+      name="Valor de Faturamento"
+      cornerRadius="5"
+      color="#2881db"
+    ></dxi-series>
   </ng-container>
   <ng-container
     *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingQuantity"
-  >
-    <dxi-series
+    ><dxi-series
       valueField="BillingQuantity"
       name="Quantidade de Faturamento"
+      cornerRadius="5"
+    ></dxi-series>
+  </ng-container>
+  <ng-container
+    *ngIf="
+      dataSource && dataSource.length > 0 && dataSource[0].ProfitPercentage
+    "
+    ><dxi-series
+      valueField="ProfitPercentage"
+      name="Porcentagem de Lucro"
+      cornerRadius="5"
+      color="#34D084"
     ></dxi-series>
   </ng-container>
 
   <dxo-common-series-settings
-    argumentField="firstName"
-    [type]="chartType"
+    argumentField="{{ xAxis }}"
+    type="bar"
     selectionMode="allArgumentPoints"
     hoverMode="onlyPoint"
     maxPointCount="5"
-  >
-  </dxo-common-series-settings>
-  <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
-  </dxo-legend>
-  <dxo-export [enabled]="true"></dxo-export>
-  <dxo-tooltip
-    [enabled]="true"
-    location="edge"
-    [customizeTooltip]="customizeTooltip"
-  >
-    <dxo-format type="fixedPoint" [precision]="2" format="thousands">
-    </dxo-format>
+  ></dxo-common-series-settings>
+
+  <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip">
   </dxo-tooltip>
+
+  <dxo-legend [visible]="false"> </dxo-legend>
 </dx-chart>

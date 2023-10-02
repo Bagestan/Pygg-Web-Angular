@@ -19,6 +19,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 
 import { DxChartModule, DxPieChartModule } from 'devextreme-angular';
 
@@ -42,6 +43,7 @@ import { DxChartModule, DxPieChartModule } from 'devextreme-angular';
     NzCheckboxModule,
     NzCollapseModule,
     NzSwitchModule,
+    NzCascaderModule,
     DxChartModule,
     DxPieChartModule,
   ],

@@ -24,13 +24,13 @@ export interface ChartType {
 export interface FieldsOptions {
   value: string;
   label: string;
-  checked: boolean;
 }
 
 export interface dxChartType {
   argumentField: string;
-  firstName: string;
-  BillingValue: number;
-  BillingQuantity: number;
-  ProfitValue: number;
+  firstName?: string;
+  BillingValue?: number;
+  BillingQuantity?: number;
+  ProfitValue?: number;
+  ProfitPercentage?: number;
 }

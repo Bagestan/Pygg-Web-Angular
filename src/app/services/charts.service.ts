@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { ChartFilter } from '../pages/charts/models/chartModels';
+import { ChartFilter } from '../pages/charts/utils/chartModels';
 import { FireBirdService } from './firebird.service';
 import { DxChartTransformService } from './utils/dx-chart-Transform.service';
 
@@ -7,6 +7,8 @@ import { DxChartTransformService } from './utils/dx-chart-Transform.service';
   providedIn: 'root',
 })
 export class ChartsService {
+  static formEmitter = new EventEmitter();
+
   static barsChartDataEmitter = new EventEmitter();
   static doughnutChartDataEmitter = new EventEmitter();
 
@@ -33,22 +35,32 @@ export class ChartsService {
   }
 
   chartDataEmitter(form: ChartFilter, chartData: any[]) {
+    console.log('🚀 ~ chartData:', chartData);
+    console.log('🚀 ~ form:', form);
+
     switch (form.chartType) {
       case 'bar':
         ChartsService.barsChartDataEmitter.emit(chartData);
+        this.formEmitter(form);
         break;
 
       case 'stackedBar':
         ChartsService.barsChartDataEmitter.emit(chartData);
+        this.formEmitter(form);
         break;
 
       case 'fullStackedBar':
         ChartsService.barsChartDataEmitter.emit(chartData);
+        this.formEmitter(form);
         break;
 
       case 'doughnut':
         ChartsService.doughnutChartDataEmitter.emit(chartData);
+        this.formEmitter(form);
         break;
     }
+  }
+  formEmitter(form: ChartFilter) {
+    ChartsService.formEmitter.emit(form);
   }
 }

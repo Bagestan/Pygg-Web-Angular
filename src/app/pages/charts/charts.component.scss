@@ -1,19 +1,12 @@
-nz-divider {
-  margin: 1rem;
-}
-
-.margin0 {
-  margin: 0;
-}
-
-.pad0 {
-  padding: 0;
-}
-
-nz-date-picker {
-  width: 100%;
-}
-
 header > div > h2 {
   margin: 0;
+}
+
+nz-col {
+  padding: 0 0.75rem !important;
+}
+
+form {
+  max-width: 60rem;
+  margin: 0 auto;
 }

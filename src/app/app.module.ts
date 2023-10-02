@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 
 import Pt from '@angular/common/locales/pt';
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { ptBR } from 'date-fns/locale';
 
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
@@ -23,6 +23,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { NZ_DATE_LOCALE, NZ_I18N, pt_BR } from 'ng-zorro-antd/i18n';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { DateFormatService } from './services/utils/date-format.service';
 
 registerLocaleData(Pt);
 
@@ -44,6 +45,8 @@ registerLocaleData(Pt);
     provideFirestore(() => getFirestore()),
   ],
   providers: [
+    DatePipe,
+    DateFormatService,
     { provide: NZ_I18N, useValue: pt_BR },
     { provide: NZ_DATE_LOCALE, useValue: ptBR },
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },

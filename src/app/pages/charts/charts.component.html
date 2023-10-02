@@ -6,58 +6,49 @@
   </header>
 </ng-template>
 
-<nz-collapse
-  [nzBordered]="false"
-  style="max-width: 60rem; margin: 0 auto; border-radius: 5px"
->
-  <nz-collapse-panel
+<nz-collapse [nzBordered]="false"
+  ><nz-collapse-panel
     [nzHeader]="ChartFilterHeader"
     [nzActive]="collapsePanel"
     (nzActiveChange)="collapsePanel = true"
-  >
-    <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+    ><form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
       <nz-row nz-row [nzGutter]="[24, 24]" nzAlign="bottom">
-        <nz-col nzXs="24" nzSm="24" nzMd="24">
-          <nz-form-item class="margin0">
-            <nz-form-label nzFor="date" nzLabelAlign="left"
-              >Dados</nz-form-label
-            >
-
-            <nz-form-control nzXs="12" nzSm="24" nzMd="16">
-              <nz-select
-                formControlName="chartDataOptions"
-                [nzOptions]="chartDataOptions"
-                (ngModelChange)="getChartFieldsOption($event)"
-              >
-              </nz-select>
-            </nz-form-control>
-          </nz-form-item>
-        </nz-col>
-
-        <nz-col nzXs="24" nzSm="24" nzMd="24">
+        <nz-col nzXs="24" nzSm="12" nzMd="12">
           <nz-form-item>
+            <nz-form-label nzLabelAlign="left"> Dados </nz-form-label>
             <nz-form-control nzXs="24" nzSm="24" nzMd="24">
-              <nz-checkbox-group
-                formControlName="chartFields"
-              ></nz-checkbox-group>
+              <nz-cascader
+                [nzOptions]="nzOptions"
+                formControlName="chartDataOptions"
+                (ngModelChange)="onChanges($event)"
+              ></nz-cascader>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-      </nz-row>
 
-      <nz-row nz-row [nzGutter]="[24, 24]" nzAlign="bottom">
+        <nz-col nzXs="24" nzSm="12" nzMd="12">
+          <nz-form-item>
+            <nz-form-label nzLabelAlign="left"> Dados </nz-form-label>
+            <nz-form-control nzXs="24" nzSm="24" nzMd="24">
+              <nz-select
+                formControlName="chartFields"
+                [nzOptions]="chartFieldsOptions"
+              ></nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
         <nz-col nzMd="12" nzSm="12" nzXs="12">
           <nz-form-item>
-            <nz-form-label nzSm="24" nzMd="8" nzLabelAlign="left"
-              >Período entre</nz-form-label
-            >
+            <nz-form-label nzSm="24" nzMd="8" nzLabelAlign="left">
+              Período entre
+            </nz-form-label>
             <nz-form-control
               nzSm="24"
               nzMd="16"
               nzErrorTip="Data obrigatória"
               class="ant-form-item-control"
-            >
-              <nz-date-picker
+              ><nz-date-picker
                 nzPlaceHolder="Data inicial"
                 nzFormat="dd/MM/yyy"
                 class="w-100"
@@ -69,16 +60,15 @@
 
         <nz-col nzMd="12" nzSm="12" nzXs="12">
           <nz-form-item>
-            <nz-form-label nzSm="24" nzMd="2" nzLabelAlign="left"
-              >até</nz-form-label
-            >
+            <nz-form-label nzSm="24" nzMd="2" nzLabelAlign="left">
+              até
+            </nz-form-label>
             <nz-form-control
               nzSm="24"
               nzMd="22"
               nzErrorTip="Data obrigatória"
               class="ant-form-item-control"
-            >
-              <nz-date-picker
+              ><nz-date-picker
                 nzPlaceHolder="Data final"
                 nzFormat="dd/MM/yyy"
                 class="w-100"
@@ -97,13 +87,11 @@
               nzFor="chartLimit"
               nzLabelAlign="left"
               >Tipo de Gráfico</nz-form-label
-            >
-            <nz-form-control nzXs="24" nzSm="24" nzMd="16">
+            ><nz-form-control nzXs="24" nzSm="24" nzMd="16">
               <nz-select
                 formControlName="chartType"
                 [nzOptions]="chartTypeOptions"
-              >
-              </nz-select>
+              ></nz-select>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
@@ -117,13 +105,11 @@
               nzFor="chartLimit"
               nzLabelAlign="left"
               >Nº Registros</nz-form-label
-            >
-            <nz-form-control nzXs="24" nzSm="24" nzMd="16">
+            ><nz-form-control nzXs="24" nzSm="24" nzMd="16">
               <nz-select
                 formControlName="chartLimit"
                 [nzOptions]="chartLimitOptions"
-              >
-              </nz-select>
+              ></nz-select>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
@@ -131,11 +117,7 @@
         <nz-col nzXs="24" nzSm="24" nzMd="24">
           <nz-form-item nz-col>
             <nz-form-control style="text-align: end">
-              <button
-                style="align-items: flex-end"
-                nz-button
-                [nzType]="'primary'"
-              >
+              <button class="margin0" nz-button nzType="primary">
                 PESQUISAR
               </button>
             </nz-form-control>

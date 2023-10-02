@@ -170,7 +170,6 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
 
   popConfirm() {
     if (!this.tabIndex) {
-      console.log(this.form.value);
       this.deleteData = {
         table: 'PCP_OP_QUA',
         ID_CLI: this.form.get('ID_CLI')?.value,
