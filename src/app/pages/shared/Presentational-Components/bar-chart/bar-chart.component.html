@@ -1,0 +1,29 @@
+<dx-chart [dataSource]="dataSource" [title]="title"
+  ><dxi-series
+    argumentField="argumentField"
+    valueField="valueField"
+    name="label"
+    type="bar"
+    [color]="color"
+    barWidth="25"
+  ></dxi-series>
+
+  <dxo-common-series-settings
+    argumentField="argumentField"
+    valueField="valueField"
+    hoverMode="allArgumentPoints"
+    selectionMode="allArgumentPoints"
+    ><dxo-label
+      [visible]="true"
+      [format]="{
+        type: 'fixedPoint',
+        precision: 0
+      }"
+      displayFormat="{valueText}%"
+      position="inside"
+    ></dxo-label>
+  </dxo-common-series-settings>
+
+  <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+  </dxo-legend>
+</dx-chart>

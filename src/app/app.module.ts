@@ -24,12 +24,14 @@ import { NZ_DATE_LOCALE, NZ_I18N, pt_BR } from 'ng-zorro-antd/i18n';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { DateFormatService } from './services/utils/date-format.service';
+import { SharedModule } from './pages/shared/shared.module';
 
 registerLocaleData(Pt);
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    SharedModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
