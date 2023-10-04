@@ -69,7 +69,6 @@ export class SearchQualityComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .pipe(retry(3))
       .subscribe((data: any) => {
-        console.log('🚀 ~ data:', data);
         this.isLoading = true;
         this.companies = data;
         if (data.length > 0) {

@@ -23,28 +23,25 @@
               class="w-100"
               name="firstCompany"
               formControlName="SelectedCompany"
-            >
-              <nz-option
+              ><nz-option
                 nzRequired
                 *ngFor="let company of companyOptions"
                 [nzValue]="company.CD_EMP"
                 [nzLabel]="company.OptionName"
-              >
-              </nz-option>
+              ></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>
     <nz-row nzGutter="8">
-      <nz-col nzXXl="6" nzXl="6" nzLg="6" nzMd="6" nzSm="6" nzXs="12">
+      <nz-col nzSm="12" nzXs="12">
         <nz-form-item>
           <nz-form-label nzRequired>Período</nz-form-label>
           <nz-form-control
             nzErrorTip="Data obrigatória"
             class="ant-form-item-control"
-          >
-            <nz-date-picker
+            ><nz-date-picker
               nzFormat="dd/MM/yyy"
               class="w-100"
               formControlName="startDate"
@@ -52,32 +49,28 @@
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-      <nz-col nzXXl="6" nzXl="6" nzLg="6" nzMd="6" nzSm="6" nzXs="12">
+      <nz-col nzSm="12" nzXs="12">
         <nz-form-item>
           <nz-form-label nzRequired>Até</nz-form-label>
           <nz-form-control
             nzErrorTip="Data obrigatória"
             class="ant-form-item-control"
-          >
-            <nz-date-picker
+            ><nz-date-picker
               nzFormat="dd/MM/yyy"
               class="w-100"
               formControlName="endDate"
               >Até</nz-date-picker
-            >
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
-    <nz-row nzGutter="8">
+            ></nz-form-control
+          ></nz-form-item
+        ></nz-col
+      ></nz-row
+    ><nz-row nzGutter="8">
       <nz-col nzXs="24" nzSm="24">
         <label class="checkboxLabel" nz-checkbox formControlName="hideResolved"
-          >Ocultar Resolvidos</label
-        >
-      </nz-col>
-    </nz-row>
-
-    <button [nzSize]="size" nz-button nzType="default">
+          >Ocultar Resolvidos
+        </label></nz-col
+      ></nz-row
+    ><button [nzSize]="size" nz-button nzType="default">
       <span nz-icon nzType="file-search" nzTheme="outline"></span>
       CONSULTAR
     </button>
