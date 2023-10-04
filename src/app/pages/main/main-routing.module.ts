@@ -7,6 +7,7 @@ import { UserModule } from '../user/user.module';
 import { DataBaseModule } from '../database/database.module';
 import { AuthService } from 'src/app/services/auth.service';
 import { LucratividadeModule } from '../lucratividae/lucratividae.module';
+import { ProductivityModule } from '../productivity/productivity.module';
 
 const authGuardFn: CanActivateFn = () => {
   const isPermission = inject(AuthService);
@@ -47,6 +48,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('../lucratividae/lucratividae.module').then(
             () => LucratividadeModule
+          ),
+      },
+      {
+        path: 'productivity',
+        loadChildren: () =>
+          import('../productivity/productivity.module').then(
+            () => ProductivityModule
           ),
       },
     ],

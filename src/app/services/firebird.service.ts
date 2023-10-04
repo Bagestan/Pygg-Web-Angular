@@ -21,6 +21,7 @@ import {
   ChartFilter,
   ProfitData,
 } from '../pages/lucratividae/utils/chartModels';
+import { DateFormatService } from './utils/date-format.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,15 +36,40 @@ export class FireBirdService {
   constructor(
     private httpClient: HttpClient,
     private auth: AuthService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private DateFormat: DateFormatService
   ) {
     this.getToken();
+  }
+
+  getPrintingProductionData(
+    company: string,
+    startDate: Date,
+    endDate: Date,
+    data: string
+  ) {
+    return this.httpClient
+      .post(
+        `${this.API}printProduction/${data}`,
+        {
+          company: company,
+          startDate: this.DateFormat.formatDateBR(startDate),
+          endDate: this.DateFormat.formatDateBR(endDate),
+        },
+        { headers: this.header }
+      )
+      .pipe(
+        retry(2),
+        tap({
+          error: (error) => this.message.error(error),
+        })
+      );
   }
 
   getChartData(data: ChartFilter): Observable<ProfitData[]> {
     return this.httpClient
       .post<ProfitData[]>(
-        `${this.API}charts/${data.chartData}`,
+        `${this.API}lucratividade/${data.chartData}`,
         {
           startDate: data.startDate,
           endDate: data.endDate,
@@ -59,7 +85,7 @@ export class FireBirdService {
       .pipe(
         retry(2),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       );
   }
@@ -69,7 +95,7 @@ export class FireBirdService {
       .pipe(
         takeUntil(this.destroy$),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       )
       .subscribe((result) => {
@@ -106,7 +132,7 @@ export class FireBirdService {
         retry(2),
         timeout(10000),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       );
   }
@@ -120,7 +146,7 @@ export class FireBirdService {
         retry(2),
         timeout(10000),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       );
   }
@@ -146,7 +172,7 @@ export class FireBirdService {
         retry(2),
         timeout(10000),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       );
   }
@@ -160,7 +186,7 @@ export class FireBirdService {
         retry(2),
         timeout(10000),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       );
   }
@@ -174,7 +200,7 @@ export class FireBirdService {
         retry(2),
         timeout(10000),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       );
   }
@@ -188,7 +214,7 @@ export class FireBirdService {
         retry(2),
         timeout(10000),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       );
   }
@@ -202,7 +228,7 @@ export class FireBirdService {
         retry(2),
         timeout(10000),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       );
   }
@@ -216,7 +242,7 @@ export class FireBirdService {
         retry(2),
         timeout(10000),
         tap({
-          error: (e) => this.message.error(e),
+          error: (error) => this.message.error(error),
         })
       );
   }

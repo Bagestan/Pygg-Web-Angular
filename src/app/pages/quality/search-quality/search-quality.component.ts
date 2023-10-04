@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { NzButtonSize } from 'ng-zorro-antd/button';
 import { FormService } from 'src/app/services/utils/form.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, retry, takeUntil } from 'rxjs';
 import { QualityService } from 'src/app/services/quality.service';
 
 @Component({
@@ -41,7 +41,7 @@ export class SearchQualityComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.sys_Emp();
+    this.getCompanys();
 
     this.form = this.fb.group({
       SelectedCompany: [1, Validators.required],
@@ -63,39 +63,31 @@ export class SearchQualityComponent implements OnInit, OnDestroy {
     }
   }
 
-  sys_Emp() {
+  getCompanys() {
     this.firebirdService
       .selectFromTable('SYS_EMP', undefined, undefined, 'CD_EMP, DS_EMP')
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data: any) => {
-          this.isLoading = true;
-          this.companies = data;
-          if (data.length > 0) {
-            for (let i = 0; i < this.companies.length; i++) {
-              const Options = this.companies[i];
-              this.companies[
-                i
-              ].OptionName = `${Options.CD_EMP} - ${Options.DS_EMP}`;
-            }
-
-            this.companyOptions = this.companies.map((company: any) => {
-              return {
-                CD_EMP: company.CD_EMP,
-                OptionName: company.OptionName,
-              };
-            });
-            this.firstCompany = this.companyOptions[0].CD_EMP;
+      .pipe(retry(3))
+      .subscribe((data: any) => {
+        console.log('🚀 ~ data:', data);
+        this.isLoading = true;
+        this.companies = data;
+        if (data.length > 0) {
+          for (let i = 0; i < this.companies.length; i++) {
+            const Options = this.companies[i];
+            this.companies[i].OptionName = `
+              ${Options.CD_EMP} - ${Options.DS_EMP}`;
           }
-          this.isLoading = false;
-        },
-        () => {
-          if (this.try < 2) {
-            this.try++;
-            this.sys_Emp();
-          }
+          this.companyOptions = this.companies.map((company: any) => {
+            return {
+              CD_EMP: company.CD_EMP,
+              OptionName: company.OptionName,
+            };
+          });
+          this.firstCompany = this.companyOptions[0].CD_EMP;
         }
-      );
+        this.isLoading = false;
+      });
   }
 
   modalVisibility(value: boolean) {

@@ -1,0 +1,108 @@
+<nz-collapse nzGhost>
+  <nz-collapse-panel [nzHeader]="title" [nzActive]="isCollapsed">
+    <form
+      nz-form
+      nzLayout="vertical"
+      [formGroup]="form"
+      (ngSubmit)="submitForm()"
+    >
+      <nz-row nzGutter="8" nzAlign="bottom">
+        <nz-col nzSm="24" nzXs="24">
+          <nz-form-item>
+            <nz-form-label nzRequired>Empresa</nz-form-label>
+            <nz-form-control nzErrorTip="error">
+              <nz-select
+                [nzLoading]="isLoading"
+                class="w-100"
+                name="firstCompany"
+                formControlName="SelectedCompany"
+                ><nz-option
+                  nzRequired
+                  *ngFor="let company of companyOptions"
+                  [nzValue]="company.CD_EMP"
+                  [nzLabel]="company.OptionName"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzSm="12" nzXs="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>Período</nz-form-label>
+            <nz-form-control
+              nzErrorTip="Data obrigatória"
+              class="ant-form-item-control"
+              ><nz-date-picker
+                nzFormat="dd/MM/yyy"
+                class="w-100"
+                formControlName="startDate"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzSm="12" nzXs="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>Até</nz-form-label>
+            <nz-form-control
+              nzErrorTip="Data obrigatória"
+              class="ant-form-item-control"
+              ><nz-date-picker
+                nzFormat="dd/MM/yyy"
+                class="w-100"
+                formControlName="endDate"
+                >Até</nz-date-picker
+              ></nz-form-control
+            ></nz-form-item
+          >
+        </nz-col>
+
+        <nz-col class="submitButton">
+          <button nz-button nzSize="default" nzType="default">
+            <span nz-icon nzType="file-search" nzTheme="outline"></span>
+            CONSULTAR
+          </button>
+        </nz-col>
+      </nz-row>
+    </form>
+  </nz-collapse-panel>
+</nz-collapse>
+
+<ng-template #title>
+  <nz-page-header
+    class="site-page-header"
+    nzTitle="Apontamentos de Produção"
+  ></nz-page-header>
+</ng-template>
+
+<div
+  class="charts"
+  *ngIf="productivityByMachinesDataSource && productivityByMachinesDataSource"
+>
+  <app-bar-chart
+    [dataSource]="productivityByMachinesDataSource"
+    [title]="productivityChartTitle"
+    [color]="PeriodBarsChartColor"
+  ></app-bar-chart>
+
+  <app-bar-chart
+    [dataSource]="productivityByPeriodDataSource"
+    [title]="productivityChartTitle"
+    [color]="MachineBarsChartColor"
+  ></app-bar-chart>
+</div>
+<div
+  class="charts"
+  *ngIf="eficienceByMachinesDataSource && eficienceByPeriodDataSource"
+>
+  <app-bar-chart
+    [dataSource]="eficienceByMachinesDataSource"
+    [title]="eficienceChartTitle"
+    [color]="PeriodBarsChartColor"
+  ></app-bar-chart>
+
+  <app-bar-chart
+    [dataSource]="eficienceByPeriodDataSource"
+    [title]="eficienceChartTitle"
+    [color]="MachineBarsChartColor"
+  ></app-bar-chart>
+</div>

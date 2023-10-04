@@ -1,0 +1,38 @@
+nz-collapse {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.charts {
+  display: flex;
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+  justify-content: space-around;
+}
+
+.chartByPeriod {
+  width: 40%;
+}
+
+.chartByMachines {
+  width: 60%;
+}
+
+@media only screen and (max-width: 600px) {
+  .charts {
+    width: 100%;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+
+  .chartByPeriod {
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  .chartByMachines {
+    margin: 0 auto;
+    width: 90%;
+  }
+}
