@@ -10,13 +10,20 @@
       <img src="../assets/img/favicon.png" alt="logo" />
       <h1>PYGG WEB</h1>
     </div>
+
     <ul
       nz-menu
       nzTheme="dark"
       nzMode="inline"
       [nzInlineCollapsed]="isCollapsed"
     >
-      <li nz-submenu nzOpen nzTitle="PCP" nzIcon="form">
+      <li
+        [(nzOpen)]="openMap['sub1']"
+        (nzOpenChange)="openHandler('sub1')"
+        nz-submenu
+        nzTitle="PCP"
+        nzIcon="form"
+      >
         <ul>
           <li nzMatchRouter nz-menu-item routerLink="/main/quality">
             <span nz-icon nzType="exception"></span>
@@ -35,7 +42,14 @@
         </ul>
       </li>
 
-      <li nz-submenu nzOpen nzTitle="Comercial" nzIcon="form">
+      <li
+        [(nzOpen)]="openMap['sub2']"
+        (nzOpenChange)="openHandler('sub2')"
+        nz-submenu
+        nzOpen
+        nzTitle="Comercial"
+        nzIcon="form"
+      >
         <ul>
           <li nzMatchRouter nz-menu-item routerLink="/main/lucratividade/">
             <span nz-icon nzType="area-chart"></span>
@@ -44,7 +58,14 @@
         </ul>
       </li>
 
-      <li nz-submenu nzOpen nzTitle="Tinturaria" nzIcon="bg-colors">
+      <li
+        [(nzOpen)]="openMap['sub3']"
+        (nzOpenChange)="openHandler('sub3')"
+        nz-submenu
+        nzOpen
+        nzTitle="Tinturaria"
+        nzIcon="bg-colors"
+      >
         <ul>
           <li nzMatchRouter nz-menu-item routerLink="/main/calc">
             <span nz-icon nzType="calculator"></span>
@@ -53,7 +74,14 @@
         </ul>
       </li>
 
-      <li nz-submenu nzOpen nzTitle="Configurações" nzIcon="setting">
+      <li
+        [(nzOpen)]="openMap['sub4']"
+        (nzOpenChange)="openHandler('sub4')"
+        nz-submenu
+        nzOpen
+        nzTitle="Configurações"
+        nzIcon="setting"
+      >
         <ul>
           <li nzMatchRouter nz-menu-item routerLink="/main/user">
             <span nz-icon nzType="user-add"></span>
