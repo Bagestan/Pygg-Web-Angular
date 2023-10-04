@@ -11,6 +11,8 @@ export class BarChartComponent implements OnChanges {
   @Input() color!: string;
   @Input() dxolabel = true;
   @Input() dxoLegend = true;
+  @Input() argumentFieldArray: [] = [];
+  @Input() valueFieldArray: [] = [];
 
   constructor() {
     this.dataSource;

@@ -22,10 +22,12 @@ import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { DxChartModule, DxPieChartModule } from 'devextreme-angular';
 import { LucratividadeComponent } from './lucratividae.component';
 import { LucratividadeRoutingModule } from './lucratividae-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [BarsComponent, LucratividadeComponent, DoughnutComponent],
   imports: [
+    SharedModule,
     CommonModule,
     FormsModule,
     DatePipe,

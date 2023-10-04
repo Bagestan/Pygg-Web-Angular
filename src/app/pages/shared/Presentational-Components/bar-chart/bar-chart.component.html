@@ -1,5 +1,6 @@
-<dx-chart [dataSource]="dataSource" [title]="title"
-  ><dxi-series
+<dx-chart [dataSource]="dataSource" [title]="title">
+  <dxi-series
+    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].valueField"
     argumentField="argumentField"
     valueField="valueField"
     name="label"
@@ -29,6 +30,5 @@
     [visible]="dxoLegend"
     verticalAlignment="bottom"
     horizontalAlignment="center"
-  >
-  </dxo-legend>
+  ></dxo-legend>
 </dx-chart>
