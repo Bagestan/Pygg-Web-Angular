@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { PrintingTrackerComponent } from './printing-production-tracker/printing-tracker.component';
 import { ProductivityRoutingModule } from './productivity-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -14,9 +15,10 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 import { DxChartModule } from 'devextreme-angular';
-import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [PrintingTrackerComponent],
@@ -34,6 +36,8 @@ import { SharedModule } from '../shared/shared.module';
     NzGridModule,
     NzCollapseModule,
     NzIconModule,
+    NzDividerModule,
+    NzTypographyModule,
     DxChartModule,
   ],
 })
