@@ -31,12 +31,29 @@
           </li>
           <li nz-submenu nzTitle="Produtividade" nzIcon="monitor">
             <ul>
-              <li nz-menu-item routerLink="/main/productivity">Estamparia</li>
-              <li nz-menu-item>Bordado</li>
-              <li nz-menu-item>Costura</li>
-              <li nz-menu-item>Tituraria</li>
-              <li nz-menu-item>Tecelagem</li>
-              <li nz-menu-item>Revisão</li>
+              <li
+                nzMatchRouter
+                nz-menu-item
+                routerLink="/main/productivity"
+                [nzSelected]="nzSelected"
+              >
+                Estamparia
+              </li>
+              <li nzMatchRouter nz-menu-item routerLink="/main/Bordado">
+                Bordado
+              </li>
+              <li nzMatchRouter nz-menu-item routerLink="/main/Costura">
+                Costura
+              </li>
+              <li nzMatchRouter nz-menu-item routerLink="/main/Tituraria">
+                Tituraria
+              </li>
+              <li nzMatchRouter nz-menu-item routerLink="/main/Tecelagem">
+                Tecelagem
+              </li>
+              <li nzMatchRouter nz-menu-item routerLink="/main/Revisão">
+                Revisão
+              </li>
             </ul>
           </li>
         </ul>

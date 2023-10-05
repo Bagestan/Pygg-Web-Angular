@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ChartsService } from 'src/app/services/charts.service';
 import { FormService } from 'src/app/services/utils/form.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChartFilter, FieldsOptions } from './utils/chartModels';
 import { DateFormatService } from 'src/app/services/utils/date-format.service';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
@@ -73,7 +73,8 @@ export class LucratividadeComponent implements OnInit {
     private formService: FormService,
     private nzMessage: NzMessageService,
     private chartService: ChartsService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -108,7 +109,7 @@ export class LucratividadeComponent implements OnInit {
       };
 
       this.chartService.getChartData(chartForm);
-      this.router.navigate([`main/charts/${chartForm.chartType}`]);
+      this.router.navigate([chartForm.chartType], { relativeTo: this.route });
       this.collapsePanel = false;
     } else {
       this.nzMessage.warning('Verifique as informações do formulário');
@@ -156,7 +157,6 @@ export class LucratividadeComponent implements OnInit {
 
   getFieldOptions() {
     const option = this.form.get('chartDataOptions')?.value[0];
-    console.log('🚀 ~ option:', option);
     switch (option) {
       case 'result':
         this.getDefaultFieldOptions();
@@ -176,7 +176,6 @@ export class LucratividadeComponent implements OnInit {
 
       case 'option':
         this.chartFieldsOptions = this.genericFieldsOptions;
-        console.log('🚀 ~ chartFieldsOptions:', this.chartFieldsOptions);
         this.form.patchValue({ chartFields: this.chartFieldsOptions[0].value });
         break;
     }

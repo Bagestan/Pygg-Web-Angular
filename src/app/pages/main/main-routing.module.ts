@@ -19,7 +19,7 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'charts' },
+      { path: '', pathMatch: 'full', redirectTo: 'quality' },
       {
         path: 'user',
         loadChildren: () =>

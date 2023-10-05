@@ -1,4 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Data, Router } from '@angular/router';
+import { Observable, map, tap } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,12 +11,22 @@ import { AuthService } from 'src/app/services/auth.service';
 export class MainComponent implements OnInit, OnChanges {
   isCollapsed = false;
 
+  id: any;
+
   openMap: { [name: string]: boolean } = {
-    sub1: false,
+    sub1: true,
     sub2: false,
     sub3: false,
     sub4: false,
   };
+
+  nzSelected = true;
+
+  constructor(public auth: AuthService, private router: Router) {}
+
+  ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   openHandler(value: string): void {
     for (const key in this.openMap) {
@@ -22,12 +34,5 @@ export class MainComponent implements OnInit, OnChanges {
         this.openMap[key] = false;
       }
     }
-  }
-
-  constructor(public auth: AuthService) {}
-  ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('🚀 ~ changes:', changes);
   }
 }

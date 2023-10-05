@@ -35,9 +35,6 @@ export class ChartsService {
   }
 
   chartDataEmitter(form: ChartFilter, chartData: any[]) {
-    console.log('🚀 ~ chartData:', chartData);
-    console.log('🚀 ~ form:', form);
-
     switch (form.chartType) {
       case 'bar':
         ChartsService.barsChartDataEmitter.emit(chartData);

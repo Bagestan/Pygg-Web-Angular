@@ -4,7 +4,7 @@ import { DxChartComponent } from 'devextreme-angular';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { ChartsService } from 'src/app/services/charts.service';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ChartFilter } from '../utils/chartModels';
 
 @Component({
@@ -35,14 +35,12 @@ export class BarsComponent implements OnInit {
             : 'argumentField';
         } else {
           this.message.error('Nenhum registro encontrado');
-          this.router.navigate(['main/charts']);
         }
       },
     });
     ChartsService.formEmitter.subscribe({
       next: (data: ChartFilter) => {
         this.chartTitle = data.chartData;
-        console.log('🚀 ~ this.chartTitle:', this.chartTitle);
 
         switch (data.chartData) {
           case 'resultByClient':
