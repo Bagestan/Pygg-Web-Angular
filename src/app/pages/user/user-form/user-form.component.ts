@@ -23,6 +23,7 @@ export class UserFormComponent implements OnInit {
   cardLoading!: boolean;
   passwordVisible = false;
   password?: string;
+  defaultUserActivated!: boolean;
 
   protected destroy$: Subject<void> = new Subject<void>();
 
@@ -69,6 +70,7 @@ export class UserFormComponent implements OnInit {
           return this.RealtimeDB.getUserProfile(result.uid).pipe(
             map((userProfile: any) => {
               this.user.company = userProfile['company'];
+              this.defaultUserActivated = userProfile['disabled'];
             }),
             catchError(() => {
               return EMPTY;
@@ -97,9 +99,10 @@ export class UserFormComponent implements OnInit {
   submitForm() {
     const email = this.form.get('email')?.value;
     const user: UserData = {
+      uid: this.user?.uid,
       company: this.form.get('company')?.value,
       email: email,
-      uid: this.user?.uid,
+      disabled: !(this.form.get('disabled')?.value ?? false),
     };
     const userAuth: UserAuth = {
       uid: this.user?.uid,
@@ -107,7 +110,6 @@ export class UserFormComponent implements OnInit {
       password: this.form.get('password')?.value,
       disabled: !(this.form.get('disabled')?.value ?? false),
     };
-    console.log('🚀 ~ userAuth:', userAuth);
 
     if (this.form.valid) {
       this.user?.uid
@@ -131,8 +133,7 @@ export class UserFormComponent implements OnInit {
         .updateAuthUser(user)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (teste) => {
-            console.log('🚀 ~ teste:', teste);
+          next: () => {
             this.nzMessage.success('Senha atualizada');
           },
           error: (error: any) => {
@@ -182,7 +183,6 @@ export class UserFormComponent implements OnInit {
   }
 
   updateUserProfile(user: UserData) {
-    console.log('🚀 ~ user:', user);
     this.RealtimeDB.updateUserProfile(user)
       .pipe(takeUntil(this.destroy$))
       .subscribe({

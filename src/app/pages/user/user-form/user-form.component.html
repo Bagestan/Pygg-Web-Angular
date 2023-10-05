@@ -96,10 +96,25 @@
                 <nz-form-label>
                   Ativo:
                   <nz-switch
-                    style="margin-left: 0.5rem"
+                    style="margin: 0.5rem"
                     nzSize="small"
                     formControlName="disabled"
                   ></nz-switch>
+                  <span
+                    nz-typography
+                    nzType="danger"
+                    *ngIf="
+                      this.form.get('disabled')?.value === defaultUserActivated
+                    "
+                  >
+                    Para
+                    {{
+                      this.form.get("disabled")?.value === false
+                        ? "desativar"
+                        : "ativar"
+                    }}
+                    o usuário é necessário alterar a senha
+                  </span>
                 </nz-form-label>
               </nz-form-control>
             </nz-form-item>

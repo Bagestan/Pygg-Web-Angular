@@ -19,6 +19,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserFormComponent } from './user-form/user-form.component';
@@ -47,6 +48,7 @@ import { UsersTableComponent } from './usersTable/usersTable.component';
     NzSwitchModule,
     NzPopoverModule,
     NzPopconfirmModule,
+    NzTypographyModule,
   ],
 })
 export class UserModule {}
