@@ -10,13 +10,13 @@ import { RealtimeDatabaseService } from './realtime-database.service';
   providedIn: 'root',
 })
 export class AuthService {
+  protected destroy$: Subject<void> = new Subject<void>();
+
   isPermission = false;
   allowedCompanies = ['ACCL'];
 
   private auth: Auth = inject(Auth);
   idToken$ = idToken(this.auth);
-
-  protected destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private angularAuth: AngularFireAuth,

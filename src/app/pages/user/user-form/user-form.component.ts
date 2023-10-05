@@ -38,13 +38,7 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
     this.onLoading(true);
-
-    this.form = this.fb.group({
-      company: [null, [Validators.required]],
-      email: [null, [Validators.required]],
-      disabled: [null],
-      password: [null],
-    });
+    this.buildForm();
 
     this.route.params.pipe(takeUntil(this.destroy$)).subscribe((user: any) => {
       return Object.keys(user).length !== 0
@@ -53,6 +47,15 @@ export class UserFormComponent implements OnInit {
     });
 
     this.onLoading(false);
+  }
+
+  buildForm() {
+    this.form = this.fb.group({
+      company: [null, [Validators.required]],
+      email: [null, [Validators.required]],
+      disabled: [null],
+      password: [null],
+    });
   }
 
   private getUserData(email: string) {
@@ -65,7 +68,7 @@ export class UserFormComponent implements OnInit {
           this.user = result;
           return this.RealtimeDB.getUserProfile(result.uid).pipe(
             map((userProfile: any) => {
-              this.user.company = userProfile[0];
+              this.user.company = userProfile['company'];
             }),
             catchError(() => {
               return EMPTY;
@@ -104,6 +107,7 @@ export class UserFormComponent implements OnInit {
       password: this.form.get('password')?.value,
       disabled: !(this.form.get('disabled')?.value ?? false),
     };
+    console.log('🚀 ~ userAuth:', userAuth);
 
     if (this.form.valid) {
       this.user?.uid
@@ -127,7 +131,8 @@ export class UserFormComponent implements OnInit {
         .updateAuthUser(user)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: () => {
+          next: (teste) => {
+            console.log('🚀 ~ teste:', teste);
             this.nzMessage.success('Senha atualizada');
           },
           error: (error: any) => {
@@ -150,6 +155,7 @@ export class UserFormComponent implements OnInit {
             email: this.form.get('email')?.value,
             uid: result.uid,
           };
+
           this.createUserProfile(user);
 
           this.onBack();
@@ -176,6 +182,7 @@ export class UserFormComponent implements OnInit {
   }
 
   updateUserProfile(user: UserData) {
+    console.log('🚀 ~ user:', user);
     this.RealtimeDB.updateUserProfile(user)
       .pipe(takeUntil(this.destroy$))
       .subscribe({

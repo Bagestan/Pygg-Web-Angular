@@ -40,7 +40,7 @@ export class UsersTableComponent implements OnInit {
       this.usersList = result;
       result.forEach((user) => {
         this.database.getUserProfile(user.uid).subscribe((result: any) => {
-          user.company = result[0];
+          user.company = result['company'];
         });
       });
     });
