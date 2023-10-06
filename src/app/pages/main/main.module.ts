@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CalcDensidadeModule } from '../calcDensidade/calc-densidade.module';
 
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
@@ -15,6 +16,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 @NgModule({
   declarations: [MainComponent],
   imports: [
+    CalcDensidadeModule,
     CommonModule,
     ReactiveFormsModule,
     MainRoutingModule,

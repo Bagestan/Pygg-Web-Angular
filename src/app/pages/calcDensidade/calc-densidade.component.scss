@@ -41,9 +41,14 @@ nz-list {
   border: 1px solid #dddddd;
   border-radius: 0.2rem;
   background-color: #fafafa;
+  padding: 1rem;
   h3 {
     color: blue;
   }
+}
+
+h3 {
+  margin: 0;
 }
 
 .suffix {

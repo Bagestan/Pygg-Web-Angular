@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { CalcDensidadeRoutingModule } from './calc-densidade-routing.module';
 import { CalcDensidadeComponent } from './calc-densidade.component';
 
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -23,7 +22,6 @@ import { SuffixPipe } from 'src/app/services/utils/suffix.pipe';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CalcDensidadeRoutingModule,
     NzGridModule,
     NzCardModule,
     NzFormModule,
@@ -35,5 +33,6 @@ import { SuffixPipe } from 'src/app/services/utils/suffix.pipe';
     NzIconModule,
     NzListModule,
   ],
+  exports: [CalcDensidadeComponent],
 })
 export class CalcDensidadeModule {}
