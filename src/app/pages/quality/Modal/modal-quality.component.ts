@@ -193,11 +193,12 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
       .delete(data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (res) => {
-          this.nzMessage.success('Item Excluído' + res);
+        () => {
+          this.nzMessage.success('Item Excluído');
           this.showModal(false);
         },
         (error) => {
+          console.log('🚀 ~ error:', error);
           this.nzMessage.error(error);
         }
       );
