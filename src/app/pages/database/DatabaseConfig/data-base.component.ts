@@ -30,7 +30,6 @@ export class DataBaseComponent implements OnInit {
   ) {
     this.getConfig().subscribe({
       next: (data) => {
-        console.log('🚀 ~ data:', data);
         if (data) {
           this.config = data;
           this.populateForm();
@@ -44,11 +43,9 @@ export class DataBaseComponent implements OnInit {
   getConfig(): Observable<firebirdConfig> {
     return this.getCompany().pipe(
       switchMap((company: string) => {
-        console.log('🚀 ~ company:', company);
         return this.realtime.getData(`clientes/${company}/config/database`);
       }),
       map((data) => {
-        console.log(data);
         return data as firebirdConfig;
       })
     );

@@ -23,7 +23,9 @@ export class AuthService {
     private router: Router,
     private message: NzMessageService,
     private database: RealtimeDatabaseService
-  ) {}
+  ) {
+    this.getIsPermission();
+  }
 
   signIn(email: string, password: string, isPersistence = false) {
     const persistence = isPersistence ? 'session' : 'local';

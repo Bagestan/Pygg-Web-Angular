@@ -76,6 +76,7 @@
       </li>
 
       <li
+        *ngIf="auth.getIsPermission()"
         [(nzOpen)]="openMap['sub3']"
         (nzOpenChange)="openHandler('sub3')"
         nz-submenu

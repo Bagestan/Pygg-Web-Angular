@@ -198,7 +198,6 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
           this.showModal(false);
         },
         (error) => {
-          console.log('🚀 ~ error:', error);
           this.nzMessage.error(error);
         }
       );
