@@ -34,7 +34,7 @@ export class TableQualityComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private router: Router,
     private fireBirdService: FireBirdService,
-    private nzMessage: NzMessageService,
+    private message: NzMessageService,
     private qualityService: QualityService
   ) {}
 
@@ -81,18 +81,18 @@ export class TableQualityComponent implements OnInit, OnDestroy {
     this.fireBirdService
       .qualitySelect(SelectedCompanyId, startDate, endDate, hideResolved)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data: []) => {
+      .subscribe({
+        next: (data: []) => {
           this.totalItems = data.length;
           if (this.totalItems > 0) {
             this.qualityTableData = data;
             this.isLoadingData = false;
           } else {
-            this.nzMessage.error('Nenhum registro localizado');
+            this.message.info('Nenhum Registro encontrado');
             this.router.navigate(['main/quality']);
           }
         },
-        () => {
+        error: () => {
           if (this.try < 2) {
             this.try++;
             this.searchQuality(
@@ -103,8 +103,8 @@ export class TableQualityComponent implements OnInit, OnDestroy {
             );
           }
           this.isLoadingData = false;
-        }
-      );
+        },
+      });
   }
 
   onPageChange(event: number) {
@@ -115,6 +115,8 @@ export class TableQualityComponent implements OnInit, OnDestroy {
     if (ID_CLI && S_QUA) {
       this.fireBirdService
         .findQualityById(ID_CLI, S_QUA)
+        .pipe(takeUntil(this.destroy$))
+
         .subscribe((formData: never[]) => {
           this.qualityService.setModalFormQualityData(formData[0], false);
         });

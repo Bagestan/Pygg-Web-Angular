@@ -86,6 +86,10 @@
 
   <div class="charts">
     <app-bar-chart
+      *ngIf="
+        productivityByMachinesDataSource &&
+        productivityByMachinesDataSource.length > 0
+      "
       class="chartByMachines"
       [dataSource]="productivityByMachinesDataSource"
       [color]="PeriodBarsChartColor"
@@ -93,6 +97,10 @@
     ></app-bar-chart>
 
     <app-bar-chart
+      *ngIf="
+        productivityByPeriodDataSource &&
+        productivityByPeriodDataSource.length > 0
+      "
       class="chartByPeriod"
       [dataSource]="productivityByPeriodDataSource"
       [color]="MachineBarsChartColor"
@@ -106,6 +114,10 @@
 
   <div class="charts">
     <app-bar-chart
+      *ngIf="
+        eficienceByMachinesDataSource &&
+        eficienceByMachinesDataSource.length > 0
+      "
       class="chartByMachines"
       [dataSource]="eficienceByMachinesDataSource"
       [color]="PeriodBarsChartColor"
@@ -113,6 +125,9 @@
     ></app-bar-chart>
 
     <app-bar-chart
+      *ngIf="
+        eficienceByPeriodDataSource && eficienceByPeriodDataSource.length > 0
+      "
       class="chartByPeriod"
       [dataSource]="eficienceByPeriodDataSource"
       [color]="MachineBarsChartColor"

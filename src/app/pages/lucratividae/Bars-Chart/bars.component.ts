@@ -4,7 +4,7 @@ import { DxChartComponent } from 'devextreme-angular';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { ChartsService } from 'src/app/services/charts.service';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ChartFilter } from '../utils/chartModels';
 
 @Component({
@@ -26,19 +26,21 @@ export class BarsComponent implements OnInit {
   constructor(private message: NzMessageService, private router: Router) {}
 
   ngOnInit(): void {
-    ChartsService.barsChartDataEmitter.subscribe({
-      next: (data: any) => {
-        if (data.length > 0) {
-          this.dataSource = data;
-          this.xAxis = this.dataSource[0].firstName
-            ? 'firstName'
-            : 'argumentField';
-        } else {
-          this.message.error('Nenhum registro encontrado');
-        }
-      },
-    });
-    ChartsService.formEmitter.subscribe({
+    ChartsService.barsChartDataEmitter
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data: any) => {
+          if (data.length > 0) {
+            this.dataSource = data;
+            this.xAxis = this.dataSource[0].firstName
+              ? 'firstName'
+              : 'argumentField';
+          } else {
+            this.message.info('Nenhum Registro encontrado');
+          }
+        },
+      });
+    ChartsService.formEmitter.pipe(takeUntil(this.destroy$)).subscribe({
       next: (data: ChartFilter) => {
         this.chartTitle = data.chartData;
 

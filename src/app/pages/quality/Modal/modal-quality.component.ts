@@ -79,20 +79,20 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
       this.fireBirdService
         .updateQuality(this.form.value)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          () => {
+        .subscribe({
+          next: () => {
             this.nzMessage.success('Registro salvo com sucesso!');
             this.showModal(false);
           },
-          (err) => {
+          error: (error) => {
             this.nzMessage.error(
-              `Erro ao salvar o registro. Cod: ${err.error.gdscode}`,
+              `Erro ao salvar o registro. Cod: ${error.error.gdscode}`,
               {
                 nzDuration: 4000,
               }
             ).onClose!;
-          }
-        );
+          },
+        });
     } else {
       this.formService.validateAllFormFields(this.form);
       this.nzMessage.error(`Revise as informações do Formulário`, {
@@ -106,32 +106,30 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
       this.fireBirdService
         .updateInsertAction(this.actionForm.value)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          () => {
+        .subscribe({
+          next: (any) => {
             this.nzMessage.success('Registro salvo com sucesso!', {
               nzDuration: 2000,
             }).onClose!;
             this.editActionForm = !this.editActionForm;
             this.showModal(false);
           },
-          (err) => {
-            if (err.error.gdscode) {
+          error: (error: any) => {
+            if (error.error.gdscode) {
               this.nzMessage.error(
-                `Erro ao salvar o registro. Cod: ${err.error.gdscode}`,
+                `Erro ao salvar o registro. Cod: ${error.error.gdscode}`,
                 {
                   nzDuration: 4000,
                 }
               ).onClose!;
             } else {
-              this.nzMessage.error(`Erro ao salvar o registro. ${err}`, {
+              this.nzMessage.error(`Erro ao salvar o registro. ${error}`, {
                 nzDuration: 4000,
               }).onClose!;
             }
-          }
-        );
+          },
+        });
     } else {
-      // this.formService.validateAllFormFields(this.actionForm);
-
       this.nzMessage.error(`Revise as informações do Formulário`, {
         nzDuration: 4000,
       }).onClose!;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { UserData } from 'src/app/pages/user/models/userData';
 import { firebaseAdminService } from 'src/app/services/firebaseAdmin.service';
 import { RealtimeDatabaseService } from 'src/app/services/realtime-database.service';
@@ -10,6 +11,8 @@ import { RealtimeDatabaseService } from 'src/app/services/realtime-database.serv
   styleUrls: ['./usersTable.component.scss'],
 })
 export class UsersTableComponent implements OnInit {
+  protected destroy$: Subject<void> = new Subject<void>();
+
   usersList!: UserData[];
 
   constructor(
@@ -36,13 +39,19 @@ export class UsersTableComponent implements OnInit {
   }
 
   getAllUsers() {
-    this.fbAdmin.listUsers().subscribe((result: UserData[]) => {
-      this.usersList = result;
-      result.forEach((user) => {
-        this.database.getUserProfile(user.uid).subscribe((result: any) => {
-          user.company = result['company'];
+    this.fbAdmin
+      .listUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result: UserData[]) => {
+        this.usersList = result;
+        result.forEach((user) => {
+          this.database
+            .getUserProfile(user.uid)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((result: any) => {
+              user.company = result['company'];
+            });
         });
       });
-    });
   }
 }

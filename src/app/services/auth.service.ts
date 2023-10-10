@@ -23,9 +23,7 @@ export class AuthService {
     private router: Router,
     private message: NzMessageService,
     private database: RealtimeDatabaseService
-  ) {
-    this.getIsPermission();
-  }
+  ) {}
 
   signIn(email: string, password: string, isPersistence = false) {
     const persistence = isPersistence ? 'session' : 'local';
@@ -46,7 +44,6 @@ export class AuthService {
   // Permission
 
   getIsPermission(): boolean {
-    this.updatePermission();
     return this.isPermission;
   }
 
@@ -56,16 +53,18 @@ export class AuthService {
         this.database
           .getUserProfile(result.uid)
           .pipe(takeUntil(this.destroy$))
-          .subscribe(
-            (data: any) => {
+          .subscribe({
+            next: (data: any) => {
               this.isPermission = this.allowedCompanies.includes(data.company)
                 ? true
                 : false;
+              return this.isPermission;
             },
-            () => {
+            error: () => {
               return false;
-            }
-          );
+            },
+            complete: () => {},
+          });
     });
   }
 }

@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EMPTY, Observable, catchError, map, switchMap } from 'rxjs';
+import {
+  EMPTY,
+  Observable,
+  Subject,
+  catchError,
+  map,
+  switchMap,
+  takeUntil,
+} from 'rxjs';
 import { RealtimeDatabaseService } from 'src/app/services/realtime-database.service';
 import { FormService } from 'src/app/services/utils/form.service';
 
@@ -18,6 +26,8 @@ interface firebirdConfig {
   styleUrls: ['./data-base.component.scss'],
 })
 export class DataBaseComponent implements OnInit {
+  protected destroy$: Subject<void> = new Subject<void>();
+
   form!: FormGroup;
   config!: firebirdConfig;
 
@@ -28,14 +38,16 @@ export class DataBaseComponent implements OnInit {
     private realtime: RealtimeDatabaseService,
     private formService: FormService
   ) {
-    this.getConfig().subscribe({
-      next: (data) => {
-        if (data) {
-          this.config = data;
-          this.populateForm();
-        }
-      },
-    });
+    this.getConfig()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            this.config = data;
+            this.populateForm();
+          }
+        },
+      });
 
     this.buildform();
   }
@@ -89,15 +101,17 @@ export class DataBaseComponent implements OnInit {
   }
 
   saveConfig(config: firebirdConfig) {
-    this.getCompany().subscribe((company: string) => {
-      this.realtime
-        .saveData(`clientes/${company}/config/database`, config)
-        .pipe(
-          catchError(() => {
-            return EMPTY;
-          })
-        );
-    });
+    this.getCompany()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((company: string) => {
+        this.realtime
+          .saveData(`clientes/${company}/config/database`, config)
+          .pipe(
+            catchError(() => {
+              return EMPTY;
+            })
+          );
+      });
   }
 
   private getCompany(): Observable<string> {

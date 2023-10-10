@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, filter, switchMap, take } from 'rxjs';
+import { Observable, Subject, filter, switchMap, take, takeUntil } from 'rxjs';
 import { UserAuth, UserData } from 'src/app/pages/user/models/userData';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
   providedIn: 'root',
 })
 export class firebaseAdminService {
+  protected destroy$: Subject<void> = new Subject<void>();
+
   private readonly API = 'http://localhost:3000/';
 
   authenticatedUser!: boolean;
@@ -28,10 +30,12 @@ export class firebaseAdminService {
   ) {}
 
   getUserToken() {
-    this.auth.idToken$.subscribe((token: string | null) => {
-      this.token = token;
-      return token;
-    });
+    this.auth.idToken$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((token: string | null) => {
+        this.token = token;
+        return token;
+      });
   }
 
   headerBuilder(): void {

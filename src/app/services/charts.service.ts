@@ -2,11 +2,14 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { FireBirdService } from './firebird.service';
 import { DxChartTransformService } from './utils/dx-chart-Transform.service';
 import { ChartFilter } from '../pages/lucratividae/utils/chartModels';
+import { Subject, takeUntil } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChartsService {
+  protected destroy$: Subject<void> = new Subject<void>();
+
   static formEmitter = new EventEmitter();
 
   static barsChartDataEmitter = new EventEmitter();
@@ -25,13 +28,15 @@ export class ChartsService {
   }
 
   getChartData(form: ChartFilter) {
-    this.getFirebirdData(form).subscribe({
-      next: (result) => {
-        const chartData = this.dxTransform.DxTransform(result);
-        this.chartDataEmitter(form, chartData);
-      },
-      error: (error) => console.error(error),
-    });
+    this.getFirebirdData(form)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (result) => {
+          const chartData = this.dxTransform.DxTransform(result);
+          this.chartDataEmitter(form, chartData);
+        },
+        error: (error) => console.error(error),
+      });
   }
 
   chartDataEmitter(form: ChartFilter, chartData: any[]) {

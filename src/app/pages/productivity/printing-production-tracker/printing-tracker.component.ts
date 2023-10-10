@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject, retry, takeUntil } from 'rxjs';
 import { FireBirdService } from 'src/app/services/firebird.service';
 
@@ -39,7 +40,8 @@ export class PrintingTrackerComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private firebirdService: FireBirdService
+    private firebirdService: FireBirdService,
+    private message: NzMessageService
   ) {
     this.getCompanys();
 
@@ -60,18 +62,40 @@ export class PrintingTrackerComponent implements OnInit {
       startDate,
       endDate,
       'productionByMachines'
-    ).subscribe((data: any) => {
-      this.getMachinesDataSources(data);
-    });
+    )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data: any) => {
+          if (data.length === 0) {
+            this.message.info('Nenhum Registro encontrado');
+          } else {
+            this.getMachinesDataSources(data);
+          }
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
 
     this.getProductivityData(
       SelectedCompany,
       startDate,
       endDate,
       'productionByPeriod'
-    ).subscribe((data: any) => {
-      this.getPeriodDataSources(data);
-    });
+    )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data: any) => {
+          if (data.length === 0) {
+            this.message.info('Nenhum Registro encontrado');
+          } else {
+            this.getMachinesDataSources(data);
+          }
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
   }
   getPeriodDataSources(data: any) {
     this.eficienceByPeriodDataSource = [];

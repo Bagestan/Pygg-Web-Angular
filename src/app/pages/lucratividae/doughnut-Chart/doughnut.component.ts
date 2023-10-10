@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ChartsService } from 'src/app/services/charts.service';
 
 @Component({
@@ -8,6 +9,8 @@ import { ChartsService } from 'src/app/services/charts.service';
   styleUrls: ['./doughnut.component.scss'],
 })
 export class DoughnutComponent implements OnInit {
+  protected destroy$: Subject<void> = new Subject<void>();
+
   dataSource!: any;
   innerRadius = 0.2;
   chartType!: string;
@@ -18,14 +21,15 @@ export class DoughnutComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.url.subscribe((data) => {
+    this.route.url.pipe(takeUntil(this.destroy$)).subscribe((data) => {
       this.chartType = data[0].path;
     });
 
-    ChartsService.doughnutChartDataEmitter.subscribe((data) => {
-      this.populateChart(data);
-    });
-
+    ChartsService.doughnutChartDataEmitter
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.populateChart(data);
+      });
   }
 
   populateChart(data: any) {

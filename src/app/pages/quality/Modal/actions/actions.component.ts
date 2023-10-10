@@ -76,6 +76,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
 
     this.actionForm.valueChanges
       .pipe(filter(() => this.actionForm.valid))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.actionFormEvent.emit(this.actionForm);
       });
@@ -116,7 +117,6 @@ export class ActionsComponent implements OnInit, OnDestroy {
           this.fireBirdService
             .getActionQuality(data.ID_CLI, data.S_QUA)
             .pipe(takeUntil(this.destroy$))
-
             .subscribe((data: any) => {
               this.isLoading = true;
               this.actionList = data;

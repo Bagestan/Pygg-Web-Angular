@@ -48,9 +48,12 @@ export class FormQualityComponent implements OnInit, OnDestroy {
 
     this.getModalData();
 
-    this.form.valueChanges.pipe(filter(() => this.form.valid)).subscribe(() => {
-      this.formQualityEvent.emit(this.form);
-    });
+    this.form.valueChanges
+      .pipe(filter(() => this.form.valid))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.formQualityEvent.emit(this.form);
+      });
   }
 
   private getModalData() {

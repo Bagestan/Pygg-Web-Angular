@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { CalcService } from 'src/app/services/calc.service';
 
 @Component({
@@ -8,6 +9,8 @@ import { CalcService } from 'src/app/services/calc.service';
   styleUrls: ['./calc-densidade.component.scss'],
 })
 export class CalcDensidadeComponent {
+  protected destroy$: Subject<void> = new Subject<void>();
+
   form!: FormGroup;
 
   constructor(
@@ -27,7 +30,7 @@ export class CalcDensidadeComponent {
       densidadeMedida: [0],
     });
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       if (this.form.valid) {
         this.calc();
       }

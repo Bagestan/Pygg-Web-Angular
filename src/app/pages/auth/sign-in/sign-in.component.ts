@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
+  protected destroy$: Subject<void> = new Subject<void>();
+
   form!: FormGroup;
   isLoading = false;
 
@@ -36,9 +39,12 @@ export class SignInComponent implements OnInit {
   submit() {
     if (this.form.valid) {
       const { email, password, rememberMe } = this.form.getRawValue();
-      this.authService.signIn(email, password, rememberMe).subscribe(() => {
-        this.router.navigate(['main']);
-      });
+      this.authService
+        .signIn(email, password, rememberMe)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.router.navigate(['main']);
+        });
     } else {
       Object.values(this.form.controls).forEach((control) => {
         if (control.invalid) {
