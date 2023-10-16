@@ -66,8 +66,7 @@
             nzTooltipTitle="O Cliente é preenchido pelo código"
             [nzTooltipOrigin]="button.elementRef"
             nzTooltipPlacement="bottom"
-          >
-            <input type="text" nz-input formControlName="NM_CLI" readonly />
+            ><input type="text" nz-input formControlName="NM_CLI" readonly />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -105,16 +104,14 @@
     <nz-col nzXs="12" nzSm="12">
       <nz-form-item>
         <nz-form-label nzErrorTip="Responsável é obrigatório" nzRequired>
-          Responsável:</nz-form-label
-        >
-        <nz-form-control>
+          Responsável: </nz-form-label
+        ><nz-form-control>
           <input
             nzErrorTip="Responsável é obrigatório"
             type="text"
             nz-input
             formControlName="NM_RESP"
-          />
-        </nz-form-control>
+        /></nz-form-control>
       </nz-form-item>
     </nz-col>
 

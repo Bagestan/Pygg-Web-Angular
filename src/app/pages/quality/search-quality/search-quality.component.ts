@@ -37,7 +37,7 @@ export class SearchQualityComponent implements OnInit, OnDestroy {
     private qualityService: QualityService,
     private router: Router,
     private formService: FormService,
-    private nzMessage: NzMessageService
+    private message: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -52,40 +52,51 @@ export class SearchQualityComponent implements OnInit, OnDestroy {
   }
 
   submitForm() {
+    this.formService.validateAllFormFields(this.form);
     if (this.form.valid) {
       this.qualityService.searchFormData = this.form.value;
       this.router.navigate(['main/quality/table']);
     } else {
-      this.formService.validateAllFormFields(this.form);
-      this.nzMessage.error(`Revise as informações do Formulário`, {
+      this.message.error(`Revise as informações do Formulário`, {
         nzDuration: 4000,
       }).onClose!;
     }
   }
 
   getCompanys() {
+    this.message.remove();
+    this.isLoading = true;
+
     this.firebirdService
       .selectFromTable('SYS_EMP', undefined, undefined, 'CD_EMP, DS_EMP')
       .pipe(takeUntil(this.destroy$))
       .pipe(retry(3))
-      .subscribe((data: any) => {
-        this.isLoading = true;
-        this.companies = data;
-        if (data.length > 0) {
-          for (let i = 0; i < this.companies.length; i++) {
-            const Options = this.companies[i];
-            this.companies[i].OptionName = `
-              ${Options.CD_EMP} - ${Options.DS_EMP}`;
+      .subscribe({
+        next: (data: any) => {
+          this.message.remove();
+
+          this.companies = data;
+          if (data.length > 0) {
+            for (let i = 0; i < this.companies.length; i++) {
+              const Options = this.companies[i];
+              this.companies[i].OptionName = `
+                ${Options.CD_EMP} - ${Options.DS_EMP}`;
+            }
+            this.companyOptions = this.companies.map((company: any) => {
+              return {
+                CD_EMP: company.CD_EMP,
+                OptionName: company.OptionName,
+              };
+            });
+            this.firstCompany = this.companyOptions[0].CD_EMP;
           }
-          this.companyOptions = this.companies.map((company: any) => {
-            return {
-              CD_EMP: company.CD_EMP,
-              OptionName: company.OptionName,
-            };
-          });
-          this.firstCompany = this.companyOptions[0].CD_EMP;
-        }
-        this.isLoading = false;
+          this.isLoading = false;
+        },
+
+        error: (error) => {
+          console.error('🚀 ~ error:', error);
+          this.message.error(error);
+        },
       });
   }
 
@@ -95,6 +106,5 @@ export class SearchQualityComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next();
-    this.destroy$.complete();
   }
 }

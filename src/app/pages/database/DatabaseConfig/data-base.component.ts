@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  EMPTY,
-  Observable,
-  Subject,
-  catchError,
-  map,
-  switchMap,
-  takeUntil,
-} from 'rxjs';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
 import { RealtimeDatabaseService } from 'src/app/services/realtime-database.service';
 import { FormService } from 'src/app/services/utils/form.service';
 
@@ -31,21 +24,31 @@ export class DataBaseComponent implements OnInit {
   form!: FormGroup;
   config!: firebirdConfig;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.message.loading('');
+  }
 
   constructor(
     private fb: FormBuilder,
     private realtime: RealtimeDatabaseService,
-    private formService: FormService
+    private formService: FormService,
+    private message: NzMessageService
   ) {
     this.getConfig()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
+          this.message.remove();
           if (data) {
             this.config = data;
             this.populateForm();
+          } else {
+            this.message.error('Configuração não encontrada');
           }
+        },
+        error: (error) => {
+          this.message.error(error);
+          console.error(error);
         },
       });
 
@@ -106,11 +109,14 @@ export class DataBaseComponent implements OnInit {
       .subscribe((company: string) => {
         this.realtime
           .saveData(`clientes/${company}/config/database`, config)
-          .pipe(
-            catchError(() => {
-              return EMPTY;
-            })
-          );
+          .subscribe({
+            next: () => {
+              this.message.success('Configuração salva');
+            },
+            error: (error) => {
+              this.message.error('Erro ao salvar configuração', error);
+            },
+          });
       });
   }
 

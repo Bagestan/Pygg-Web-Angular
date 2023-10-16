@@ -123,6 +123,7 @@ export class FireBirdService {
       id: id || undefined,
       returnData: returnData || undefined,
     };
+
     return this.httpClient
       .post<[]>(`${this.API}quality/selectById`, data, {
         headers: this.header,
@@ -132,7 +133,12 @@ export class FireBirdService {
         retry(2),
         timeout(10000),
         tap({
-          error: (error) => this.message.error(error),
+          error: () => {
+            this.message.remove();
+            return this.message.error(
+              'Não foi possível consultar a lista de empresas no banco de dados'
+            );
+          },
         })
       );
   }

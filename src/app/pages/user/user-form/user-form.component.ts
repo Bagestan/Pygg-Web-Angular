@@ -34,10 +34,12 @@ export class UserFormComponent implements OnInit {
     private router: Router,
     private fbAdmin: firebaseAdminService,
     private RealtimeDB: RealtimeDatabaseService,
-    private formService: FormService
+    private formService: FormService,
+    private message: NzMessageService
   ) {}
 
   ngOnInit() {
+    this.message.loading('');
     this.onLoading(true);
     this.buildForm();
 
@@ -71,6 +73,7 @@ export class UserFormComponent implements OnInit {
             map((userProfile: any) => {
               this.user.company = userProfile['company'];
               this.defaultUserActivated = userProfile['disabled'];
+              this.message.remove();
             }),
             catchError(() => {
               return EMPTY;

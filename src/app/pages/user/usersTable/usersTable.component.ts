@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject, takeUntil } from 'rxjs';
 import { UserData } from 'src/app/pages/user/models/userData';
 import { firebaseAdminService } from 'src/app/services/firebaseAdmin.service';
@@ -19,12 +20,15 @@ export class UsersTableComponent implements OnInit {
     private router: Router,
     private fbAdmin: firebaseAdminService,
     private route: ActivatedRoute,
-    private database: RealtimeDatabaseService
+    private database: RealtimeDatabaseService,
+    private message: NzMessageService
   ) {
     this.getAllUsers();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.message.loading('');
+  }
 
   createUser() {
     this.router.navigate([`form/`], { relativeTo: this.route });
@@ -49,6 +53,7 @@ export class UsersTableComponent implements OnInit {
             .getUserProfile(user.uid)
             .pipe(takeUntil(this.destroy$))
             .subscribe((result: any) => {
+              this.message.remove();
               user.company = result['company'];
             });
         });

@@ -85,6 +85,7 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
             this.showModal(false);
           },
           error: (error) => {
+            console.log(error);
             this.nzMessage.error(
               `Erro ao salvar o registro. Cod: ${error.error.gdscode}`,
               {
@@ -107,14 +108,16 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
         .updateInsertAction(this.actionForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (any) => {
+          next: () => {
             this.nzMessage.success('Registro salvo com sucesso!', {
               nzDuration: 2000,
             }).onClose!;
             this.editActionForm = !this.editActionForm;
             this.showModal(false);
           },
-          error: (error: any) => {
+          error: (error) => {
+            console.log(error);
+
             if (error.error.gdscode) {
               this.nzMessage.error(
                 `Erro ao salvar o registro. Cod: ${error.error.gdscode}`,
@@ -190,15 +193,16 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
     this.fireBirdService
       .delete(data)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.nzMessage.success('Item Excluído');
           this.showModal(false);
         },
-        (error) => {
+        error: (error) => {
+          console.log(error);
           this.nzMessage.error(error);
-        }
-      );
+        },
+      });
   }
 
   ngOnDestroy(): void {

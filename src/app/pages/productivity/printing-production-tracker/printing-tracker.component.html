@@ -53,10 +53,8 @@
                 >Até</nz-date-picker
               ></nz-form-control
             ></nz-form-item
-          >
-        </nz-col>
-
-        <nz-col class="submitButton">
+          ></nz-col
+        ><nz-col class="submitButton">
           <button nz-button nzSize="default" nzType="default">
             <span nz-icon nzType="file-search" nzTheme="outline"></span>
             CONSULTAR
@@ -66,68 +64,45 @@
     </form>
   </nz-collapse-panel>
 </nz-collapse>
-
 <ng-template #title>
   <nz-page-header
     class="site-page-header"
     nzTitle="Apontamentos de Produção"
   ></nz-page-header>
 </ng-template>
-
 <section
   *ngIf="
-    productivityByMachinesDataSource &&
-    productivityByMachinesDataSource &&
     eficienceByMachinesDataSource &&
-    eficienceByPeriodDataSource
+    eficienceByPeriodDataSource &&
+    productivityByMachinesDataSource &&
+    productivityByPeriodDataSource
   "
 >
   <h3 nz-typography class="chartTitle">Produtividade</h3>
-
   <div class="charts">
     <app-bar-chart
-      *ngIf="
-        productivityByMachinesDataSource &&
-        productivityByMachinesDataSource.length > 0
-      "
       class="chartByMachines"
       [dataSource]="productivityByMachinesDataSource"
       [color]="PeriodBarsChartColor"
       [dxoLegend]="false"
     ></app-bar-chart>
-
     <app-bar-chart
-      *ngIf="
-        productivityByPeriodDataSource &&
-        productivityByPeriodDataSource.length > 0
-      "
       class="chartByPeriod"
       [dataSource]="productivityByPeriodDataSource"
       [color]="MachineBarsChartColor"
       [dxoLegend]="false"
     ></app-bar-chart>
   </div>
-
   <nz-divider></nz-divider>
-
   <h3 nz-typography class="chartTitle">Eficiência</h3>
-
   <div class="charts">
     <app-bar-chart
-      *ngIf="
-        eficienceByMachinesDataSource &&
-        eficienceByMachinesDataSource.length > 0
-      "
       class="chartByMachines"
       [dataSource]="eficienceByMachinesDataSource"
       [color]="PeriodBarsChartColor"
       [dxoLegend]="false"
     ></app-bar-chart>
-
     <app-bar-chart
-      *ngIf="
-        eficienceByPeriodDataSource && eficienceByPeriodDataSource.length > 0
-      "
       class="chartByPeriod"
       [dataSource]="eficienceByPeriodDataSource"
       [color]="MachineBarsChartColor"

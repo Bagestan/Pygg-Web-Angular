@@ -63,7 +63,6 @@ export class AuthService {
             error: () => {
               return false;
             },
-            complete: () => {},
           });
     });
   }

@@ -83,6 +83,7 @@ export class TableQualityComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data: []) => {
+          this.message.remove();
           this.totalItems = data.length;
           if (this.totalItems > 0) {
             this.qualityTableData = data;
@@ -92,7 +93,8 @@ export class TableQualityComponent implements OnInit, OnDestroy {
             this.router.navigate(['main/quality']);
           }
         },
-        error: () => {
+        error: (error) => {
+          console.error('🚀 ~ error:', error);
           if (this.try < 2) {
             this.try++;
             this.searchQuality(
@@ -102,6 +104,8 @@ export class TableQualityComponent implements OnInit, OnDestroy {
               hideResolved
             );
           }
+        },
+        complete: () => {
           this.isLoadingData = false;
         },
       });
@@ -116,7 +120,6 @@ export class TableQualityComponent implements OnInit, OnDestroy {
       this.fireBirdService
         .findQualityById(ID_CLI, S_QUA)
         .pipe(takeUntil(this.destroy$))
-
         .subscribe((formData: never[]) => {
           this.qualityService.setModalFormQualityData(formData[0], false);
         });
@@ -148,11 +151,6 @@ export class TableQualityComponent implements OnInit, OnDestroy {
     this.getQualityTableData();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   getActionsType() {
     this.fireBirdService
       .selectFromTable('PCP_OP_QUA_TP')
@@ -160,5 +158,10 @@ export class TableQualityComponent implements OnInit, OnDestroy {
       .subscribe((data: actionsType) => {
         this.qualityService.setActionOptions(data);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

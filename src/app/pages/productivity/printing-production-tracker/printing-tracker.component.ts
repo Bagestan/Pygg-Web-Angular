@@ -67,6 +67,7 @@ export class PrintingTrackerComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           if (data.length === 0) {
+            this.message.remove();
             this.message.info('Nenhum Registro encontrado');
           } else {
             this.getMachinesDataSources(data);
@@ -87,9 +88,10 @@ export class PrintingTrackerComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           if (data.length === 0) {
+            this.message.remove();
             this.message.info('Nenhum Registro encontrado');
           } else {
-            this.getMachinesDataSources(data);
+            this.getPeriodDataSources(data);
           }
         },
         error: (error) => {
