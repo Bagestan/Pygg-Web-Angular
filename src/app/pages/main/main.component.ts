@@ -1,5 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,8 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements OnInit, OnChanges {
-  isCollapsed = false;
+export class MainComponent {
+  isCollapsed = true;
 
   id: any;
 
@@ -21,12 +20,7 @@ export class MainComponent implements OnInit, OnChanges {
 
   nzSelected = true;
 
-  constructor(public auth: AuthService, private router: Router) {}
-
-  ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges): void {}
-
+  constructor(public auth: AuthService) {}
   openHandler(value: string): void {
     for (const key in this.openMap) {
       if (key !== value) {

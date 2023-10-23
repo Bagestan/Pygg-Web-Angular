@@ -1,0 +1,70 @@
+<div class="wrapper">
+  <h2 style="text-align: center" nz-typography>Formação de Preço</h2>
+
+  <form nz-form [formGroup]="form">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Cliente">
+        <span>Cliente</span>
+      </nz-form-label>
+
+      <nz-form-control [nzSpan]="24" (click)="createModal()">
+        <nz-input-group
+          [nzSuffix]="showSearchCustomer ? suffixCustomer : undefined"
+          class="input border-radius-1rem"
+        >
+          <input
+            type="text"
+            nz-input
+            readonly
+            nzBorderless
+            formControlName="customer"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixCustomer>
+          <button
+            class="searchButton border-radius-08rem"
+            nz-button
+            nzType="default"
+          >
+            <span nz-icon nzType="search" nzTheme="outline"></span>
+          </button>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Referencia">
+        <span>Referência</span>
+      </nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <nz-input-group class="input border-radius-1rem">
+          <input
+            type="text"
+            nz-input
+            nzBorderless
+            formControlName="reference"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <button
+        (click)="getProduct()"
+        class="border-radius-08rem"
+        nz-button
+        nzType="default"
+      >
+        Pesquisar
+      </button>
+    </nz-form-item>
+  </form>
+
+  <nz-card
+    (click)="openProduct(product)"
+    class="border-radius-1rem"
+    [nzBodyStyle]="{ padding: '1rem' }"
+  >
+    <app-product [product]="product"></app-product>
+  </nz-card>
+</div>

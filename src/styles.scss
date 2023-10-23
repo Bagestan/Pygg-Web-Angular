@@ -9,6 +9,14 @@
   display: flex;
 }
 
+.border-radius-1rem {
+  border-radius: 1rem;
+}
+
+.border-radius-08rem {
+  border-radius: 0.8rem;
+}
+
 .spaceBetween {
   justify-content: space-between;
 }
@@ -38,6 +46,10 @@ input::-webkit-inner-spin-button {
 
 nz-page-header {
   padding: 0 0.5rem !important;
+}
+
+.textCenter {
+  text-align: center;
 }
 
 .alignCenter {

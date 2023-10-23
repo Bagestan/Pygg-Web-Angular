@@ -1,0 +1,40 @@
+<div *ngIf="product">
+  <div class="img central">
+    <nz-avatar
+      class="d-flex central"
+      [nzSize]="128"
+      nzIcon="user"
+      nzSrc=".//src/assets/img/Camiseta.png"
+    ></nz-avatar>
+    <h4 class="textCenter" nz-typography>{{ product.referenceName }}</h4>
+  </div>
+  <div class="description">
+    <nz-descriptions>
+      <nz-descriptions-item nzTitle="Ref">
+        {{ product.referenceId }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Coleção">
+        {{ product.collectionName }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Cores">
+        {{ product.colors }}
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </div>
+  <div class="d-flex spaceBetween alignCenter">
+    <div>
+      <h5 class="marginZero">Custo</h5>
+      <h4 class="marginZero" nz-typography>
+        R$<strong>{{ product.price }}</strong>
+      </h4>
+    </div>
+    <button
+      class="border-radius-08rem"
+      nz-button
+      nzType="default"
+      *ngIf="showOption"
+    >
+      Selecionar
+    </button>
+  </div>
+</div>

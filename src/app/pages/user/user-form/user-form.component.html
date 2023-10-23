@@ -3,14 +3,12 @@
     [nzBordered]="false"
     [nzBodyStyle]="{ padding: 0 }"
     [nzLoading]="cardLoading"
-  >
-    <nz-page-header
+    ><nz-page-header
       class="site-page-header"
       (nzBack)="onBack()"
       nzBackIcon
       nzTitle="Editar Usuário"
-    >
-    </nz-page-header>
+    ></nz-page-header>
 
     <form
       nz-form
@@ -63,12 +61,12 @@
                   ></span>
                 </ng-template>
                 <ng-template #passwordError let-control>
-                  <ng-container *ngIf="control.hasError('required')"
-                    >Por favor confirme sua senha!</ng-container
-                  >
-                  <ng-container *ngIf="control.hasError('minlength')"
-                    >Tamanho mínimo 8!</ng-container
-                  >
+                  <ng-container *ngIf="control.hasError('required')">
+                    Por favor confirme sua senha!
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('minlength')">
+                    Tamanho mínimo 8!
+                  </ng-container>
                 </ng-template>
               </nz-input-group>
             </nz-form-control>
@@ -92,8 +90,7 @@
               <nz-form-control
                 nzErrorTip="Nome da empresa é obrigatório"
                 *ngIf="user"
-              >
-                <nz-form-label>
+                ><nz-form-label>
                   Ativo:
                   <nz-switch
                     style="margin: 0.5rem"
@@ -165,8 +162,7 @@
     (nzBack)="onBack()"
     nzBackIcon
     nzTitle="Editar Usuário"
-  >
-  </nz-page-header>
+  ></nz-page-header>
 </ng-template>
 
 <ng-template #iconTpl>

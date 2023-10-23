@@ -1,0 +1,22 @@
+.input {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: none;
+}
+
+.searchButton {
+  border: none;
+}
+
+.wrapper {
+  height: fit-content;
+}
+
+nz-list {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0 1rem;
+  border-radius: 1rem;
+}
+
+nz-list-item {
+  cursor: pointer;
+}

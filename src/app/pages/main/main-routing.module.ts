@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LucratividadeModule } from '../lucratividae/lucratividae.module';
 import { ProductivityModule } from '../productivity/productivity.module';
 import { CalcDensidadeComponent } from '../calcDensidade/calc-densidade.component';
+import { PricingModule } from '../pricing/pricing.module';
 
 const authGuardFn: CanActivateFn = () => {
   const isPermission = inject(AuthService);
@@ -48,6 +49,11 @@ const routes: Routes = [
           import('../productivity/productivity.module').then(
             () => ProductivityModule
           ),
+      },
+      {
+        path: 'pricing',
+        loadChildren: () =>
+          import('../pricing/pricing.module').then(() => PricingModule),
       },
       {
         path: 'calc',

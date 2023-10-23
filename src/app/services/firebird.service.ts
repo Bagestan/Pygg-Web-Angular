@@ -211,6 +211,38 @@ export class FireBirdService {
       );
   }
 
+  customerSearch(searchPrompt: string) {
+    return this.httpClient
+      .post(
+        `${this.API}quality/searchClientByName`,
+        { searchPrompt },
+        { headers: this.header }
+      )
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (error) => this.message.error(error),
+        })
+      );
+  }
+
+  getReference(reference: number) {
+    return this.httpClient
+      .post(
+        `${this.API}quality/getReference`,
+        { reference },
+        { headers: this.header }
+      )
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (error) => this.message.error(error),
+        })
+      );
+  }
+
   updateInsertAction(data: FormGroup) {
     return this.httpClient
       .post<[]>(`${this.API}quality/upOrInAction`, data, {

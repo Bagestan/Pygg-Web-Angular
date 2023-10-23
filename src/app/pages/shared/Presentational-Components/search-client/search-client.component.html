@@ -1,0 +1,45 @@
+<div class="wrapper">
+  <h2 style="text-align: center" nz-typography>Pesquisar Cliente</h2>
+
+  <form nz-form [formGroup]="form">
+    <nz-form-item>
+      <nz-form-control [nzSpan]="24">
+        <nz-input-group
+          class="input border-radius-1rem"
+          [nzSuffix]="suffixTemplate"
+          ><input
+            type="text"
+            nz-input
+            nzBorderless
+            formControlName="customerSearch"
+            (blur)="submit()"
+          />
+        </nz-input-group>
+        <ng-template #suffixTemplate>
+          <button
+            (click)="submit()"
+            class="searchButton border-radius-08rem"
+            nz-button
+            nzType="default"
+          >
+            <span nz-icon nzType="search" nzTheme="outline"> </span>
+          </button>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <div class="result" *ngIf="clientList">
+    <nz-list [nzSplit]="true">
+      <nz-list-item
+        *ngFor="let item of clientList"
+        (click)="selectCustomer(item)"
+      >
+        {{ item["id"] }} - {{ item["name"] }}
+      </nz-list-item>
+    </nz-list>
+    <p *ngIf="clientListLength">
+      mostrando 5 items de {{ clientListLength }} encontrados
+    </p>
+  </div>
+</div>
