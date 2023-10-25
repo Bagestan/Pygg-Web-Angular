@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject } from 'rxjs';
 import { SearchClientComponent } from '../shared/Presentational-Components/search-client/search-client.component';
-import { customer, product } from 'src/app/services/shared/types';
+import { Customer, Product } from 'src/app/services/shared/types';
 import { FireBirdService } from '../../services/firebird.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PriceFormationService } from 'src/app/services/price-formation.service';
 
 interface IModalData {
   favoriteLibrary: string;
@@ -26,7 +27,7 @@ export class PricingComponent {
   productInfoLoading = true;
   costInfoLoading = true;
   showSearchCustomer = true;
-  product!: product;
+  product!: Product;
 
   constructor(
     private modal: NzModalService,
@@ -35,7 +36,8 @@ export class PricingComponent {
     private fireBird: FireBirdService,
     private formService: FormService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private priceService: PriceFormationService
   ) {
     this.buildForm();
   }
@@ -49,7 +51,6 @@ export class PricingComponent {
         new Promise((resolve) => setTimeout(resolve, 1000));
       },
     });
-    modal.afterOpen.subscribe(() => {});
     modal.afterClose.subscribe((data) => {
       this.selectedCustomer(data);
     });
@@ -57,47 +58,64 @@ export class PricingComponent {
 
   buildForm() {
     this.form = this.fb.group({
-      customer: [null, Validators.required],
-      customerId: [null, Validators.required],
-      reference: [27627, Validators.required],
+      customer: ['DELZUITA DOS SANTOS GARCIA ME', Validators.required],
+      customerId: [1, Validators.required],
+      customerCNPJ: ['44.086.932/0001-74'],
+      referenceId: [75129, Validators.required],
     });
   }
 
-  selectedCustomer(customer: customer) {
+  selectedCustomer(customer: Customer) {
     this.showSearchCustomer = false;
-    this.form.patchValue({ customer: customer.name, customerId: customer.id });
+    this.priceService.customer = customer;
+    this.form.patchValue({
+      customer: customer.name,
+      customerId: customer.id,
+      customerCNPJ: customer.CNPJ,
+    });
   }
 
   getProduct() {
     this.formService.validateAllFormFields(this.form);
 
     if (this.form.valid) {
-      const { reference } = this.form.getRawValue();
-      this.fireBird.getReference(reference).subscribe((data: any) => {
-        const coresJuntas = this.getColors(data);
+      const { referenceId } = this.form.getRawValue();
+      this.fireBird.getReference(referenceId).subscribe((data: any) => {
+        const colors = this.getColors(data);
+        const price = this.getMean(data, 'CUSTO');
         this.product = {
           img: data[0]['IMAGEM'],
           collectionId: data[0]['CD_COL'],
           collectionName: data[0]['DS_COL'],
-          colors: coresJuntas,
           referenceName: data[0]['DS_REF'],
-          price: 12.34,
-          referenceId: this.form.get('reference')?.value,
+          colors: colors,
+          price: price,
+          referenceId: referenceId,
         };
       });
     }
   }
 
   getColors(objects: []) {
-    const cores = objects.map((object) => object['DS_COR']);
-    const coresJuntas = cores.join(', ');
-    return coresJuntas;
+    const colorsArray = objects.map((object) => object['DS_COR']);
+    const colors = colorsArray.join(', ');
+    return colors;
   }
 
-  openProduct(product: product) {
-    const productJSON = JSON.stringify(product);
-    localStorage.setItem('product', productJSON);
+  getMean(objects: [], property: string) {
+    const prices = objects.map((object) => object[property]);
 
+    if (prices.length === 0) return 0;
+
+    const soma = prices.reduce((total, numero) => {
+      return total + numero;
+    }, 0);
+
+    return soma / prices.length;
+  }
+
+  openProduct(product: Product) {
+    this.priceService.product = product;
     this.router.navigate([`formation`], { relativeTo: this.route });
   }
 }

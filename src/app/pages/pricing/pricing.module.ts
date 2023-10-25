@@ -6,6 +6,8 @@ import { PricingRoutingModule } from './pricing-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { PricingComponent } from './pricing.component';
 import { ProductComponent } from './product/product.component';
+import { PriceFormationComponent } from './price-formation/price-formation.component';
+import { FinalPriceComponent } from './final-price/final-price.component';
 
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -22,10 +24,14 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { PriceFormationComponent } from './price-formation/price-formation.component';
 
 @NgModule({
-  declarations: [PricingComponent, ProductComponent, PriceFormationComponent],
+  declarations: [
+    PricingComponent,
+    ProductComponent,
+    PriceFormationComponent,
+    FinalPriceComponent,
+  ],
   imports: [
     SharedModule,
     CommonModule,

@@ -2,62 +2,65 @@
   <h2 style="text-align: center" nz-typography>Formação de Preço</h2>
 
   <form nz-form [formGroup]="form">
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Cliente">
-        <span>Cliente</span>
-      </nz-form-label>
+    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
+      <nz-form-item nz-col nzSm="24" nzXs="24">
+        <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="customer">
+          Cliente
+        </nz-form-label>
 
-      <nz-form-control [nzSpan]="24" (click)="createModal()">
-        <nz-input-group
-          [nzSuffix]="showSearchCustomer ? suffixCustomer : undefined"
-          class="input border-radius-1rem"
-        >
-          <input
-            type="text"
-            nz-input
-            readonly
-            nzBorderless
-            formControlName="customer"
-          />
-        </nz-input-group>
-
-        <ng-template #suffixCustomer>
-          <button
-            class="searchButton border-radius-08rem"
-            nz-button
-            nzType="default"
+        <nz-form-control nz-col nzSm="24" nzXs="24" (click)="createModal()">
+          <nz-input-group
+            [nzSuffix]="showSearchCustomer ? suffixCustomer : undefined"
+            class="input border-radius-1rem"
+            nzSize="large"
           >
-            <span nz-icon nzType="search" nzTheme="outline"></span>
-          </button>
-        </ng-template>
-      </nz-form-control>
-    </nz-form-item>
+            <input
+              type="text"
+              nz-input
+              readonly
+              nzBorderless
+              formControlName="customer"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-row>
 
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Referencia">
-        <span>Referência</span>
-      </nz-form-label>
-      <nz-form-control [nzSpan]="24">
-        <nz-input-group class="input border-radius-1rem">
-          <input
-            type="text"
-            nz-input
-            nzBorderless
-            formControlName="reference"
-          />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <button
-        (click)="getProduct()"
-        class="border-radius-08rem"
-        nz-button
-        nzType="default"
-      >
-        Pesquisar
-      </button>
-    </nz-form-item>
+    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="referenceId">
+            Referência
+          </nz-form-label>
+          <nz-input-group
+            class="input border-radius-1rem"
+            nz-col
+            nzSm="24"
+            nzXs="24"
+            nzSize="large"
+          >
+            <input
+              type="text"
+              nz-input
+              placeholder="10"
+              formControlName="referenceId"
+              nzBorderless
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button
+          (click)="getProduct()"
+          class="border-radius-08rem"
+          nz-button
+          nzType="default"
+        >
+          Pesquisar
+        </button>
+      </nz-form-item>
+    </nz-row>
   </form>
 
   <nz-card
@@ -68,3 +71,9 @@
     <app-product [product]="product"></app-product>
   </nz-card>
 </div>
+
+<ng-template #suffixCustomer>
+  <button class="searchButton border-radius-08rem" nz-button nzType="default">
+    <span nz-icon nzType="search" nzTheme="outline"></span>
+  </button>
+</ng-template>

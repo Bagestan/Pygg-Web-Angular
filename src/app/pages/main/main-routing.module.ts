@@ -20,7 +20,7 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'lucratividade' },
+      { path: '', pathMatch: 'full', redirectTo: 'pricing' },
       {
         path: 'user',
         loadChildren: () =>

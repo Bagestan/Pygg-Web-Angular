@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { Subject, takeUntil } from 'rxjs';
 import { FireBirdService } from 'src/app/services/firebird.service';
-import { customer } from 'src/app/services/shared/types';
+import { Customer } from 'src/app/services/shared/types';
 
 interface IModalData {
   favoriteLibrary: string;
@@ -52,15 +52,17 @@ export class SearchClientComponent {
   searchResult(data: []) {
     data.map((item: any) => {
       item.name = item['NM_CLI'];
-      item.id = item['CD_CLI'];
+      item.id = item['ID_CLI'];
+      item.cnpj = item['CD_CLI'];
       delete item['NM_CLI'];
+      delete item['ID_CLI'];
       delete item['CD_CLI'];
     });
     this.clientListLength = data.length;
     this.clientList = data.slice(0, 5);
   }
 
-  selectCustomer(item: customer) {
+  selectCustomer(item: Customer) {
     this.#modal.destroy(item);
   }
 }

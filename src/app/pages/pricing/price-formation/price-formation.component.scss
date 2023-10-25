@@ -1,0 +1,32 @@
+nz-card {
+  background-color: rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+.input {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: none;
+}
+
+nz-form-item {
+  margin-bottom: 1rem;
+}
+
+.teste {
+  border-radius: 100%;
+  width: 38px;
+  height: 38px;
+}
+
+.taxLabel {
+  height: 40px;
+  width: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: rgba(0, 0, 0, 0.5);
+}

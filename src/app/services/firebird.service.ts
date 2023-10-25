@@ -243,6 +243,46 @@ export class FireBirdService {
       );
   }
 
+  getMarkup() {
+    return this.httpClient
+      .post(`${this.API}quality/getMarkupOptions`, {}, { headers: this.header })
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (error) => this.message.error(error),
+        })
+      );
+  }
+
+  getPaymentOption() {
+    return this.httpClient
+      .post(`${this.API}quality/getPaymentOption`, {}, { headers: this.header })
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (error) => this.message.error(error),
+        })
+      );
+  }
+
+  getTaxes(customerId: number | string) {
+    return this.httpClient
+      .post(
+        `${this.API}quality/getTaxes`,
+        { customerId },
+        { headers: this.header }
+      )
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (error) => this.message.error(error),
+        })
+      );
+  }
+
   updateInsertAction(data: FormGroup) {
     return this.httpClient
       .post<[]>(`${this.API}quality/upOrInAction`, data, {
