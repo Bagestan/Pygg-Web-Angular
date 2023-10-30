@@ -1,8 +1,14 @@
 <div class="wrapper">
-  <h2 style="text-align: center" nz-typography>Formação de Preço</h2>
+  <nz-page-header nzBackIcon>
+    <nz-page-header-title>Formação de Preço</nz-page-header-title>
+  </nz-page-header>
 
   <form nz-form [formGroup]="form">
-    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
+    <nz-row
+      [nzAlign]="'bottom'"
+      [nzJustify]="'space-between'"
+      [nzGutter]="[16, 16]"
+    >
       <nz-form-item nz-col nzSm="24" nzXs="24">
         <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="customer">
           Cliente
@@ -26,7 +32,7 @@
       </nz-form-item>
     </nz-row>
 
-    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
+    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'" [nzGutter]="16">
       <nz-form-item>
         <nz-form-control>
           <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="referenceId">
@@ -64,11 +70,12 @@
   </form>
 
   <nz-card
-    (click)="openProduct(product)"
+    *ngIf="priceService.product"
+    (click)="openProduct()"
     class="border-radius-1rem"
     [nzBodyStyle]="{ padding: '1rem' }"
   >
-    <app-product [product]="product"></app-product>
+    <app-product></app-product>
   </nz-card>
 </div>
 

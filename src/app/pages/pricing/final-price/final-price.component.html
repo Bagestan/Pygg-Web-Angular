@@ -1,7 +1,17 @@
 <div class="wrapper">
-  <h2 style="text-align: center" nz-typography>Formação de Preço</h2>
+  <nz-page-header nzBackIcon (nzBack)="routeReturn()">
+    <nz-page-header-title>Formação de Preço</nz-page-header-title>
+  </nz-page-header>
 
-  <nz-card class="border-radius-1rem" [nzBodyStyle]="{ padding: '1rem' }">
-    <app-product [product]="product" [productTaxes]="productTaxes" [showOption]="false"></app-product>
+  <nz-card
+    *ngIf="
+      this.priceService.product &&
+      this.priceService.productTaxes &&
+      this.priceService.productCost
+    "
+    class="border-radius-1rem"
+    [nzBodyStyle]="{ padding: '1rem' }"
+  >
+    <app-product [showOption]="false"></app-product>
   </nz-card>
 </div>

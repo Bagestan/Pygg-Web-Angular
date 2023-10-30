@@ -1,13 +1,15 @@
 <div class="wrapper">
-  <h2 style="text-align: center" nz-typography>Formação de Preço</h2>
+  <nz-page-header nzBackIcon (nzBack)="routeReturn()">
+    <nz-page-header-title>Formação de Preço</nz-page-header-title>
+  </nz-page-header>
 
   <nz-card class="border-radius-1rem" [nzBodyStyle]="{ padding: '1rem' }">
-    <app-product [product]="product" [showOption]="false"></app-product>
+    <app-product [showOption]="false"></app-product>
   </nz-card>
 
   <form nz-form [formGroup]="form">
     <nz-row [nzAlign]="'bottom'">
-      <nz-form-item nz-col nzXs="21" nzSm="22">
+      <nz-form-item nz-col nzXs="20" nzSm="22">
         <nz-form-control>
           <nz-form-label nzFor="markupId" nzXs="12" nzSm="12">
             Markup
@@ -19,9 +21,9 @@
             nzSm="12"
             [nzLabelAlign]="'right'"
             nzNoColon="true"
-            *ngIf="markupInterest"
+            *ngIf="priceService.markupInterest"
           >
-            {{ markupInterest | number : "1.2-2" }} %
+            {{ priceService.markupInterest | number : "1.2-2" }} %
           </nz-form-label>
           <!--  -->
           <nz-select
@@ -34,7 +36,7 @@
             nzSize="large"
           >
             <nz-option
-              *ngFor="let item of markupOptions"
+              *ngFor="let item of priceService.markupOptions"
               [nzValue]="item.ID_TAB"
               [nzLabel]="item.CD_DS"
             ></nz-option>
@@ -42,16 +44,16 @@
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item nz-col nzXs="3" nzSm="2">
+      <nz-form-item nz-col nzXs="4" nzSm="2">
         <div class="taxLabel">
-          {{ markupInterest | number : "1.1-1" }}
-          <span *ngIf="markupInterest"> %</span>
+          {{ priceService.markupInterest | number : "1.1-1" }}
+          <span *ngIf="priceService.markupInterest"> %</span>
         </div>
       </nz-form-item>
     </nz-row>
 
-    <nz-row [nzAlign]="'bottom'">
-      <nz-form-item nz-col nzXs="21" nzSm="22">
+    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
+      <nz-form-item nz-col nzXs="20" nzSm="22">
         <nz-form-control>
           <nz-form-label nzFor="paymentId">
             Condição de Pagamento
@@ -64,27 +66,25 @@
             (ngModelChange)="updatePaymentInterest($event)"
           >
             <nz-option
-              *ngFor="let item of paymentOptions"
+              *ngFor="let item of priceService.paymentOptions"
               [nzValue]="item.ID_PGTO"
               [nzLabel]="item.CD_DS"
             ></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item nz-col nzXs="3" nzSm="2">
+      <nz-form-item nz-col nzXs="4" nzSm="2">
         <div class="taxLabel">
-          {{ paymentInterest | number : "1.1-1" }}
-          <span *ngIf="paymentInterest"> %</span>
+          {{ priceService.paymentInterest | number : "1.1-1" }}
+          <span *ngIf="priceService.paymentInterest"> %</span>
         </div>
       </nz-form-item>
     </nz-row>
 
     <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
-      <nz-form-item nzFlex="auto">
+      <nz-form-item nz-col nzXs="12" nzSm="24">
         <nz-form-control>
-          <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="markup">
-            Lucro
-          </nz-form-label>
+          <nz-form-label nzFor="markup"> Lucro </nz-form-label>
           <nz-input-group
             class="input border-radius-1rem"
             [nzSuffix]="suffixTemplate"
@@ -104,12 +104,14 @@
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item nzSm="2" nzXs="2">
+      <nz-form-item nzSm="4" nzXs="2">
         <button
           (click)="submit()"
           class="border-radius-08rem"
           nz-button
           nzType="default"
+          nzSize="large"
+          style="border-radius: 50% !important"
         >
           <span nz-icon nzType="right" nzTheme="outline"></span>
         </button>

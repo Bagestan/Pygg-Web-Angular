@@ -1,4 +1,4 @@
-<div *ngIf="product">
+<div *ngIf="priceService.product">
   <div class="img central">
     <nz-avatar
       class="d-flex central"
@@ -6,29 +6,84 @@
       nzIcon="user"
       nzSrc=".//src/assets/img/Camiseta.png"
     ></nz-avatar>
-    <h4 class="textCenter" nz-typography>{{ product.referenceName }}</h4>
-  </div>
-  <div class="description">
-    <nz-descriptions [nzColumn]="1" nzSize="small">
-      <nz-descriptions-item nzTitle="Referência">
-        {{ product.referenceId }}
-      </nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Coleção">
-        {{ product.collectionName }}
-      </nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Cores">
-        {{ product.colors }}
-      </nz-descriptions-item>
-    </nz-descriptions>
+    <h4 class="textCenter" nz-typography>
+      {{ priceService.product.referenceName }}
+    </h4>
   </div>
 
+  <nz-list nzSize="small" nzSplit="false">
+    <nz-list-item>
+      <span nz-typography> Referência </span>
+      {{ priceService.product.referenceId }}
+    </nz-list-item>
+    <nz-list-item>
+      <span nz-typography> Coleção </span>
+      {{ priceService.product.collectionName }}
+    </nz-list-item>
+    <nz-list-item>
+      <span nz-typography> Cores </span>
+      {{ priceService.product.colors }}
+    </nz-list-item>
+  </nz-list>
+
+  <nz-divider *ngIf="priceService.productCost" nzText="Preço"></nz-divider>
+
+  <nz-list nzSize="small" nzSplit="false" *ngIf="priceService.productCost">
+    <nz-list-item>
+      <span nz-typography> Custo </span>
+      {{ priceService.product.cost | currency : "BRL" : "symbol" : "1.2-2" }}
+    </nz-list-item>
+
+    <nz-list-item>
+      <span nz-typography> Margem Contribuição </span>
+      {{
+        priceService.productCost.markup.markupMargin
+          .toFixed(2)
+          .replace(".", ",")
+      }}
+      %
+    </nz-list-item>
+
+    <nz-list-item>
+      <span nz-typography> IR </span>
+      {{ priceService.productTaxes["IR"].toFixed(2).replace(".", ",") }} %
+    </nz-list-item>
+
+    <nz-list-item>
+      <span nz-typography> CSLL </span>
+      {{ priceService.productTaxes["CSLL"].toFixed(2).replace(".", ",") }} %
+    </nz-list-item>
+
+    <nz-list-item
+      [ngStyle]="{ color: priceService.lucroCalculado < 0 ? 'red' : 'green' }"
+    >
+      <span
+        nz-typography
+        [ngStyle]="{ color: priceService.lucroCalculado < 0 ? 'red' : 'green' }"
+      >
+        <strong> Resultado líquido </strong>
+      </span>
+      <strong>
+        {{ priceService.lucroCalculado.toFixed(2).replace(".", ",") }}
+        %
+      </strong>
+    </nz-list-item>
+
+    <nz-list-item>
+      <span nz-typography> Preço Produto </span>
+      {{ priceService.precoCalc | currency : "BRL" : "symbol" : "1.2-2" }}
+    </nz-list-item>
+  </nz-list>
+
   <div class="d-flex spaceBetween alignCenter">
-    <div>
+    <div *ngIf="!priceService.productCost">
       <h5 class="marginZero">Custo</h5>
       <h4 class="marginZero" nz-typography>
-        <strong>{{
-          product.price | currency : "BRL" : "symbol" : "1.2-2"
-        }}</strong>
+        <strong>
+          {{
+            priceService.product.cost | currency : "BRL" : "symbol" : "1.2-2"
+          }}
+        </strong>
       </h4>
     </div>
 
@@ -37,17 +92,54 @@
       nz-button
       nzType="default"
       *ngIf="showOption"
+      nzSize="large"
     >
       Selecionar
     </button>
   </div>
-
-  <nz-descriptions [nzColumn]="1" nzSize="small">
-    <nz-descriptions-item nzTitle="Product"
-      >Cloud Database</nz-descriptions-item
-    >
-    <nz-descriptions-item nzTitle="Billing">Prepaid</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="time">18:00:00</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Amount">$80.00</nz-descriptions-item>
-  </nz-descriptions>
 </div>
+
+<div
+  class="d-flex alignCenter"
+  style="flex-direction: column"
+  *ngIf="priceService.precoCalc"
+>
+  <h4 class="central">Preço final</h4>
+  <form nz-form [formGroup]="form">
+    <nz-form-item class="central">
+      <nz-form-control>
+        <input
+          formControlName="price"
+          currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div class="d-flex alignCenter" *ngIf="priceService.receitaLiquidaPrecoInput">
+  <ng-container
+    *ngIf="priceService.receitaLiquidaPrecoInput > 0; else deniedTemplate"
+  >
+    <nz-avatar
+      class="central"
+      [nzSize]="64"
+      style="background-color: #119a28"
+      nzIcon="check"
+    ></nz-avatar>
+  </ng-container>
+</div>
+
+<ng-template #deniedTemplate>
+  <nz-avatar
+    class="central"
+    [nzSize]="64"
+    style="background-color: #ff3141"
+    nzIcon="close"
+  ></nz-avatar>
+</ng-template>
+
+<ng-template #teste> Referência </ng-template>
+
+<ng-template #tagTemplate> Conteúdo </ng-template>

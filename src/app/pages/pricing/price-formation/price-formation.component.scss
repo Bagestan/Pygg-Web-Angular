@@ -3,11 +3,6 @@ nz-card {
   margin-bottom: 1rem;
 }
 
-.input {
-  background-color: rgba(0, 0, 0, 0.05);
-  border: none;
-}
-
 nz-form-item {
   margin-bottom: 1rem;
 }
@@ -20,9 +15,8 @@ nz-form-item {
 
 .taxLabel {
   height: 40px;
-  width: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
   text-align: center;
   display: flex;
   align-items: center;

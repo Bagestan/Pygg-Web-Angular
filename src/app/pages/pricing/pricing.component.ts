@@ -1,9 +1,9 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component, ViewContainerRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject } from 'rxjs';
 import { SearchClientComponent } from '../shared/Presentational-Components/search-client/search-client.component';
-import { Customer, Product } from 'src/app/services/shared/types';
+import { Customer } from 'src/app/services/shared/types';
 import { FireBirdService } from '../../services/firebird.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,7 +19,7 @@ interface IModalData {
   templateUrl: './pricing.component.html',
   styleUrls: ['./pricing.component.scss'],
 })
-export class PricingComponent {
+export class PricingComponent implements OnInit {
   protected destroy$: Subject<void> = new Subject<void>();
 
   form!: FormGroup;
@@ -27,7 +27,6 @@ export class PricingComponent {
   productInfoLoading = true;
   costInfoLoading = true;
   showSearchCustomer = true;
-  product!: Product;
 
   constructor(
     private modal: NzModalService,
@@ -37,42 +36,44 @@ export class PricingComponent {
     private formService: FormService,
     private router: Router,
     private route: ActivatedRoute,
-    private priceService: PriceFormationService
-  ) {
-    this.buildForm();
+    protected priceService: PriceFormationService
+  ) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      customer: [null, Validators.required],
+      customerId: [null, Validators.required],
+      customerCNPJ: [null],
+      referenceId: [75129, Validators.required],
+    });
   }
 
   createModal() {
     const modal = this.modal.create<SearchClientComponent, IModalData>({
       nzClosable: false,
+      nzFooter: null,
       nzContent: SearchClientComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzOnOk: () => {
         new Promise((resolve) => setTimeout(resolve, 1000));
       },
     });
-    modal.afterClose.subscribe((data) => {
-      this.selectedCustomer(data);
-    });
-  }
-
-  buildForm() {
-    this.form = this.fb.group({
-      customer: ['DELZUITA DOS SANTOS GARCIA ME', Validators.required],
-      customerId: [1, Validators.required],
-      customerCNPJ: ['44.086.932/0001-74'],
-      referenceId: [75129, Validators.required],
+    modal.afterClose.subscribe((customer) => {
+      this.selectedCustomer(customer);
     });
   }
 
   selectedCustomer(customer: Customer) {
     this.showSearchCustomer = false;
     this.priceService.customer = customer;
+
     this.form.patchValue({
       customer: customer.name,
       customerId: customer.id,
       customerCNPJ: customer.CNPJ,
     });
+
+    this.priceService.getTaxes();
   }
 
   getProduct() {
@@ -80,16 +81,18 @@ export class PricingComponent {
 
     if (this.form.valid) {
       const { referenceId } = this.form.getRawValue();
+
       this.fireBird.getReference(referenceId).subscribe((data: any) => {
         const colors = this.getColors(data);
-        const price = this.getMean(data, 'CUSTO');
-        this.product = {
+        const cost = this.getMean(data, 'CUSTO');
+
+        this.priceService.product = {
           img: data[0]['IMAGEM'],
           collectionId: data[0]['CD_COL'],
           collectionName: data[0]['DS_COL'],
           referenceName: data[0]['DS_REF'],
           colors: colors,
-          price: price,
+          cost: cost,
           referenceId: referenceId,
         };
       });
@@ -99,6 +102,7 @@ export class PricingComponent {
   getColors(objects: []) {
     const colorsArray = objects.map((object) => object['DS_COR']);
     const colors = colorsArray.join(', ');
+
     return colors;
   }
 
@@ -114,8 +118,7 @@ export class PricingComponent {
     return soma / prices.length;
   }
 
-  openProduct(product: Product) {
-    this.priceService.product = product;
+  openProduct() {
     this.router.navigate([`formation`], { relativeTo: this.route });
   }
 }

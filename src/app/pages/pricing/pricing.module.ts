@@ -22,8 +22,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
   declarations: [
@@ -51,8 +53,10 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzAvatarModule,
     NzButtonModule,
     NzTypographyModule,
-    NzDescriptionsModule,
     NzModalModule,
+    NzListModule,
+    NzDividerModule,
+    CurrencyMaskModule,
   ],
 })
 export class PricingModule {}
