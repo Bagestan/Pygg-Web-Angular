@@ -9,20 +9,16 @@
   display: flex;
 }
 
-.border-radius-1rem {
-  border-radius: 1rem;
-}
-
-.border-radius-50 {
-  border-radius: 2rem;
-}
-
 .border-radius-08rem {
-  border-radius: 0.8rem;
+  border-radius: 0.8rem !important;
 }
 
 .spaceBetween {
   justify-content: space-between;
+}
+
+.input {
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 nz-sider .ant-layout-sider-children {
@@ -63,4 +59,14 @@ nz-page-header {
 .input {
   background-color: rgba(0, 0, 0, 0.05);
   border: none;
+}
+
+.ant-input-affix-wrapper-status-error:not(
+    .ant-input-affix-wrapper-disabled
+  ):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper,
+.ant-input-affix-wrapper-status-error:not(
+    .ant-input-affix-wrapper-disabled
+  ):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover {
+  border: 1px solid #ff4d4f;
+  background-color: rgba(0, 0, 0, 0.05);
 }

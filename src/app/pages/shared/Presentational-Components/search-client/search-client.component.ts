@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { Subject, takeUntil } from 'rxjs';
 import { FireBirdService } from 'src/app/services/firebird.service';
 import { Customer } from 'src/app/services/shared/types';
+import { FormService } from 'src/app/services/utils/form.service';
 
 interface IModalData {
   favoriteLibrary: string;
@@ -28,7 +30,9 @@ export class SearchClientComponent {
 
   constructor(
     private fb: FormBuilder,
-    private fireBirdService: FireBirdService
+    private fireBirdService: FireBirdService,
+    private message: NzMessageService,
+    private formService: FormService
   ) {
     this.form = this.fb.group({
       customerSearch: [null, Validators.required],
@@ -40,12 +44,18 @@ export class SearchClientComponent {
   }
 
   searchClient() {
+    this.formService.validateAllFormFields(this.form);
+
     const { customerSearch } = this.form.getRawValue();
     this.fireBirdService
       .customerSearch(customerSearch)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        this.searchResult(data);
+        if (data.length > 0) {
+          this.searchResult(data);
+        } else {
+          this.message.warning('Nenhum registro encontrado');
+        }
       });
   }
 

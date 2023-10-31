@@ -8,6 +8,7 @@ import { FireBirdService } from '../../services/firebird.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PriceFormationService } from 'src/app/services/price-formation.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 interface IModalData {
   favoriteLibrary: string;
@@ -36,7 +37,8 @@ export class PricingComponent implements OnInit {
     private formService: FormService,
     private router: Router,
     private route: ActivatedRoute,
-    protected priceService: PriceFormationService
+    protected priceService: PriceFormationService,
+    private message: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -64,16 +66,20 @@ export class PricingComponent implements OnInit {
   }
 
   selectedCustomer(customer: Customer) {
-    this.showSearchCustomer = false;
-    this.priceService.customer = customer;
+    if (customer) {
+      this.showSearchCustomer = false;
+      this.priceService.customer = customer;
 
-    this.form.patchValue({
-      customer: customer.name,
-      customerId: customer.id,
-      customerCNPJ: customer.CNPJ,
-    });
+      this.form.patchValue({
+        customer: customer.name,
+        customerId: customer.id,
+        customerCNPJ: customer.CNPJ,
+      });
 
-    this.priceService.getTaxes();
+      this.priceService.getTaxes();
+    } else {
+      this.message.warning('Cliente não selecionado');
+    }
   }
 
   getProduct() {
@@ -82,20 +88,30 @@ export class PricingComponent implements OnInit {
     if (this.form.valid) {
       const { referenceId } = this.form.getRawValue();
 
-      this.fireBird.getReference(referenceId).subscribe((data: any) => {
-        const colors = this.getColors(data);
-        const cost = this.getMean(data, 'CUSTO');
+      this.fireBird
+        .getReference(referenceId)
+        .pipe()
+        .subscribe((data: any) => {
+          console.log('🚀 ~ data:', data);
+          if (data.length == 0) {
+            this.message.error('Referência não encontrada');
+          } else {
+            const colors = this.getColors(data);
+            const cost = this.getMean(data, 'CUSTO');
 
-        this.priceService.product = {
-          img: data[0]['IMAGEM'],
-          collectionId: data[0]['CD_COL'],
-          collectionName: data[0]['DS_COL'],
-          referenceName: data[0]['DS_REF'],
-          colors: colors,
-          cost: cost,
-          referenceId: referenceId,
-        };
-      });
+            this.priceService.product = {
+              img: data[0].IMAGEM,
+              collectionId: data[0].CD_CO,
+              collectionName: data[0].DS_COL,
+              referenceName: data[0].DS_REF,
+              colors: colors,
+              cost: cost,
+              referenceId: referenceId,
+            };
+            console.log('🚀 product:', this.priceService.product);
+          }
+        });
+    } else {
     }
   }
 
@@ -120,5 +136,10 @@ export class PricingComponent implements OnInit {
 
   openProduct() {
     this.router.navigate([`formation`], { relativeTo: this.route });
+  }
+
+  routeReturn() {
+    this.priceService.resetProduct();
+    this.router.navigate(['main/pricing']);
   }
 }

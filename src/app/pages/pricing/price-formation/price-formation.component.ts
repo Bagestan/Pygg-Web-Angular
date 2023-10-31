@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductCost } from 'src/app/services/shared/types';
 import { PriceFormationService } from '../../../services/price-formation.service';
 import { Router } from '@angular/router';
+import { FormService } from '../../../services/utils/form.service';
 
 @Component({
   selector: 'app-price-formation',
@@ -18,7 +19,8 @@ export class PriceFormationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public priceService: PriceFormationService,
-    private router: Router
+    private router: Router,
+    private formService: FormService
   ) {}
 
   ngOnInit() {
@@ -42,25 +44,27 @@ export class PriceFormationComponent implements OnInit {
   }
 
   submit() {
-    const productCost: ProductCost = {
-      markup: {
-        markupId: this.form.get('markupId')?.value,
-        markupName: this.form.get('markupName')?.value,
-        markupInterest: this.form.get('markupInterest')?.value,
-        markupMargin: this.form.get('markupMargin')?.value,
-      },
-      payment: {
-        paymentId: this.form.get('paymentId')?.value,
-        paymentName: this.form.get('paymentName')?.value,
-        paymentInterest: this.form.get('paymentInterest')?.value,
-      },
-      profit: this.form.get('profit')?.value,
-    };
+    this.formService.validateAllFormFields(this.form);
 
-    this.priceService.saveProductCost(productCost);
-    console.log('🚀 ~ productCost:', productCost);
+    if (this.form.valid) {
+      const productCost: ProductCost = {
+        markup: {
+          markupId: this.form.get('markupId')?.value,
+          markupName: this.form.get('markupName')?.value,
+          markupInterest: this.form.get('markupInterest')?.value,
+          markupMargin: this.form.get('markupMargin')?.value,
+        },
+        payment: {
+          paymentId: this.form.get('paymentId')?.value,
+          paymentName: this.form.get('paymentName')?.value,
+          paymentInterest: this.form.get('paymentInterest')?.value,
+        },
+        profit: this.form.get('profit')?.value,
+      };
 
-    this.router.navigate(['/main/pricing/final']);
+      this.priceService.saveProductCost(productCost);
+      this.router.navigate(['/main/pricing/final']);
+    }
   }
 
   updateMarkupInterest(event: number) {
@@ -84,6 +88,7 @@ export class PriceFormationComponent implements OnInit {
   }
 
   routeReturn() {
+    this.priceService.resetProduct();
     this.router.navigate(['main/pricing']);
   }
 }

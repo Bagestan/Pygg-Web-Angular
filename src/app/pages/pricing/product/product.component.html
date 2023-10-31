@@ -1,4 +1,4 @@
-<div *ngIf="priceService.product">
+<div *ngIf="priceService.product && priceService.product.referenceId !== 0">
   <div class="img central">
     <nz-avatar
       class="d-flex central"
@@ -26,12 +26,21 @@
     </nz-list-item>
   </nz-list>
 
-  <nz-divider *ngIf="priceService.productCost" nzText="Preço"></nz-divider>
+  <nz-divider
+    *ngIf="priceService.productCost && priceService.productCost?.profit !== 0"
+    nzText="Preço"
+  ></nz-divider>
 
-  <nz-list nzSize="small" nzSplit="false" *ngIf="priceService.productCost">
+  <nz-list
+    nzSize="small"
+    nzSplit="false"
+    *ngIf="priceService.productCost && priceService.productCost?.profit !== 0"
+  >
     <nz-list-item>
-      <span nz-typography> Custo </span>
-      {{ priceService.product.cost | currency : "BRL" : "symbol" : "1.2-2" }}
+      <span nz-typography> <strong> Custo </strong> </span>
+      <strong
+        >{{ priceService.product.cost | currency : "BRL" : "symbol" : "1.2-2" }}
+      </strong>
     </nz-list-item>
 
     <nz-list-item>
@@ -55,17 +64,18 @@
     </nz-list-item>
 
     <nz-list-item
-      [ngStyle]="{ color: priceService.lucroCalculado < 0 ? 'red' : 'green' }"
-    >
-      <span
+      [ngStyle]="{
+        color: priceService.lucroCalculado < 0 ? '#ff3141' : '#119a28'
+      }"
+      ><span
         nz-typography
-        [ngStyle]="{ color: priceService.lucroCalculado < 0 ? 'red' : 'green' }"
-      >
-        <strong> Resultado líquido </strong>
+        [ngStyle]="{
+          color: priceService.lucroCalculado < 0 ? '#ff3141' : '#119a28'
+        }"
+        ><strong> Resultado líquido </strong>
       </span>
       <strong>
-        {{ priceService.lucroCalculado.toFixed(2).replace(".", ",") }}
-        %
+        {{ priceService.lucroCalculado.toFixed(2).replace(".", ",") }} %
       </strong>
     </nz-list-item>
 
@@ -76,14 +86,12 @@
   </nz-list>
 
   <div class="d-flex spaceBetween alignCenter">
-    <div *ngIf="!priceService.productCost">
+    <div *ngIf="!this.priceService.precoCalc">
       <h5 class="marginZero">Custo</h5>
       <h4 class="marginZero" nz-typography>
-        <strong>
-          {{
-            priceService.product.cost | currency : "BRL" : "symbol" : "1.2-2"
-          }}
-        </strong>
+        <strong>{{
+          priceService.product.cost | currency : "BRL" : "symbol" : "1.2-2"
+        }}</strong>
       </h4>
     </div>
 
@@ -102,7 +110,7 @@
 <div
   class="d-flex alignCenter"
   style="flex-direction: column"
-  *ngIf="priceService.precoCalc"
+  *ngIf="priceService.precoCalc && priceService.product.referenceId !== 0"
 >
   <h4 class="central">Preço final</h4>
   <form nz-form [formGroup]="form">
@@ -118,7 +126,13 @@
   </form>
 </div>
 
-<div class="d-flex alignCenter" *ngIf="priceService.receitaLiquidaPrecoInput">
+<div
+  class="d-flex alignCenter"
+  *ngIf="
+    priceService.receitaLiquidaPrecoInput &&
+    priceService.product.referenceId !== 0
+  "
+>
   <ng-container
     *ngIf="priceService.receitaLiquidaPrecoInput > 0; else deniedTemplate"
   >

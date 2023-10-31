@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <nz-page-header nzBackIcon>
+  <nz-page-header nzBackIcon (nzBack)="routeReturn()">
     <nz-page-header-title>Formação de Preço</nz-page-header-title>
   </nz-page-header>
 
@@ -16,9 +16,10 @@
 
         <nz-form-control nz-col nzSm="24" nzXs="24" (click)="createModal()">
           <nz-input-group
+            class="input border-radius-08rem"
             [nzSuffix]="showSearchCustomer ? suffixCustomer : undefined"
-            class="input border-radius-1rem"
             nzSize="large"
+            nzBorderless
           >
             <input
               type="text"
@@ -39,18 +40,20 @@
             Referência
           </nz-form-label>
           <nz-input-group
-            class="input border-radius-1rem"
+            class="border-radius-08rem"
             nz-col
             nzSm="24"
             nzXs="24"
             nzSize="large"
+            class="input"
           >
             <input
+              class="border-radius-08rem"
               type="text"
               nz-input
+              nzBorderless
               placeholder="10"
               formControlName="referenceId"
-              nzBorderless
             />
           </nz-input-group>
         </nz-form-control>
@@ -70,9 +73,9 @@
   </form>
 
   <nz-card
-    *ngIf="priceService.product"
+    *ngIf="priceService.product && priceService.product.referenceId !== 0"
     (click)="openProduct()"
-    class="border-radius-1rem"
+    class="border-radius-08rem"
     [nzBodyStyle]="{ padding: '1rem' }"
   >
     <app-product></app-product>
