@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { PriceFormationService } from 'src/app/services/price-formation.service';
+import { FormService } from 'src/app/services/utils/form.service';
 
 @Component({
   selector: 'app-product',
@@ -29,7 +30,8 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public priceService: PriceFormationService
+    public priceService: PriceFormationService,
+    private formService: FormService
   ) {}
 
   ngOnInit() {
@@ -38,6 +40,8 @@ export class ProductComponent implements OnInit {
     });
 
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.formService.validateAllFormFields(this.form);
+
       if (this.form.valid) {
         const { price } = this.form.getRawValue();
         this.priceService.calcDespesasPrecoInput(price);

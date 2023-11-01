@@ -183,7 +183,7 @@ export class FireBirdService {
       );
   }
 
-  getActionQuality(id: number, squa: number) {
+  getQualityActions(id: number, squa: number) {
     return this.httpClient
       .get<[]>(`${this.API}quality/qualityAction/${id}/${squa}`, {
         headers: this.header,
@@ -227,10 +227,10 @@ export class FireBirdService {
       );
   }
 
-  getReference(reference: number) {
+  getPriceReference(reference: number) {
     return this.httpClient
       .post(
-        `${this.API}quality/getReference`,
+        `${this.API}price/getReference`,
         { reference },
         { headers: this.header }
       )
@@ -243,9 +243,9 @@ export class FireBirdService {
       );
   }
 
-  getMarkup() {
+  getPriceMarkup() {
     return this.httpClient
-      .post(`${this.API}quality/getMarkupOptions`, {}, { headers: this.header })
+      .post(`${this.API}price/getMarkupOptions`, {}, { headers: this.header })
       .pipe(
         retry(2),
         timeout(10000),
@@ -257,7 +257,7 @@ export class FireBirdService {
 
   getPaymentOption() {
     return this.httpClient
-      .post(`${this.API}quality/getPaymentOption`, {}, { headers: this.header })
+      .post(`${this.API}price/getPaymentOption`, {}, { headers: this.header })
       .pipe(
         retry(2),
         timeout(10000),
@@ -267,10 +267,10 @@ export class FireBirdService {
       );
   }
 
-  getTaxes(customerId: number | string) {
+  getPriceTaxes(customerId: number | string) {
     return this.httpClient
       .post(
-        `${this.API}quality/getTaxes`,
+        `${this.API}price/getTaxes`,
         { customerId },
         { headers: this.header }
       )
@@ -311,7 +311,7 @@ export class FireBirdService {
       );
   }
 
-  delete(deleteData: deleteData) {
+  deleteQuality(deleteData: deleteData) {
     return this.httpClient
       .post<[]>(`${this.API}quality/deleteQuality/`, deleteData, {
         headers: this.header,

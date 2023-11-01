@@ -4,6 +4,7 @@ import { ProductCost } from 'src/app/services/shared/types';
 import { PriceFormationService } from '../../../services/price-formation.service';
 import { Router } from '@angular/router';
 import { FormService } from '../../../services/utils/form.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-price-formation',
@@ -20,7 +21,8 @@ export class PriceFormationComponent implements OnInit {
     private fb: FormBuilder,
     public priceService: PriceFormationService,
     private router: Router,
-    private formService: FormService
+    private formService: FormService,
+    private message: NzMessageService
   ) {}
 
   ngOnInit() {
@@ -64,6 +66,8 @@ export class PriceFormationComponent implements OnInit {
 
       this.priceService.saveProductCost(productCost);
       this.router.navigate(['/main/pricing/final']);
+    } else {
+      this.message.error('Verifique o(s) campo(s) em vermelho');
     }
   }
 

@@ -38,8 +38,8 @@
   >
     <nz-list-item>
       <span nz-typography> <strong> Custo </strong> </span>
-      <strong
-        >{{ priceService.product.cost | currency : "BRL" : "symbol" : "1.2-2" }}
+      <strong>
+        {{ priceService.product.cost | currency : "BRL" : "symbol" : "1.2-2" }}
       </strong>
     </nz-list-item>
 
@@ -75,7 +75,12 @@
         ><strong> Resultado líquido </strong>
       </span>
       <strong>
-        {{ priceService.lucroCalculado.toFixed(2).replace(".", ",") }} %
+        {{
+          priceService.lucroCalculado > 0
+            ? priceService.lucroCalculado.toFixed(2).replace(".", ",")
+            : 0
+        }}
+        %
       </strong>
     </nz-list-item>
 
@@ -117,6 +122,7 @@
     <nz-form-item class="central">
       <nz-form-control>
         <input
+          minlength="0"
           formControlName="price"
           currencyMask
           [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"

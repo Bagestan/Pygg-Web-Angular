@@ -1,13 +1,5 @@
-.searchButton {
-  // border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
 nz-input-group {
   border-radius: 0.8rem;
-}
-
-nz-card {
-  // background-color: rgba(0, 0, 0, 0.05);
 }
 
 nz-form-item {
@@ -15,5 +7,10 @@ nz-form-item {
 }
 
 form {
-  margin-top: 1rem;
+  margin: 1rem 0.5rem;
+  max-width: 100%;
+}
+
+nz-card {
+  // background-color: rgba(0, 0, 0, 0.05);
 }

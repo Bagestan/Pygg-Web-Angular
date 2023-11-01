@@ -89,13 +89,16 @@ export class PricingComponent implements OnInit {
       const { referenceId } = this.form.getRawValue();
 
       this.fireBird
-        .getReference(referenceId)
+        .getPriceReference(referenceId)
         .pipe()
         .subscribe((data: any) => {
-          console.log('🚀 ~ data:', data);
           if (data.length == 0) {
+            this.message.remove();
             this.message.error('Referência não encontrada');
           } else {
+            this.message.remove();
+            this.message.success('');
+
             const colors = this.getColors(data);
             const cost = this.getMean(data, 'CUSTO');
 
@@ -108,7 +111,6 @@ export class PricingComponent implements OnInit {
               cost: cost,
               referenceId: referenceId,
             };
-            console.log('🚀 product:', this.priceService.product);
           }
         });
     } else {
@@ -132,6 +134,10 @@ export class PricingComponent implements OnInit {
     }, 0);
 
     return soma / prices.length;
+  }
+
+  teste() {
+    console.log('teste');
   }
 
   openProduct() {

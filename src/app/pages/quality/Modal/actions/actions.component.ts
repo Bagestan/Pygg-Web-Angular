@@ -115,7 +115,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
 
         if ((this.ID_CLI, this.S_QUA)) {
           this.fireBirdService
-            .getActionQuality(data.ID_CLI, data.S_QUA)
+            .getQualityActions(data.ID_CLI, data.S_QUA)
             .pipe(takeUntil(this.destroy$))
             .subscribe((data: any) => {
               this.isLoading = true;

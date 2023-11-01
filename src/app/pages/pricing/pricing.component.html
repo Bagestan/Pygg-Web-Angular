@@ -4,11 +4,7 @@
   </nz-page-header>
 
   <form nz-form [formGroup]="form">
-    <nz-row
-      [nzAlign]="'bottom'"
-      [nzJustify]="'space-between'"
-      [nzGutter]="[16, 16]"
-    >
+    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
       <nz-form-item nz-col nzSm="24" nzXs="24">
         <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="customer">
           Cliente
@@ -33,7 +29,7 @@
       </nz-form-item>
     </nz-row>
 
-    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'" [nzGutter]="16">
+    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
       <nz-form-item>
         <nz-form-control>
           <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="referenceId">
@@ -54,6 +50,7 @@
               nzBorderless
               placeholder="10"
               formControlName="referenceId"
+              (blur)="getProduct()"
             />
           </nz-input-group>
         </nz-form-control>

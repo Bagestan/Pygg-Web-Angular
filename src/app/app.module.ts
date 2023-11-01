@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -52,6 +52,7 @@ registerLocaleData(Pt);
     { provide: NZ_I18N, useValue: pt_BR },
     { provide: NZ_DATE_LOCALE, useValue: ptBR },
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    { provide: LOCALE_ID, useValue: 'pt' },
   ],
   bootstrap: [AppComponent],
 })

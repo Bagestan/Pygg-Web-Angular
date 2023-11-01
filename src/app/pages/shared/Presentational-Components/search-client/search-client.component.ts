@@ -52,8 +52,11 @@ export class SearchClientComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         if (data.length > 0) {
+          this.message.remove();
+          this.message.success('');
           this.searchResult(data);
         } else {
+          this.message.remove();
           this.message.warning('Nenhum registro encontrado');
         }
       });

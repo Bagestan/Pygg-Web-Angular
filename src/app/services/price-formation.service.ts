@@ -50,7 +50,7 @@ export class PriceFormationService {
   }
 
   getMarkup() {
-    this.firebirdService.getMarkup().subscribe((data) => {
+    this.firebirdService.getPriceMarkup().subscribe((data) => {
       this.markupOptions = data as MarkupData[];
     });
   }
@@ -62,9 +62,11 @@ export class PriceFormationService {
   }
 
   getTaxes() {
-    this.firebirdService.getTaxes(this.customer.id).subscribe((data: any) => {
-      this.productTaxes = data[0] as Taxes;
-    });
+    this.firebirdService
+      .getPriceTaxes(this.customer.id)
+      .subscribe((data: any) => {
+        this.productTaxes = data[0] as Taxes;
+      });
   }
 
   calcLucroBruto() {
@@ -90,8 +92,6 @@ export class PriceFormationService {
     this.receitaBrutaPrecoCalc =
       this.precoCalc - this.product.cost - this.despesasPrecoCalc;
 
-    console.log('🚀 ~ this.receitaBrutaPrecoCalc:', this.receitaBrutaPrecoCalc);
-
     this.receitaLiquidaPrecoCalc =
       this.receitaBrutaPrecoCalc -
       this.receitaBrutaPrecoCalc * (this.productTaxes.IR / 100) -
@@ -106,10 +106,6 @@ export class PriceFormationService {
 
     this.receitaBrutaPrecoInput =
       preco - this.product.cost - this.despesasPrecoInput;
-    console.log(
-      '🚀 ~ this.receitaBrutaPrecoInput:',
-      this.receitaBrutaPrecoInput
-    );
 
     this.receitaLiquidaPrecoInput =
       this.receitaBrutaPrecoInput -

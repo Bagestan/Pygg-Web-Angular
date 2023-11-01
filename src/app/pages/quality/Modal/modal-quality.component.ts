@@ -191,7 +191,7 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
 
   callDeleteData(data: deleteData): void {
     this.fireBirdService
-      .delete(data)
+      .deleteQuality(data)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
