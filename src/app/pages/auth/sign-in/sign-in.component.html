@@ -31,12 +31,13 @@
               ></span>
             </ng-template>
             <ng-template #passwordError let-control>
-              <ng-container *ngIf="control.hasError('required')"
-                >Por favor confirme sua senha!</ng-container
-              >
-              <ng-container *ngIf="control.hasError('minlength')"
-                >Tamanho mínimo 8!</ng-container
-              >
+              <ng-container *ngIf="control.hasError('required')">
+                Por favor confirme sua senha!
+              </ng-container>
+
+              <ng-container *ngIf="control.hasError('minlength')">
+                Tamanho mínimo 8!
+              </ng-container>
             </ng-template>
           </nz-input-group>
         </nz-form-control>
@@ -48,15 +49,15 @@
           </label>
         </div>
         <div nz-col [nzSpan]="12">
-          <a routerLink="/auth/request-password" class="login-form-forgot"
-            >Esqueci a senha</a
-          >
+          <a routerLink="/auth/request-password" class="login-form-forgot">
+            Esqueci a senha
+          </a>
         </div>
       </div>
       <button
         nz-button
         class="login-form-button login-form-margin"
-        [nzType]="'primary'"
+        nzType="primary"
         [nzLoading]="isLoading"
       >
         <span nz-icon nzType="login" nzTheme="outline"></span>

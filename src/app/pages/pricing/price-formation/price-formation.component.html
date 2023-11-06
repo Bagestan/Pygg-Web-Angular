@@ -3,39 +3,30 @@
     <nz-page-header-title>Formação de Preço</nz-page-header-title>
   </nz-page-header>
 
-  <nz-card [nzBodyStyle]="{ padding: '1rem' }">
+  <nz-card *ngIf="priceService.product" [nzBodyStyle]="{ padding: '1rem' }">
     <app-product [showOption]="false"></app-product>
   </nz-card>
 
   <form nz-form [formGroup]="form">
-    <nz-row [nzAlign]="'bottom'">
-      <nz-form-item nz-col nzXs="20" nzSm="22">
+    <nz-row nzAlign="bottom" nzJustify="space-between">
+      <nz-form-item nz-col nzXs="19" nzSm="21">
         <nz-form-control>
-          <nz-form-label nzFor="markupId" nzXs="12" nzSm="12">
-            Markup
-          </nz-form-label>
-          <!--  -->
+          <nz-form-label nzFor="markupId"> Markup </nz-form-label>
           <nz-form-label
             nzFor="markupId"
             nzXs="12"
             nzSm="12"
-            [nzLabelAlign]="'right'"
+            nzLabelAlign="right"
             nzNoColon="true"
             *ngIf="priceService.markupInterest"
-          >
-            {{ priceService.markupInterest | number : "1.2-2" }} %
-          </nz-form-label>
-          <!--  -->
+          ></nz-form-label>
           <nz-select
-            nzSm="24"
-            nzXs="24"
             nzBorderless
             class="input border-radius-08rem"
             formControlName="markupId"
             (ngModelChange)="updateMarkupInterest($event)"
             nzSize="large"
-          >
-            <nz-option
+            ><nz-option
               *ngFor="let item of priceService.markupOptions"
               [nzValue]="item.ID_TAB"
               [nzLabel]="item.CD_DS"
@@ -52,8 +43,8 @@
       </nz-form-item>
     </nz-row>
 
-    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
-      <nz-form-item nz-col nzXs="20" nzSm="22">
+    <nz-row nzAlign="bottom" nzJustify="space-between">
+      <nz-form-item nz-col nzXs="19" nzSm="21">
         <nz-form-control>
           <nz-form-label nzFor="paymentId">
             Condição de Pagamento
@@ -64,8 +55,7 @@
             nzSize="large"
             (ngModelChange)="updatePaymentInterest($event)"
             class="input border-radius-08rem"
-          >
-            <nz-option
+            ><nz-option
               *ngFor="let item of priceService.paymentOptions"
               [nzValue]="item.ID_PGTO"
               [nzLabel]="item.CD_DS"
@@ -81,21 +71,22 @@
       </nz-form-item>
     </nz-row>
 
-    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
+    <nz-row nzAlign="bottom" nzJustify="space-between">
       <nz-form-item nz-col nzXs="12" nzSm="12">
         <nz-form-control>
           <nz-form-label nzFor="markup"> Lucro </nz-form-label>
           <nz-input-group
-            class="input"
-            [nzSuffix]="suffixTemplate"
+            class="input border-radius-08rem"
             nz-col
             nzSm="24"
             nzXs="24"
             nzSize="large"
-          >
-            <input
-              type="text"
+            ><input
               nz-input
+              [allowNegativeNumbers]="false"
+              mask="separator.2"
+              thousandSeparator="."
+              suffix="%"
               placeholder="10"
               formControlName="profit"
               nzBorderless

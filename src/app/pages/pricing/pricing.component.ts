@@ -1,7 +1,12 @@
-import { Component, ViewContainerRef, OnInit } from '@angular/core';
+import {
+  Component,
+  ViewContainerRef,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { SearchClientComponent } from '../shared/Presentational-Components/search-client/search-client.component';
 import { Customer } from 'src/app/services/shared/types';
 import { FireBirdService } from '../../services/firebird.service';
@@ -19,6 +24,7 @@ interface IModalData {
   selector: 'app-pricing',
   templateUrl: './pricing.component.html',
   styleUrls: ['./pricing.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PricingComponent implements OnInit {
   protected destroy$: Subject<void> = new Subject<void>();
@@ -48,14 +54,17 @@ export class PricingComponent implements OnInit {
       customerCNPJ: [null],
       referenceId: [75129, Validators.required],
     });
+
+    this.createModal();
   }
 
   createModal() {
-    const modal = this.modal.create<SearchClientComponent, IModalData>({
+    const modal = this.modal.create<SearchClientComponent>({
       nzClosable: false,
       nzFooter: null,
       nzContent: SearchClientComponent,
       nzViewContainerRef: this.viewContainerRef,
+      nzCentered: true,
       nzOnOk: () => {
         new Promise((resolve) => setTimeout(resolve, 1000));
       },
@@ -90,7 +99,7 @@ export class PricingComponent implements OnInit {
 
       this.fireBird
         .getPriceReference(referenceId)
-        .pipe()
+        .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
           if (data.length == 0) {
             this.message.remove();
@@ -114,6 +123,8 @@ export class PricingComponent implements OnInit {
           }
         });
     } else {
+      this.message.remove();
+      this.message.error('Verifique os campos');
     }
   }
 
@@ -134,10 +145,6 @@ export class PricingComponent implements OnInit {
     }, 0);
 
     return soma / prices.length;
-  }
-
-  teste() {
-    console.log('teste');
   }
 
   openProduct() {

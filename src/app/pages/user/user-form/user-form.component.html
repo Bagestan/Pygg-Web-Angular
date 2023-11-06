@@ -30,6 +30,7 @@
               <nz-form-label> Email</nz-form-label>
               <nz-input-group>
                 <input
+                  class="border-radius-08rem"
                   nz-input
                   formControlName="email"
                   type="text"
@@ -78,7 +79,12 @@
             <nz-form-control nzErrorTip="Nome da empresa é obrigatório">
               <nz-form-label nzRequired> Empresa</nz-form-label>
               <nz-input-group>
-                <input nz-input formControlName="company" type="text" />
+                <input
+                  class="border-radius-08rem"
+                  nz-input
+                  formControlName="company"
+                  type="text"
+                />
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
@@ -103,8 +109,7 @@
                     *ngIf="
                       this.form.get('disabled')?.value === defaultUserActivated
                     "
-                  >
-                    Para
+                    >Para
                     {{
                       this.form.get("disabled")?.value === false
                         ? "desativar"
@@ -117,14 +122,9 @@
             </nz-form-item>
           </div>
         </nz-col>
-
-        <nz-col nzXs="21" nzSm="21">
-          <button nz-button nzBlock nzType="primary" (click)="submitForm()">
-            {{ "SALVAR" }}
-          </button>
-        </nz-col>
-
-        <nz-col nzXs="3" nzSm="3">
+      </nz-row>
+      <nz-row nzJustify="space-between">
+        <nz-col nzXs="3" nzSm="2">
           <button
             nzBlock
             nz-button
@@ -138,6 +138,12 @@
             [nzIcon]="iconTpl"
           >
             <span nz-icon nzType="delete" nzTheme="outline"></span>
+          </button>
+        </nz-col>
+
+        <nz-col nzXs="8" nzSm="4">
+          <button nz-button nzBlock nzType="primary" (click)="submitForm()">
+            {{ "SALVAR" }}
           </button>
         </nz-col>
       </nz-row>

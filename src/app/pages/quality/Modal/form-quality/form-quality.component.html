@@ -3,9 +3,14 @@
     <nz-col nzXs="12" nzSm="8">
       <nz-form-item>
         <nz-form-control nzErrorTip="Partida é obrigatória">
-          <nz-form-label nzRequired> Partida:</nz-form-label>
+          <nz-form-label nzRequired> Partida: </nz-form-label>
           <nz-input-group>
-            <input nz-input formControlName="CD_OP" type="number" />
+            <input
+              class="border-radius-08rem"
+              nz-input
+              formControlName="CD_OP"
+              type="number"
+            />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -13,7 +18,7 @@
 
     <nz-col nzXs="12" nzSm="8">
       <nz-form-item>
-        <nz-form-label nzRequired> Data:</nz-form-label>
+        <nz-form-label nzRequired> Data: </nz-form-label>
         <nz-form-control nzErrorTip="Data é obrigatória">
           <nz-input-group>
             <nz-date-picker
@@ -28,10 +33,11 @@
 
     <nz-col nzXs="24" nzSm="8">
       <nz-form-item>
-        <nz-form-label nzRequired> Cod Cliente:</nz-form-label>
+        <nz-form-label nzRequired> Cod Cliente: </nz-form-label>
         <nz-form-control nzErrorTip="Código do cliente é obrigatório">
           <nz-input-group>
             <input
+              class="border-radius-08rem"
               nz-element
               (blur)="getNmCli()"
               nz-input
@@ -59,14 +65,19 @@
 
     <nz-col nzXs="24" nzSm="24">
       <nz-form-item>
-        <nz-form-label nzRequired> Nome do Cliente:</nz-form-label>
+        <nz-form-label nzRequired> Nome do Cliente: </nz-form-label>
         <nz-form-control nzErrorTip="Nome do cliente é obrigatório">
           <nz-input-group
             nz-tooltip
             nzTooltipTitle="O Cliente é preenchido pelo código"
             [nzTooltipOrigin]="button.elementRef"
-            nzTooltipPlacement="bottom"
-            ><input type="text" nz-input formControlName="NM_CLI" readonly />
+            ><input
+              class="border-radius-08rem"
+              type="text"
+              nz-input
+              formControlName="NM_CLI"
+              readonly
+            />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -74,10 +85,15 @@
 
     <nz-col nzXs="24" nzSm="24">
       <nz-form-item>
-        <nz-form-label nzRequired> Artigo:</nz-form-label>
+        <nz-form-label nzRequired> Artigo: </nz-form-label>
         <nz-form-control>
           <nz-input-group>
-            <input type="text" nz-input formControlName="DS_ART" />
+            <input
+              type="text"
+              nz-input
+              formControlName="DS_ART"
+              class="border-radius-08rem"
+            />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -86,7 +102,7 @@
     <nz-col nzXs="24" nzSm="24">
       <nz-form-item>
         <nz-form-control nzErrorTip="Defeito é obrigatório">
-          <nz-form-label nzRequired> Defeito:</nz-form-label>
+          <nz-form-label nzRequired> Defeito: </nz-form-label>
 
           <textarea
             type="text"
@@ -94,6 +110,7 @@
             placeholder="Descrição detalhada do Defeito"
             [nzAutosize]="{ minRows: 2, maxRows: 6 }"
             formControlName="DS_DEF"
+            class="border-radius-08rem"
           ></textarea>
         </nz-form-control>
       </nz-form-item>
@@ -104,21 +121,30 @@
     <nz-col nzXs="12" nzSm="12">
       <nz-form-item>
         <nz-form-label nzErrorTip="Responsável é obrigatório" nzRequired>
-          Responsável: </nz-form-label
-        ><nz-form-control>
+          Responsável:
+        </nz-form-label>
+        <nz-form-control>
           <input
             nzErrorTip="Responsável é obrigatório"
             type="text"
             nz-input
             formControlName="NM_RESP"
-        /></nz-form-control>
+            class="border-radius-08rem"
+          />
+        </nz-form-control>
       </nz-form-item>
     </nz-col>
 
     <nz-col nzXs="8" nzSm="8" nzOffset="3">
       <nz-form-item>
         <nz-input-group>
-          <label nz-checkbox formControlName="RESOL">Resolvido</label>
+          <label
+            nz-checkbox
+            formControlName="RESOL"
+            class="border-radius-08rem"
+          >
+            Resolvido
+          </label>
         </nz-input-group>
       </nz-form-item>
     </nz-col>

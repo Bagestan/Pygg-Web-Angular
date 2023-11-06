@@ -21,8 +21,8 @@ export class FinalPriceComponent implements OnInit {
   }
 
   routeReturn() {
-    this.router.navigate(['main/pricing']);
+    this.router.navigate(['main/pricing/formation']);
 
-    this.priceService.resetProduct();
+    this.priceService.resetFinalProduct();
   }
 }

@@ -19,6 +19,7 @@
 
 .input {
   background-color: rgba(0, 0, 0, 0.05) !important;
+  border: none;
 }
 
 nz-sider .ant-layout-sider-children {
@@ -54,11 +55,6 @@ nz-page-header {
 
 .alignCenter {
   align-items: center;
-}
-
-.input {
-  background-color: rgba(0, 0, 0, 0.05);
-  border: none;
 }
 
 .ant-input-affix-wrapper-status-error:not(

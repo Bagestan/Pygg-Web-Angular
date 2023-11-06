@@ -25,7 +25,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { CurrencyMaskModule } from 'ng2-currency-mask';
+
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
     NzModalModule,
     NzListModule,
     NzDividerModule,
-    CurrencyMaskModule,
+    NgxMaskModule.forChild(),
   ],
 })
 export class PricingModule {}

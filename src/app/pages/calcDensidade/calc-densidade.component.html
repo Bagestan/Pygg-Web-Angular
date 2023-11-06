@@ -10,9 +10,9 @@
           <nz-row [nzGutter]="[32, 8]">
             <nz-col [nzSm]="12" [nzXs]="12">
               <nz-form-item>
-                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
-                  >Peso Material</nz-form-label
-                >
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24">
+                  Peso Material
+                </nz-form-label>
                 <nz-form-control [nzSm]="24" [nzXs]="24">
                   <nz-input-number-group [nzAddOnAfter]="kg">
                     <nz-input-number
@@ -22,11 +22,12 @@
                 </nz-form-control>
               </nz-form-item>
             </nz-col>
+
             <nz-col [nzSm]="12" [nzXs]="12">
               <nz-form-item>
-                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
-                  >Relação de Banho</nz-form-label
-                >
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24">
+                  Relação de Banho
+                </nz-form-label>
                 <nz-form-control [nzSm]="24" [nzXs]="24">
                   <nz-input-number-group [nzAddOnAfter]="qtd">
                     <nz-input-number
@@ -36,11 +37,12 @@
                 </nz-form-control>
               </nz-form-item>
             </nz-col>
+
             <nz-col [nzSm]="12" [nzXs]="12">
               <nz-form-item>
-                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
-                  >Adições Futuras</nz-form-label
-                >
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24">
+                  Adições Futuras
+                </nz-form-label>
                 <nz-form-control [nzSm]="24" [nzXs]="24">
                   <nz-input-number-group [nzAddOnAfter]="l">
                     <nz-input-number
@@ -50,11 +52,12 @@
                 </nz-form-control>
               </nz-form-item>
             </nz-col>
+
             <nz-col [nzSm]="12" [nzXs]="12">
               <nz-form-item>
-                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
-                  >Sal/Sulfato</nz-form-label
-                >
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24">
+                  Sal/Sulfato
+                </nz-form-label>
                 <nz-form-control [nzSm]="24" [nzXs]="24">
                   <nz-input-number-group [nzAddOnAfter]="gL">
                     <nz-input-number
@@ -66,9 +69,9 @@
             </nz-col>
             <nz-col [nzSm]="12" [nzXs]="12">
               <nz-form-item>
-                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
-                  >Barrilha</nz-form-label
-                >
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24">
+                  Barrilha
+                </nz-form-label>
                 <nz-form-control [nzSm]="24" [nzXs]="24">
                   <nz-input-number-group [nzAddOnAfter]="gL">
                     <nz-input-number
@@ -81,8 +84,8 @@
             <nz-col [nzSm]="12" [nzXs]="12">
               <nz-form-item>
                 <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24">
-                  Alcali</nz-form-label
-                >
+                  Alcali
+                </nz-form-label>
                 <nz-form-control [nzSm]="24" [nzXs]="24">
                   <nz-input-number-group [nzAddOnAfter]="gL">
                     <nz-input-number formControlName="alcali"></nz-input-number>
@@ -92,9 +95,9 @@
             </nz-col>
             <nz-col [nzSm]="12" [nzXs]="12">
               <nz-form-item>
-                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
-                  >Soda Cáustica</nz-form-label
-                >
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24">
+                  Soda Cáustica
+                </nz-form-label>
                 <nz-form-control [nzSm]="24" [nzXs]="24">
                   <nz-input-number-group [nzAddOnAfter]="gL">
                     <nz-input-number
@@ -106,9 +109,9 @@
             </nz-col>
             <nz-col [nzSm]="12" [nzXs]="12">
               <nz-form-item>
-                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24"
-                  >Densidade Medida</nz-form-label
-                >
+                <nz-form-label nzLabelAlign="left" [nzSm]="24" [nzXs]="24">
+                  Densidade Medida
+                </nz-form-label>
                 <nz-form-control [nzSm]="24" [nzXs]="24">
                   <nz-input-number-group [nzAddOnAfter]="gL">
                     <nz-input-number
@@ -126,19 +129,19 @@
     <div class="card">
       <nz-list nzSize="small" nzBordered [nzHeader]="acrescentar">
         <nz-list-item>
-          <span>Sal/Sulfato:</span>
+          <span> Sal/Sulfato: </span>
           {{ calcService.addSalSul | suffix }}
         </nz-list-item>
         <nz-list-item>
-          <span>Barrilha:</span>
+          <span> Barrilha: </span>
           {{ calcService.addBarrilha | suffix }}
         </nz-list-item>
         <nz-list-item>
-          <span>Alcali:</span>
+          <span> Alcali: </span>
           {{ calcService.addAlcali | suffix }}
         </nz-list-item>
         <nz-list-item>
-          <span>Soda Cáustica:</span>
+          <span> Soda Cáustica: </span>
           {{ calcService.addSodaCau | suffix }}
         </nz-list-item>
       </nz-list>
@@ -159,27 +162,27 @@
     <div class="card">
       <nz-list nzSize="small" nzBordered [nzHeader]="contact">
         <nz-list-item>
-          <span>Volume Real da Máquina:</span>
+          <span> Volume Real da Máquina: </span>
           {{ calcService.volMaq | suffix : "L" }}
         </nz-list-item>
         <nz-list-item>
-          <span>Eletrólito da Receita:</span>
+          <span> Eletrólito da Receita: </span>
           {{ calcService.eletro | suffix : "Kg" }}
         </nz-list-item>
         <nz-list-item>
-          <span>Barrilha da Receita:</span>
+          <span> Barrilha da Receita: </span>
           {{ calcService.barrilha | suffix : "Kg" }}
         </nz-list-item>
         <nz-list-item>
-          <span>Alcali da Receita:</span>
+          <span> Alcali da Receita: </span>
           {{ calcService.alcali | suffix : "Kg" }}
         </nz-list-item>
         <nz-list-item>
-          <span>Soda da Receita:</span>
+          <span> Soda da Receita: </span>
           {{ calcService.sodaCau | suffix : "Kg" }}
         </nz-list-item>
         <nz-list-item>
-          <span>Volume/Água a Mais/Menos:</span>
+          <span> Volume/Água a Mais/Menos: </span>
           {{ calcService.volAgua | suffix : "L" }}
         </nz-list-item>
       </nz-list>

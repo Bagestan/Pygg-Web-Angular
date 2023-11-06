@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class MainComponent {
   isCollapsed = true;
 
-  id: any;
+  id!: number;
 
   openMap: { [name: string]: boolean } = {
     sub1: true,
@@ -21,6 +21,7 @@ export class MainComponent {
   nzSelected = true;
 
   constructor(public auth: AuthService) {}
+
   openHandler(value: string): void {
     for (const key in this.openMap) {
       if (key !== value) {

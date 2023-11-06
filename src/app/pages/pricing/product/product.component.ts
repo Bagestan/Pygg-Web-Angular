@@ -36,7 +36,10 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      price: [this.priceService.precoCalc, [Validators.required]],
+      price: [
+        this.priceService.calcPrice().toFixed(2).replace('.', ','),
+        [Validators.required],
+      ],
     });
 
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {

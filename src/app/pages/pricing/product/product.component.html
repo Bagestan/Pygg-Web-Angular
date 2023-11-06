@@ -86,12 +86,12 @@
 
     <nz-list-item>
       <span nz-typography> Preço Produto </span>
-      {{ priceService.precoCalc | currency : "BRL" : "symbol" : "1.2-2" }}
+      {{ priceService.calcPrice() | currency : "BRL" : "symbol" : "1.2-2" }}
     </nz-list-item>
   </nz-list>
 
   <div class="d-flex spaceBetween alignCenter">
-    <div *ngIf="!this.priceService.precoCalc">
+    <div *ngIf="!priceService.calcPrice()">
       <h5 class="marginZero">Custo</h5>
       <h4 class="marginZero" nz-typography>
         <strong>{{
@@ -115,7 +115,7 @@
 <div
   class="d-flex alignCenter"
   style="flex-direction: column"
-  *ngIf="priceService.precoCalc && priceService.product.referenceId !== 0"
+  *ngIf="priceService.calcPrice() > 0 && priceService.lucroInput > 0"
 >
   <h4 class="central">Preço final</h4>
   <form nz-form [formGroup]="form">
@@ -124,8 +124,9 @@
         <input
           minlength="0"
           formControlName="price"
-          currencyMask
-          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          mask="separator.2"
+          thousandSeparator="."
+          prefix="R$"
         />
       </nz-form-control>
     </nz-form-item>
@@ -134,10 +135,7 @@
 
 <div
   class="d-flex alignCenter"
-  *ngIf="
-    priceService.receitaLiquidaPrecoInput &&
-    priceService.product.referenceId !== 0
-  "
+  *ngIf="priceService.receitaLiquidaPrecoInput && priceService.lucroInput > 0"
 >
   <ng-container
     *ngIf="priceService.receitaLiquidaPrecoInput > 0; else deniedTemplate"

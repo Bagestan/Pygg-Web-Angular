@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
@@ -17,6 +17,7 @@ interface firebirdConfig {
   selector: 'app-data-base',
   templateUrl: './data-base.component.html',
   styleUrls: ['./data-base.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataBaseComponent implements OnInit {
   protected destroy$: Subject<void> = new Subject<void>();

@@ -7,8 +7,7 @@
     [nzData]="actionList"
     [nzLoading]="isLoading"
     nzFrontPagination="false"
-  >
-    <thead>
+    ><thead>
       <tr>
         <th>Data:</th>
         <th>Ação:</th>
@@ -38,8 +37,7 @@
           <nz-form-control
             nzErrorTip="Campo obrigatório"
             class="ant-form-item-control"
-          >
-            <nz-date-picker
+            ><nz-date-picker
               class="w-100"
               nzFormat="dd/MM/yyy"
               formControlName="D_ACA"
@@ -57,8 +55,7 @@
                 *ngFor="let actions of actionOptions"
                 [nzValue]="actions.ID_TP"
                 [nzLabel]="actions.DS_TP"
-              >
-              </nz-option>
+              ></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -69,8 +66,12 @@
           <nz-form-label nzRequired>Responsável</nz-form-label>
           <nz-form-control nzErrorTip="Campo obrigatório">
             <nz-input-group>
-              <input nzHasFeedback nz-input formControlName="NM_RESP" />
-            </nz-input-group>
+              <input
+                class="border-radius-08rem"
+                nzHasFeedback
+                nz-input
+                formControlName="NM_RESP"
+            /></nz-input-group>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -81,6 +82,7 @@
           <nz-form-control nzErrorTip="Campo obrigatório">
             <nz-input-group>
               <textarea
+                class="border-radius-08rem"
                 nzHasFeedback
                 nz-input
                 placeholder="Controlled autosize"

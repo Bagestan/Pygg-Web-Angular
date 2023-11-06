@@ -31,11 +31,7 @@ export class PriceFormationService {
   receitaBrutaPrecoInput!: number;
   receitaLiquidaPrecoInput!: number;
 
-  divisor!: number;
-
-  lucroBruto!: number;
   lucroInput!: number;
-  precoCalc!: number;
   lucroCalculado!: number;
 
   constructor(private firebirdService: FireBirdService) {}
@@ -70,34 +66,40 @@ export class PriceFormationService {
   }
 
   calcLucroBruto() {
-    this.lucroBruto =
+    return (
       this.lucroInput /
-      ((100 - (this.productTaxes.IR + this.productTaxes.CSLL)) / 100);
+      ((100 - (this.productTaxes.IR + this.productTaxes.CSLL)) / 100)
+    );
   }
 
   calcDivisor() {
-    this.divisor =
-      (100 - (this.markupInterest + this.paymentInterest + this.lucroBruto)) /
-      100;
+    return (
+      (100 -
+        (this.markupInterest + this.paymentInterest + this.calcLucroBruto())) /
+      100
+    );
   }
 
-  calcPrice() {
-    this.precoCalc = this.product.cost / this.divisor;
+  calcPrice(): number {
+    if (this.product.cost && this.calcDivisor()) {
+      return this.product.cost / this.calcDivisor();
+    }
+    return -0;
   }
 
   calcDespesasPrecoCalc() {
     this.despesasPrecoCalc =
-      this.precoCalc * ((this.markupInterest + this.paymentInterest) / 100);
+      this.calcPrice() * ((this.markupInterest + this.paymentInterest) / 100);
 
     this.receitaBrutaPrecoCalc =
-      this.precoCalc - this.product.cost - this.despesasPrecoCalc;
+      this.calcPrice() - this.product.cost - this.despesasPrecoCalc;
 
     this.receitaLiquidaPrecoCalc =
       this.receitaBrutaPrecoCalc -
       this.receitaBrutaPrecoCalc * (this.productTaxes.IR / 100) -
       this.receitaBrutaPrecoCalc * (this.productTaxes.CSLL / 100);
 
-    this.calcDespesasPrecoInput(this.precoCalc);
+    this.calcDespesasPrecoInput(this.calcPrice());
   }
 
   calcDespesasPrecoInput(preco: number) {
@@ -127,6 +129,9 @@ export class PriceFormationService {
     };
     this.customer = { name: '', id: 0, CNPJ: '' };
     this.productTaxes = { IR: 0, CSLL: 0 };
+  }
+
+  resetFinalProduct() {
     this.productCost = {
       markup: {
         markupId: 0,
@@ -143,16 +148,6 @@ export class PriceFormationService {
     };
     this.markupInterest = 0;
     this.paymentInterest = 0;
-    this.despesasPrecoCalc = 0;
-    this.receitaBrutaPrecoCalc = 0;
-    this.receitaLiquidaPrecoCalc = 0;
-    this.despesasPrecoInput = 0;
-    this.receitaBrutaPrecoInput = 0;
-    this.receitaLiquidaPrecoInput = 0;
-    this.divisor = 0;
-    this.lucroBruto = 0;
     this.lucroInput = 0;
-    this.precoCalc = 0;
-    this.lucroCalculado = 0;
   }
 }

@@ -4,7 +4,7 @@
   </nz-page-header>
 
   <form nz-form [formGroup]="form">
-    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
+    <nz-row nzAlign="bottom" nzJustify="space-between">
       <nz-form-item nz-col nzSm="24" nzXs="24">
         <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="customer">
           Cliente
@@ -16,8 +16,7 @@
             [nzSuffix]="showSearchCustomer ? suffixCustomer : undefined"
             nzSize="large"
             nzBorderless
-          >
-            <input
+            ><input
               type="text"
               nz-input
               readonly
@@ -29,7 +28,7 @@
       </nz-form-item>
     </nz-row>
 
-    <nz-row [nzAlign]="'bottom'" [nzJustify]="'space-between'">
+    <nz-row nzAlign="bottom" nzJustify="space-between">
       <nz-form-item>
         <nz-form-control>
           <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="referenceId">
@@ -42,8 +41,7 @@
             nzXs="24"
             nzSize="large"
             class="input"
-          >
-            <input
+            ><input
               class="border-radius-08rem"
               type="text"
               nz-input
@@ -74,8 +72,7 @@
     (click)="openProduct()"
     class="border-radius-08rem"
     [nzBodyStyle]="{ padding: '1rem' }"
-  >
-    <app-product></app-product>
+    ><app-product></app-product>
   </nz-card>
 </div>
 
