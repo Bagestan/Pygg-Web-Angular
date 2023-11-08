@@ -34,6 +34,8 @@ export class PriceFormationService {
   lucroInput!: number;
   lucroCalculado!: number;
 
+  imgSrc: any = 'teste';
+
   constructor(private firebirdService: FireBirdService) {}
 
   saveProductCost(productCost: ProductCost) {
@@ -84,7 +86,7 @@ export class PriceFormationService {
     if (this.product.cost && this.calcDivisor()) {
       return this.product.cost / this.calcDivisor();
     }
-    return -0;
+    return 0;
   }
 
   calcDespesasPrecoCalc() {

@@ -14,11 +14,7 @@ import { FormService } from 'src/app/services/utils/form.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PriceFormationService } from 'src/app/services/price-formation.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-
-interface IModalData {
-  favoriteLibrary: string;
-  favoriteFramework: string;
-}
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pricing',
@@ -44,7 +40,8 @@ export class PricingComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     protected priceService: PriceFormationService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +49,7 @@ export class PricingComponent implements OnInit {
       customer: [null, Validators.required],
       customerId: [null, Validators.required],
       customerCNPJ: [null],
-      referenceId: [75129, Validators.required],
+      referenceId: ['B1684', Validators.required],
     });
 
     this.createModal();
@@ -98,7 +95,7 @@ export class PricingComponent implements OnInit {
       const { referenceId } = this.form.getRawValue();
 
       this.fireBird
-        .getPriceReference(referenceId)
+        .getReferencePrice(referenceId)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
           if (data.length == 0) {
@@ -108,16 +105,13 @@ export class PricingComponent implements OnInit {
             this.message.remove();
             this.message.success('');
 
-            const colors = this.getColors(data);
-            const cost = this.getMean(data, 'CUSTO');
-
             this.priceService.product = {
-              img: data[0].IMAGEM,
-              collectionId: data[0].CD_CO,
+              img: this.getReferenceImg(referenceId),
+              collectionId: data[0].CD_COL,
               collectionName: data[0].DS_COL,
               referenceName: data[0].DS_REF,
-              colors: colors,
-              cost: cost,
+              colors: this.getColors(data),
+              cost: this.getMean(data, 'CUSTO'),
               referenceId: referenceId,
             };
           }
@@ -126,6 +120,15 @@ export class PricingComponent implements OnInit {
       this.message.remove();
       this.message.error('Verifique os campos');
     }
+  }
+
+  getReferenceImg(ref: string) {
+    this.fireBird
+      .getReferenceImg(ref, this.priceService.customer.id)
+      .subscribe((blob) => {
+        const url = URL.createObjectURL(blob);
+        this.priceService.imgSrc = this.sanitizer.bypassSecurityTrustUrl(url);
+      });
   }
 
   getColors(objects: []) {

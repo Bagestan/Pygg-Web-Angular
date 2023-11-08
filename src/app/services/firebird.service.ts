@@ -4,6 +4,7 @@ import {
   Observable,
   Subject,
   first,
+  map,
   retry,
   takeUntil,
   tap,
@@ -227,7 +228,7 @@ export class FireBirdService {
       );
   }
 
-  getPriceReference(reference: number) {
+  getReferencePrice(reference: string) {
     return this.httpClient
       .post(
         `${this.API}price/getReference`,
@@ -241,6 +242,14 @@ export class FireBirdService {
           error: (error) => this.message.error(error),
         })
       );
+  }
+
+  getReferenceImg(reference: string, customerId: number) {
+    return this.httpClient.post(
+      `${this.API}price/getReferenceImg`,
+      { reference: reference, customerId: customerId },
+      { headers: this.header, responseType: 'blob' }
+    );
   }
 
   getPriceMarkup() {
@@ -267,7 +276,7 @@ export class FireBirdService {
       );
   }
 
-  getPriceTaxes(customerId: number | string) {
+  getPriceTaxes(customerId: number) {
     return this.httpClient
       .post(
         `${this.API}price/getTaxes`,

@@ -3,8 +3,9 @@
     <nz-avatar
       class="d-flex central"
       [nzSize]="128"
+      nzShape="square"
       nzIcon="user"
-      nzSrc=".//src/assets/img/Camiseta.png"
+      [nzSrc]="priceService.imgSrc"
     ></nz-avatar>
     <h4 class="textCenter" nz-typography>
       {{ priceService.product.referenceName }}
@@ -115,7 +116,7 @@
 <div
   class="d-flex alignCenter"
   style="flex-direction: column"
-  *ngIf="priceService.calcPrice() > 0 && priceService.lucroInput > 0"
+  *ngIf="priceService.calcPrice()"
 >
   <h4 class="central">Preço final</h4>
   <form nz-form [formGroup]="form">
