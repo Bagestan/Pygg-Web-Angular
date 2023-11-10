@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FireBirdService } from 'src/app/services/firebird.service';
+import { FirebirdService } from 'src/app/services/firebird.service';
 import { Router } from '@angular/router';
 import { NzButtonSize } from 'ng-zorro-antd/button';
 import { FormService } from 'src/app/services/utils/form.service';
@@ -32,7 +32,7 @@ export class SearchQualityComponent implements OnInit, OnDestroy {
   size: NzButtonSize = 'default';
 
   constructor(
-    private firebirdService: FireBirdService,
+    private firebird: FirebirdService,
     private fb: FormBuilder,
     private qualityService: QualityService,
     private router: Router,
@@ -67,7 +67,7 @@ export class SearchQualityComponent implements OnInit, OnDestroy {
     this.message.remove();
     this.isLoading = true;
 
-    this.firebirdService
+    this.firebird
       .selectFromTable('SYS_EMP', undefined, undefined, 'CD_EMP, DS_EMP')
       .pipe(takeUntil(this.destroy$))
       .pipe(retry(3))

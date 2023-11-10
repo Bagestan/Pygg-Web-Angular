@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductCost } from 'src/app/services/shared/types';
+import {
+  MarkupData,
+  PaymentData,
+  ProductCost,
+  Taxes,
+} from 'src/app/services/shared/types';
 import { PriceFormationService } from '../../../services/price-formation.service';
 import { Router } from '@angular/router';
 import { FormService } from '../../../services/utils/form.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { FirebirdService } from '../../../services/firebird.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-price-formation',
@@ -12,21 +19,34 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   styleUrls: ['./price-formation.component.scss'],
 })
 export class PriceFormationComponent implements OnInit {
-  form!: FormGroup;
+  priceForm!: FormGroup;
+  displayPriceForm = true;
 
-  formatterPercent = (value: number): string => `${value} %`;
-  parserPercent = (value: string): string => value.replace(' %', '');
+  markupOptions!: MarkupData[];
+  markupOptionsLoading = true;
+  markupInterest!: number;
+
+  paymentOptions!: PaymentData[];
+  paymentOptionsLoading = true;
+  paymentInterest!: number;
+
+  product = this.priceService.product;
+  productImg = this.priceService.productImg;
+
+  productTaxes!: Taxes;
+  productCost!: ProductCost;
 
   constructor(
     private fb: FormBuilder,
     public priceService: PriceFormationService,
     private router: Router,
     private formService: FormService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private firebird: FirebirdService
   ) {}
 
   ngOnInit() {
-    this.form = this.fb.group({
+    this.priceForm = this.fb.group({
       markupId: [null, [Validators.required]],
       markupName: [null],
       markupInterest: [null],
@@ -37,62 +57,74 @@ export class PriceFormationComponent implements OnInit {
       profit: [null, [Validators.required]],
     });
 
-    if (this.priceService.product) {
-      this.priceService.getMarkup();
-      this.priceService.getPaymentOption();
-    } else {
-      this.router.navigate(['main/pricing']);
-    }
+    this.firebird
+      .getPaymentOption()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.paymentOptions = data as PaymentData[];
+        this.paymentOptionsLoading = false;
+      });
+
+    this.firebird
+      .getPriceMarkup()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.markupOptions = data as MarkupData[];
+        this.markupOptionsLoading = false;
+      });
+
+    this.firebird
+      .getPriceTaxes(this.priceService.customer.id)
+      .subscribe((data: any) => {
+        this.productTaxes = data[0] as Taxes;
+      });
   }
 
   submit() {
-    this.formService.validateAllFormFields(this.form);
+    this.formService.validateAllFormFields(this.priceForm);
 
-    if (this.form.valid) {
-      const productCost: ProductCost = {
+    console.log('🚀 ~ this.priceForm.value:', this.priceForm.value);
+
+    if (this.priceForm.valid) {
+      this.displayPriceForm = false;
+
+      this.productCost = {
         markup: {
-          markupId: this.form.get('markupId')?.value,
-          markupName: this.form.get('markupName')?.value,
-          markupInterest: this.form.get('markupInterest')?.value,
-          markupMargin: this.form.get('markupMargin')?.value,
+          markupId: this.priceForm.get('markupId')?.value,
+          markupName: this.priceForm.get('markupName')?.value,
+          markupInterest: this.priceForm.get('markupInterest')?.value,
+          markupMargin: this.priceForm.get('markupMargin')?.value,
         },
         payment: {
-          paymentId: this.form.get('paymentId')?.value,
-          paymentName: this.form.get('paymentName')?.value,
-          paymentInterest: this.form.get('paymentInterest')?.value,
+          paymentId: this.priceForm.get('paymentId')?.value,
+          paymentName: this.priceForm.get('paymentName')?.value,
+          paymentInterest: this.priceForm.get('paymentInterest')?.value,
         },
-        profit: this.form.get('profit')?.value,
+        profit: this.priceForm.get('profit')?.value,
       };
-
-      this.priceService.saveProductCost(productCost);
-      this.router.navigate(['/main/pricing/final']);
     } else {
       this.message.error('Verifique o(s) campo(s) em vermelho');
     }
   }
 
   updateMarkupInterest(event: number) {
-    this.form.patchValue({
-      markupInterest: this.priceService.markupOptions[event].MKP_TOT,
-      markupName: this.priceService.markupOptions[event].CD_DS,
-      markupMargin: this.priceService.markupOptions[event].MC_TOT,
+    this.priceForm.patchValue({
+      markupInterest: this.markupOptions[event].MKP_TOT,
+      markupName: this.markupOptions[event].CD_DS,
+      markupMargin: this.markupOptions[event].MC_TOT,
     });
-
-    this.priceService.markupInterest =
-      this.priceService.markupOptions[event].MKP_TOT;
+    this.markupInterest = this.markupOptions[event].MKP_TOT;
   }
 
   updatePaymentInterest(event: number) {
-    this.form.patchValue({
-      paymentInterest: this.priceService.paymentOptions[event].JUR_TOT,
-      paymentName: this.priceService.paymentOptions[event].CD_DS,
+    this.priceForm.patchValue({
+      paymentInterest: this.paymentOptions[event].JUR_TOT,
+      paymentName: this.paymentOptions[event].CD_DS,
     });
-    this.priceService.paymentInterest =
-      this.priceService.paymentOptions[event].JUR_TOT;
+    this.paymentInterest = this.paymentOptions[event].JUR_TOT;
   }
 
   routeReturn() {
-    this.priceService.resetProduct();
     this.router.navigate(['main/pricing']);
   }
 }

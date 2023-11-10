@@ -2,7 +2,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FireBirdService } from 'src/app/services/firebird.service';
+import { FirebirdService } from 'src/app/services/firebird.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject, takeUntil } from 'rxjs';
 import { actionsType, qualityTableData } from '../models/qualityData';
@@ -33,7 +33,7 @@ export class TableQualityComponent implements OnInit, OnDestroy {
   constructor(
     private datePipe: DatePipe,
     private router: Router,
-    private fireBirdService: FireBirdService,
+    private firebird: FirebirdService,
     private message: NzMessageService,
     private qualityService: QualityService
   ) {}
@@ -78,7 +78,7 @@ export class TableQualityComponent implements OnInit, OnDestroy {
     hideResolved: boolean
   ) {
     this.isLoadingData = true;
-    this.fireBirdService
+    this.firebird
       .qualitySelect(SelectedCompanyId, startDate, endDate, hideResolved)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -117,7 +117,7 @@ export class TableQualityComponent implements OnInit, OnDestroy {
 
   populateForm(ID_CLI?: number, S_QUA?: number): void {
     if (ID_CLI && S_QUA) {
-      this.fireBirdService
+      this.firebird
         .findQualityById(ID_CLI, S_QUA)
         .pipe(takeUntil(this.destroy$))
         .subscribe((formData: never[]) => {
@@ -152,7 +152,7 @@ export class TableQualityComponent implements OnInit, OnDestroy {
   }
 
   getActionsType() {
-    this.fireBirdService
+    this.firebird
       .selectFromTable('PCP_OP_QUA_TP')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: actionsType) => {

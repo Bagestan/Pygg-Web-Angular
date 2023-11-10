@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PriceFormationComponent } from './price-formation.component';
+import { PriceFormationComponent } from './PriceFormationComponent';
 
 describe('PriceFormationComponent', () => {
   let component: PriceFormationComponent;
@@ -8,9 +8,8 @@ describe('PriceFormationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PriceFormationComponent ]
-    })
-    .compileComponents();
+      declarations: [PriceFormationComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PriceFormationComponent);
     component = fixture.componentInstance;

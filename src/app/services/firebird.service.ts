@@ -27,7 +27,7 @@ import { DateFormatService } from './utils/date-format.service';
 @Injectable({
   providedIn: 'root',
 })
-export class FireBirdService {
+export class FirebirdService {
   protected destroy$: Subject<void> = new Subject<void>();
   private readonly API = 'http://localhost:3000/';
 
@@ -228,11 +228,11 @@ export class FireBirdService {
       );
   }
 
-  getReferencePrice(reference: string) {
+  getReferencePrice(reference: string, customerId: number) {
     return this.httpClient
       .post(
         `${this.API}price/getReference`,
-        { reference },
+        { reference, customerId: customerId },
         { headers: this.header }
       )
       .pipe(
@@ -245,11 +245,19 @@ export class FireBirdService {
   }
 
   getReferenceImg(reference: string, customerId: number) {
-    return this.httpClient.post(
-      `${this.API}price/getReferenceImg`,
-      { reference: reference, customerId: customerId },
-      { headers: this.header, responseType: 'blob' }
-    );
+    return this.httpClient
+      .post(
+        `${this.API}price/getReferenceImg`,
+        { reference: reference, customerId: customerId },
+        { headers: this.header, responseType: 'blob' }
+      )
+      .pipe(
+        retry(2),
+        timeout(10000),
+        tap({
+          error: (error) => this.message.error(error),
+        })
+      );
   }
 
   getPriceMarkup() {

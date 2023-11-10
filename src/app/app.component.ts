@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FireBirdService } from './services/firebird.service';
 import { AuthService } from './services/auth.service';
+import { FirebirdService } from './services/firebird.service';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +9,11 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private FireBirdService: FireBirdService
+    private fireBird: FirebirdService
   ) {}
 
   ngOnInit(): void {
-    this.FireBirdService.getToken();
+    this.fireBird.getToken();
 
     this.authService.updatePermission();
   }

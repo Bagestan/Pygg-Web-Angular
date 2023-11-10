@@ -8,7 +8,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FireBirdService } from '../../../../services/firebird.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -17,6 +16,7 @@ import { actionsData } from '../../models/qualityData';
 import { NzButtonSize } from 'ng-zorro-antd/button';
 import { DateFormatService } from 'src/app/services/utils/date-format.service';
 import { QualityService } from 'src/app/services/quality.service';
+import { FirebirdService } from 'src/app/services/firebird.service';
 
 @Component({
   selector: 'app-actions',
@@ -43,7 +43,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
   ID_CLI!: number;
 
   constructor(
-    private fireBirdService: FireBirdService,
+    private fireBird: FirebirdService,
     private formBuilder: FormBuilder,
     private nzMessage: NzMessageService,
     private dateFormatService: DateFormatService,
@@ -114,7 +114,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
         this.actionForm?.patchValue({ ID_CLI: data.ID_CLI, S_QUA: data.S_QUA });
 
         if ((this.ID_CLI, this.S_QUA)) {
-          this.fireBirdService
+          this.fireBird
             .getQualityActions(data.ID_CLI, data.S_QUA)
             .pipe(takeUntil(this.destroy$))
             .subscribe((data: any) => {

@@ -1,9 +1,11 @@
+teste
+
 <div class="wrapper">
   <nz-page-header nzBackIcon (nzBack)="routeReturn()">
     <nz-page-header-title>Formação de Preço</nz-page-header-title>
   </nz-page-header>
 
-  <form nz-form [formGroup]="form">
+  <form nz-form [formGroup]="productForm">
     <nz-row nzAlign="bottom" nzJustify="space-between">
       <nz-form-item nz-col nzSm="24" nzXs="24">
         <nz-form-label nz-col nzSm="24" nzXs="24" nzFor="customer">
@@ -13,7 +15,7 @@
         <nz-form-control nz-col nzSm="24" nzXs="24" (click)="createModal()">
           <nz-input-group
             class="input border-radius-08rem"
-            [nzSuffix]="showSearchCustomer ? suffixCustomer : undefined"
+            [nzSuffix]="showSearchCustomer ? suffixPercentage : undefined"
             nzSize="large"
             nzBorderless
             ><input
@@ -68,13 +70,21 @@
   </form>
 
   <nz-card
-    *ngIf="priceService.product && priceService.product.referenceId !== 0"
+    *ngIf="product"
     (click)="openProduct()"
     class="border-radius-08rem"
     [nzBodyStyle]="{ padding: '1rem' }"
-    ><app-product></app-product>
+    ><app-product
+      [product]="product"
+      [productImg]="productImg"
+      [path]="'pricing'"
+    ></app-product>
   </nz-card>
 </div>
+
+<ng-template #suffixPercentage>
+  <span style="margin: 0" nz-icon nzType="percentage" nzTheme="outline"></span>
+</ng-template>
 
 <ng-template #suffixCustomer>
   <button class="searchButton border-radius-08rem" nz-button nzType="default">

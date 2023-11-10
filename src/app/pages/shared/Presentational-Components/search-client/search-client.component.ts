@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { Subject, takeUntil } from 'rxjs';
-import { FireBirdService } from 'src/app/services/firebird.service';
+import { FirebirdService } from 'src/app/services/firebird.service';
 import { Customer } from 'src/app/services/shared/types';
 import { FormService } from 'src/app/services/utils/form.service';
 
@@ -30,7 +30,7 @@ export class SearchClientComponent {
 
   constructor(
     private fb: FormBuilder,
-    private fireBirdService: FireBirdService,
+    private firebird: FirebirdService,
     private message: NzMessageService,
     private formService: FormService
   ) {
@@ -47,7 +47,7 @@ export class SearchClientComponent {
     this.formService.validateAllFormFields(this.form);
 
     const { customerSearch } = this.form.getRawValue();
-    this.fireBirdService
+    this.firebird
       .customerSearch(customerSearch)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject, retry, takeUntil } from 'rxjs';
-import { FireBirdService } from 'src/app/services/firebird.service';
+import { FirebirdService } from 'src/app/services/firebird.service';
 
 interface chartObject {
   argumentField: string;
@@ -40,7 +40,7 @@ export class PrintingTrackerComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private firebirdService: FireBirdService,
+    private firebird: FirebirdService,
     private message: NzMessageService
   ) {
     this.getCompanys();
@@ -143,7 +143,7 @@ export class PrintingTrackerComponent implements OnInit {
     endDate: Date,
     data: string
   ) {
-    return this.firebirdService.getPrintingProductionData(
+    return this.firebird.getPrintingProductionData(
       company,
       startDate,
       endDate,
@@ -152,7 +152,7 @@ export class PrintingTrackerComponent implements OnInit {
   }
 
   getCompanys() {
-    this.firebirdService
+    this.firebird
       .selectFromTable('SYS_EMP', undefined, undefined, 'CD_EMP, DS_EMP')
       .pipe(takeUntil(this.destroy$))
       .pipe(retry(3))

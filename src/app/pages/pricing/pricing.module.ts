@@ -7,7 +7,6 @@ import { SharedModule } from '../shared/shared.module';
 import { PricingComponent } from './pricing.component';
 import { ProductComponent } from './product/product.component';
 import { PriceFormationComponent } from './price-formation/price-formation.component';
-import { FinalPriceComponent } from './final-price/final-price.component';
 
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -25,16 +24,12 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzImageModule } from 'ng-zorro-antd/image';
 
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-  declarations: [
-    PricingComponent,
-    ProductComponent,
-    PriceFormationComponent,
-    FinalPriceComponent,
-  ],
+  declarations: [PricingComponent, ProductComponent, PriceFormationComponent],
   imports: [
     SharedModule,
     CommonModule,
@@ -57,6 +52,7 @@ import { NgxMaskModule } from 'ngx-mask';
     NzModalModule,
     NzListModule,
     NzDividerModule,
+    NzImageModule,
     NgxMaskModule.forChild(),
   ],
 })

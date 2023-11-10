@@ -1,8 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { FireBirdService } from './firebird.service';
 import { DxChartTransformService } from './utils/dx-chart-Transform.service';
 import { ChartFilter } from '../pages/lucratividae/utils/chartModels';
 import { Subject, takeUntil } from 'rxjs';
+import { FirebirdService } from './firebird.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +19,12 @@ export class ChartsService {
   static paletteExtensionMode = 'Blend';
 
   constructor(
-    private firebirdService: FireBirdService,
+    private firebird: FirebirdService,
     private dxTransform: DxChartTransformService
   ) {}
 
   getFirebirdData(form: ChartFilter) {
-    return this.firebirdService.getChartData(form);
+    return this.firebird.getChartData(form);
   }
 
   getChartData(form: ChartFilter) {

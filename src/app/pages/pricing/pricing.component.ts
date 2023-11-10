@@ -1,15 +1,17 @@
-import {
-  Component,
-  ViewContainerRef,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, ViewContainerRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take } from 'rxjs';
 import { SearchClientComponent } from '../shared/Presentational-Components/search-client/search-client.component';
-import { Customer } from 'src/app/services/shared/types';
-import { FireBirdService } from '../../services/firebird.service';
+import {
+  Customer,
+  MarkupData,
+  PaymentData,
+  Product,
+  ProductCost,
+  Taxes,
+} from 'src/app/services/shared/types';
+import { FirebirdService } from '../../services/firebird.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PriceFormationService } from 'src/app/services/price-formation.service';
@@ -20,22 +22,28 @@ import { DomSanitizer } from '@angular/platform-browser';
   selector: 'app-pricing',
   templateUrl: './pricing.component.html',
   styleUrls: ['./pricing.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PricingComponent implements OnInit {
   protected destroy$: Subject<void> = new Subject<void>();
 
-  form!: FormGroup;
+  productForm!: FormGroup;
 
   productInfoLoading = true;
   costInfoLoading = true;
   showSearchCustomer = true;
 
+  productImg!: any;
+  product!: Product;
+  customer!: Customer;
+
+  formatterPercent = (value: number): string => `${value} %`;
+  parserPercent = (value: string): string => value.replace(' %', '');
+
   constructor(
     private modal: NzModalService,
     private fb: FormBuilder,
     private viewContainerRef: ViewContainerRef,
-    private fireBird: FireBirdService,
+    private firebird: FirebirdService,
     private formService: FormService,
     private router: Router,
     private route: ActivatedRoute,
@@ -45,7 +53,7 @@ export class PricingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group({
+    this.productForm = this.fb.group({
       customer: [null, Validators.required],
       customerId: [null, Validators.required],
       customerCNPJ: [null],
@@ -66,7 +74,9 @@ export class PricingComponent implements OnInit {
         new Promise((resolve) => setTimeout(resolve, 1000));
       },
     });
+
     modal.afterClose.subscribe((customer) => {
+      this.priceService.customer = customer;
       this.selectedCustomer(customer);
     });
   }
@@ -74,61 +84,61 @@ export class PricingComponent implements OnInit {
   selectedCustomer(customer: Customer) {
     if (customer) {
       this.showSearchCustomer = false;
-      this.priceService.customer = customer;
+      this.customer = customer;
 
-      this.form.patchValue({
+      this.productForm.patchValue({
         customer: customer.name,
         customerId: customer.id,
         customerCNPJ: customer.CNPJ,
       });
-
-      this.priceService.getTaxes();
     } else {
       this.message.warning('Cliente não selecionado');
     }
   }
 
   getProduct() {
-    this.formService.validateAllFormFields(this.form);
+    this.formService.validateAllFormFields(this.productForm);
 
-    if (this.form.valid) {
-      const { referenceId } = this.form.getRawValue();
+    if (this.productForm.valid) {
+      const { referenceId } = this.productForm.getRawValue();
 
-      this.fireBird
-        .getReferencePrice(referenceId)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((data: any) => {
-          if (data.length == 0) {
-            this.message.remove();
-            this.message.error('Referência não encontrada');
-          } else {
-            this.message.remove();
-            this.message.success('');
-
-            this.priceService.product = {
-              img: this.getReferenceImg(referenceId),
-              collectionId: data[0].CD_COL,
-              collectionName: data[0].DS_COL,
-              referenceName: data[0].DS_REF,
-              colors: this.getColors(data),
-              cost: this.getMean(data, 'CUSTO'),
-              referenceId: referenceId,
-            };
-          }
+      this.getReferenceImg(referenceId)
+        .pipe(take(1))
+        .subscribe((img) => {
+          const url = URL.createObjectURL(img);
+          this.productImg = this.sanitizer.bypassSecurityTrustUrl(url);
         });
+
+      this.getReferencePrice(referenceId).subscribe((data: any) => {
+        if (data.length == 0) {
+          this.message.remove();
+          this.message.error('Referência não encontrada');
+        } else {
+          this.message.remove();
+          this.message.success('');
+
+          this.product = {
+            collectionId: data[0].CD_COL,
+            collectionName: data[0].DS_COL,
+            referenceName: data[0].DS_REF,
+            colors: this.getColors(data),
+            cost: this.getMean(data, 'CUSTO'),
+            referenceId: referenceId,
+          };
+        }
+      });
     } else {
       this.message.remove();
       this.message.error('Verifique os campos');
     }
   }
 
+  getReferencePrice(ref: string) {
+    return this.firebird.getReferencePrice(ref, this.customer.id);
+  }
+
   getReferenceImg(ref: string) {
-    this.fireBird
-      .getReferenceImg(ref, this.priceService.customer.id)
-      .subscribe((blob) => {
-        const url = URL.createObjectURL(blob);
-        this.priceService.imgSrc = this.sanitizer.bypassSecurityTrustUrl(url);
-      });
+    return this.firebird.getReferenceImg(ref, this.customer.id);
   }
 
   getColors(objects: []) {
@@ -151,11 +161,14 @@ export class PricingComponent implements OnInit {
   }
 
   openProduct() {
+    this.priceService.product = this.product;
+    this.priceService.customer = this.customer;
+    this.priceService.productImg = this.productImg;
+
     this.router.navigate([`formation`], { relativeTo: this.route });
   }
 
   routeReturn() {
-    this.priceService.resetProduct();
     this.router.navigate(['main/pricing']);
   }
 }

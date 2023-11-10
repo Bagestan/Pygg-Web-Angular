@@ -13,10 +13,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { NzButtonSize } from 'ng-zorro-antd/button';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateFormatService } from 'src/app/services/utils/date-format.service';
-import { FireBirdService } from 'src/app/services/firebird.service';
 import { FormService } from '../../../services/utils/form.service';
 import { deleteData } from '../models/qualityData';
 import { QualityService } from 'src/app/services/quality.service';
+import { FirebirdService } from 'src/app/services/firebird.service';
 
 @Component({
   selector: 'app-modal-quality',
@@ -43,7 +43,7 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private qualityService: QualityService,
     private dateFormatService: DateFormatService,
-    private fireBirdService: FireBirdService,
+    private fireBird: FirebirdService,
     private formService: FormService
   ) {}
 
@@ -76,7 +76,7 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
           this.form.get('D_QUA')?.value
         ),
       });
-      this.fireBirdService
+      this.fireBird
         .updateQuality(this.form.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -104,7 +104,7 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
 
   saveActionQuality() {
     if (this.actionForm?.valid) {
-      this.fireBirdService
+      this.fireBird
         .updateInsertAction(this.actionForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -190,7 +190,7 @@ export class ModalQualityComponent implements OnInit, OnDestroy {
   }
 
   callDeleteData(data: deleteData): void {
-    this.fireBirdService
+    this.fireBird
       .deleteQuality(data)
       .pipe(takeUntil(this.destroy$))
       .subscribe({

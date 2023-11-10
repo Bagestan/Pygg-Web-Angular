@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, filter, takeUntil } from 'rxjs';
-import { FireBirdService } from 'src/app/services/firebird.service';
+import { FirebirdService } from 'src/app/services/firebird.service';
 import { QualityService } from 'src/app/services/quality.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class FormQualityComponent implements OnInit, OnDestroy {
   isModalVisible!: boolean;
 
   constructor(
-    private fireBirdService: FireBirdService,
+    private fireBird: FirebirdService,
     private formBuilder: FormBuilder,
     private qualityService: QualityService
   ) {}
@@ -80,7 +80,7 @@ export class FormQualityComponent implements OnInit, OnDestroy {
   //
 
   getNmCli() {
-    this.fireBirdService
+    this.fireBird
       .selectFromTable(
         'CML_CLIENTE',
         'CD_CLI',

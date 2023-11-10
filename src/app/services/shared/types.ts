@@ -5,7 +5,6 @@ export type Customer = {
 };
 
 export type Product = {
-  img: any;
   collectionId: number;
   collectionName: string;
   colors: string;

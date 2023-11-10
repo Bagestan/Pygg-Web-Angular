@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-
-import { FireBirdService } from '../firebird.service';
+import { FirebirdService } from '../firebird.service';
 
 describe('fireBirdService', () => {
-  let service: FireBirdService;
+  let service: FirebirdService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(FireBirdService);
+    service = TestBed.inject(FirebirdService);
   });
+  s;
 
   it('should be created', () => {
     expect(service).toBeTruthy();

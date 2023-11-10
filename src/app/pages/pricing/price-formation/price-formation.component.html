@@ -1,13 +1,18 @@
-<div class="wrapper">
+<section class="wrapper">
   <nz-page-header nzBackIcon (nzBack)="routeReturn()">
     <nz-page-header-title>Formação de Preço</nz-page-header-title>
   </nz-page-header>
 
-  <nz-card *ngIf="priceService.product" [nzBodyStyle]="{ padding: '1rem' }">
-    <app-product [showOption]="false"></app-product>
+  <nz-card [nzBodyStyle]="{ padding: '1rem' }">
+    <app-product
+      [product]="product"
+      [productImg]="productImg"
+      [productCost]="productCost"
+      [showOption]="false"
+    ></app-product>
   </nz-card>
 
-  <form nz-form [formGroup]="form">
+  <form nz-form [formGroup]="priceForm" *ngIf="displayPriceForm">
     <nz-row nzAlign="bottom" nzJustify="space-between">
       <nz-form-item nz-col nzXs="19" nzSm="21">
         <nz-form-control>
@@ -18,16 +23,17 @@
             nzSm="12"
             nzLabelAlign="right"
             nzNoColon="true"
-            *ngIf="priceService.markupInterest"
           ></nz-form-label>
+          <!-- *ngIf="priceService.markupInterest" -->
           <nz-select
             nzBorderless
             class="input border-radius-08rem"
             formControlName="markupId"
             (ngModelChange)="updateMarkupInterest($event)"
             nzSize="large"
+            [nzLoading]="markupOptionsLoading"
             ><nz-option
-              *ngFor="let item of priceService.markupOptions"
+              *ngFor="let item of markupOptions"
               [nzValue]="item.ID_TAB"
               [nzLabel]="item.CD_DS"
             ></nz-option>
@@ -37,8 +43,8 @@
 
       <nz-form-item nz-col nzXs="4" nzSm="2">
         <div class="taxLabel">
-          {{ priceService.markupInterest | number : "1.1-1" }}
-          <span *ngIf="priceService.markupInterest"> %</span>
+          {{ markupInterest | number : "1.1-1" }}
+          <span *ngIf="markupInterest"> %</span>
         </div>
       </nz-form-item>
     </nz-row>
@@ -55,8 +61,9 @@
             nzSize="large"
             (ngModelChange)="updatePaymentInterest($event)"
             class="input border-radius-08rem"
+            [nzLoading]="paymentOptionsLoading"
             ><nz-option
-              *ngFor="let item of priceService.paymentOptions"
+              *ngFor="let item of paymentOptions"
               [nzValue]="item.ID_PGTO"
               [nzLabel]="item.CD_DS"
             ></nz-option>
@@ -65,8 +72,8 @@
       </nz-form-item>
       <nz-form-item nz-col nzXs="4" nzSm="2">
         <div class="taxLabel">
-          {{ priceService.paymentInterest | number : "1.1-1" }}
-          <span *ngIf="priceService.paymentInterest"> %</span>
+          {{ paymentInterest | number : "1.1-1" }}
+          <span *ngIf="paymentInterest"> %</span>
         </div>
       </nz-form-item>
     </nz-row>
@@ -109,8 +116,4 @@
       </nz-form-item>
     </nz-row>
   </form>
-</div>
-
-<ng-template #suffixTemplate>
-  <span style="margin: 0" nz-icon nzType="percentage" nzTheme="outline"></span>
-</ng-template>
+</section>
