@@ -33,8 +33,22 @@ export class PriceFormationComponent implements OnInit {
   product = this.priceService.product;
   productImg = this.priceService.productImg;
 
-  productTaxes!: Taxes;
   productCost!: ProductCost;
+  productTaxes!: Taxes;
+
+  despesasPrecoCalc!: number;
+  receitaBrutaPrecoCalc!: number;
+  receitaLiquidaPrecoCalc!: number;
+
+  despesasPrecoInput!: number;
+  receitaBrutaPrecoInput!: number;
+  receitaLiquidaPrecoInput!: number;
+
+  lucroInput!: number;
+  lucroCalculado!: number;
+
+  price!: number;
+  result = this.receitaLiquidaPrecoInput > 0 ? 'approved' : 'denied';
 
   constructor(
     private fb: FormBuilder,
@@ -57,36 +71,40 @@ export class PriceFormationComponent implements OnInit {
       profit: [null, [Validators.required]],
     });
 
-    this.firebird
-      .getPaymentOption()
-      .pipe(take(1))
-      .subscribe((data) => {
-        this.paymentOptions = data as PaymentData[];
-        this.paymentOptionsLoading = false;
-      });
+    if (this.product && this.product.cost) {
+      this.priceService
+        .getPaymentOption()
+        .pipe(take(1))
+        .subscribe((data) => {
+          this.paymentOptions = data as PaymentData[];
+          this.paymentOptionsLoading = false;
+        });
 
-    this.firebird
-      .getPriceMarkup()
-      .pipe(take(1))
-      .subscribe((data) => {
-        this.markupOptions = data as MarkupData[];
-        this.markupOptionsLoading = false;
-      });
-
-    this.firebird
-      .getPriceTaxes(this.priceService.customer.id)
-      .subscribe((data: any) => {
-        this.productTaxes = data[0] as Taxes;
-      });
+      this.priceService
+        .getPriceMarkup()
+        .pipe(take(1))
+        .subscribe((data) => {
+          this.markupOptions = data as MarkupData[];
+          this.markupOptionsLoading = false;
+        });
+    } else {
+      this.router.navigate(['main/pricing']);
+    }
   }
 
   submit() {
     this.formService.validateAllFormFields(this.priceForm);
 
-    console.log('🚀 ~ this.priceForm.value:', this.priceForm.value);
-
     if (this.priceForm.valid) {
-      this.displayPriceForm = false;
+      this.priceService
+        .getPriceTaxes(this.priceService.customer.id)
+        .subscribe((data: any) => {
+          this.productTaxes = data[0] as Taxes;
+          this.price = this.calcPrice();
+          this.calcLucroBruto();
+          this.calcDivisor();
+          this.calcDespesasPrecoCalc();
+        });
 
       this.productCost = {
         markup: {
@@ -102,9 +120,59 @@ export class PriceFormationComponent implements OnInit {
         },
         profit: this.priceForm.get('profit')?.value,
       };
+      this.lucroInput = this.productCost.profit;
     } else {
       this.message.error('Verifique o(s) campo(s) em vermelho');
     }
+  }
+
+  calcLucroBruto() {
+    return (
+      this.lucroInput /
+      ((100 - (this.productTaxes.IR + this.productTaxes.CSLL)) / 100)
+    );
+  }
+
+  calcDivisor(): number {
+    return (
+      (100 -
+        (this.markupInterest + this.paymentInterest + this.calcLucroBruto())) /
+      100
+    );
+  }
+
+  calcPrice(): number {
+    return this.product.cost / this.calcDivisor();
+  }
+
+  calcDespesasPrecoCalc() {
+    this.despesasPrecoCalc =
+      this.calcPrice() * ((this.markupInterest + this.paymentInterest) / 100);
+
+    this.receitaBrutaPrecoCalc =
+      this.calcPrice() - this.product.cost - this.despesasPrecoCalc;
+
+    this.receitaLiquidaPrecoCalc =
+      this.receitaBrutaPrecoCalc -
+      this.receitaBrutaPrecoCalc * (this.productTaxes.IR / 100) -
+      this.receitaBrutaPrecoCalc * (this.productTaxes.CSLL / 100);
+
+    this.calcDespesasPrecoInput(this.calcPrice());
+  }
+
+  calcDespesasPrecoInput(preco: number) {
+    this.despesasPrecoInput =
+      preco * ((this.markupInterest + this.paymentInterest) / 100);
+
+    this.receitaBrutaPrecoInput =
+      preco - this.product.cost - this.despesasPrecoInput;
+
+    this.receitaLiquidaPrecoInput =
+      this.receitaBrutaPrecoInput -
+      this.receitaBrutaPrecoInput * (this.productTaxes.IR / 100) -
+      this.receitaBrutaPrecoInput * (this.productTaxes.CSLL / 100);
+
+    this.lucroCalculado = (this.receitaLiquidaPrecoInput / preco) * 100;
   }
 
   updateMarkupInterest(event: number) {
@@ -115,7 +183,6 @@ export class PriceFormationComponent implements OnInit {
     });
     this.markupInterest = this.markupOptions[event].MKP_TOT;
   }
-
   updatePaymentInterest(event: number) {
     this.priceForm.patchValue({
       paymentInterest: this.paymentOptions[event].JUR_TOT,
@@ -126,5 +193,38 @@ export class PriceFormationComponent implements OnInit {
 
   routeReturn() {
     this.router.navigate(['main/pricing']);
+  }
+
+  resetProduct() {
+    this.product = {
+      collectionId: 0,
+      collectionName: '',
+      colors: '',
+      referenceName: '',
+      referenceId: 0,
+      cost: 0,
+    };
+    this.priceService.customer = { name: '', id: 0, CNPJ: '' };
+    this.productTaxes = { IR: 0, CSLL: 0 };
+  }
+
+  resetFinalProduct() {
+    this.productCost = {
+      markup: {
+        markupId: 0,
+        markupName: '',
+        markupInterest: 0,
+        markupMargin: 0,
+      },
+      payment: {
+        paymentId: 0,
+        paymentName: '',
+        paymentInterest: 0,
+      },
+      profit: 0,
+    };
+    this.markupInterest = 0;
+    this.paymentInterest = 0;
+    this.lucroInput = 0;
   }
 }

@@ -3,14 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject, take } from 'rxjs';
 import { SearchClientComponent } from '../shared/Presentational-Components/search-client/search-client.component';
-import {
-  Customer,
-  MarkupData,
-  PaymentData,
-  Product,
-  ProductCost,
-  Taxes,
-} from 'src/app/services/shared/types';
+import { Customer, Product } from 'src/app/services/shared/types';
 import { FirebirdService } from '../../services/firebird.service';
 import { FormService } from 'src/app/services/utils/form.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -35,9 +28,6 @@ export class PricingComponent implements OnInit {
   productImg!: any;
   product!: Product;
   customer!: Customer;
-
-  formatterPercent = (value: number): string => `${value} %`;
-  parserPercent = (value: string): string => value.replace(' %', '');
 
   constructor(
     private modal: NzModalService,
@@ -134,11 +124,11 @@ export class PricingComponent implements OnInit {
   }
 
   getReferencePrice(ref: string) {
-    return this.firebird.getReferencePrice(ref, this.customer.id);
+    return this.priceService.getReferencePrice(ref, this.customer.id);
   }
 
   getReferenceImg(ref: string) {
-    return this.firebird.getReferenceImg(ref, this.customer.id);
+    return this.priceService.getReferenceImg(ref, this.customer.id);
   }
 
   getColors(objects: []) {
