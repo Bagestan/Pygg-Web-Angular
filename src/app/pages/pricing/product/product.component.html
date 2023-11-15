@@ -1,5 +1,3 @@
-{{ productTaxes }}
-
 <div>
   <div class="img central">
     <img
@@ -33,7 +31,7 @@
 
   <nz-divider *ngIf="productCost" nzText="Preço"></nz-divider>
 
-  <nz-list nzSize="small" nzSplit="false" *ngIf="productCost">
+  <nz-list nzSize="small" nzSplit="false" *ngIf="productCost && productTaxes">
     <nz-list-item>
       <span nz-typography> <strong> Custo </strong> </span>
       <strong>
@@ -43,17 +41,35 @@
 
     <nz-list-item>
       <span nz-typography> Margem Contribuição </span>
-      {{ productCost.markup.markupMargin.toFixed(2).replace(".", ",") }}%
+      {{
+        (productCost.markup.markupMargin / 100).toLocaleString("pt-br", {
+          style: "percent",
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2
+        })
+      }}
     </nz-list-item>
 
     <nz-list-item>
       <span nz-typography> IR </span>
-      {{ productTaxes["IR"].toFixed(2).replace(".", ",") }} %
+      {{
+        (productTaxes["IR"] / 100).toLocaleString("pt-br", {
+          style: "percent",
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2
+        })
+      }}
     </nz-list-item>
 
     <nz-list-item>
       <span nz-typography> CSLL </span>
-      {{ productTaxes["CSLL"].toFixed(2).replace(".", ",") }} %
+      {{
+        (productTaxes["CSLL"] / 100).toLocaleString("pt-br", {
+          style: "percent",
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2
+        })
+      }}
     </nz-list-item>
 
     <nz-list-item
@@ -69,20 +85,25 @@
       </span>
       <strong>
         {{
-          lucroCalculado > 0 ? lucroCalculado.toFixed(2).replace(".", ",") : 0
+          lucroCalculado > 0
+            ? (lucroCalculado / 100).toLocaleString("pt-br", {
+                style: "percent",
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
+              })
+            : 0
         }}
-        %
       </strong>
     </nz-list-item>
 
-    <nz-list-item *ngIf="calcPrice()">
+    <nz-list-item>
       <span nz-typography> Preço Produto </span>
-      {{ calcPrice() | currency : "BRL" : "symbol" : "1.2-2" }}
+      {{ price | currency : "BRL" : "symbol" : "1.2-2" }}
     </nz-list-item>
   </nz-list>
 
-  <div class="d-flex spaceBetween alignCenter">
-    <div *ngIf="!calcPrice() && product">
+  <div class="d-flex spaceBetween alignCenter" *ngIf="!productTaxes">
+    <div *ngIf="product">
       <h5 class="marginZero">Custo</h5>
       <h4 class="marginZero" nz-typography>
         <strong>{{
@@ -103,15 +124,19 @@
   </div>
 </div>
 
-<div class="d-flex alignCenter" style="flex-direction: column">
+<div
+  class="d-flex alignCenter"
+  style="flex-direction: column"
+  *ngIf="form && productCost && productCost.markup.markupId"
+>
   <h4 class="central">Preço final</h4>
   <form nz-form [formGroup]="form">
     <nz-form-item class="central">
       <nz-form-control>
         <input
           minlength="0"
-          formControlName="price"
-          mask="separator.2"
+          formControlName="newPrice"
+          mask="separator,2"
           thousandSeparator="."
           prefix="R$"
         />
@@ -120,7 +145,10 @@
   </form>
 </div>
 
-<div class="d-flex alignCenter">
+<div
+  class="d-flex alignCenter"
+  *ngIf="productCost && productCost.markup.markupId"
+>
   <ng-container *ngIf="receitaLiquidaPrecoInput > 0; else deniedTemplate">
     <nz-avatar
       class="central"
@@ -139,10 +167,6 @@
     nzIcon="close"
   ></nz-avatar>
 </ng-template>
-
-<ng-template #teste> Referência </ng-template>
-
-<ng-template #tagTemplate> Conteúdo </ng-template>
 
 <nz-modal
   *ngIf="isVisible"

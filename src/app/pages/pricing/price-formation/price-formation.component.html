@@ -8,11 +8,17 @@
       [product]="product"
       [productImg]="productImg"
       [productCost]="productCost"
+      [productTaxes]="productTaxes"
+      [lucroCalculado]="lucroCalculado"
+      [receitaLiquidaPrecoInput]="receitaLiquidaPrecoInput"
+      [result]="result"
+      [price]="price"
       [showOption]="false"
+      (outputPrice)="calcDespesasPrecoInput($event)"
     ></app-product>
   </nz-card>
 
-  <form nz-form [formGroup]="priceForm" *ngIf="displayPriceForm">
+  <form nz-form [formGroup]="priceForm" *ngIf="!productTaxes">
     <nz-row nzAlign="bottom" nzJustify="space-between">
       <nz-form-item nz-col nzXs="19" nzSm="21">
         <nz-form-control>
@@ -92,7 +98,7 @@
               nz-input
               [allowNegativeNumbers]="false"
               mask="separator.2"
-              thousandSeparator="."
+              thousandSeparator=","
               suffix="%"
               placeholder="10"
               formControlName="profit"
