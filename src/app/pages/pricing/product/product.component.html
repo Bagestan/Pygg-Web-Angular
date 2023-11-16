@@ -1,5 +1,6 @@
 <div>
   <div class="img central">
+    @if (productImg) {
     <img
       class="product-image d-flex central"
       width="200px"
@@ -7,14 +8,16 @@
       [src]="productImg"
       alt="Foto do Produto"
       (click)="imgModal(true)"
-      *ngIf="productImg"
     />
-    <h4 *ngIf="product" class="textCenter" nz-typography>
+    } @if (product) {
+    <h4 class="textCenter" nz-typography>
       {{ product.referenceName }}
     </h4>
+    }
   </div>
 
-  <nz-list nzSize="small" nzSplit="false" *ngIf="product">
+  @if (product) {
+  <nz-list nzSize="small" nzSplit="false">
     <nz-list-item>
       <span nz-typography> Referência </span>
       {{ product.referenceId }}
@@ -29,9 +32,10 @@
     </nz-list-item>
   </nz-list>
 
-  <nz-divider *ngIf="productCost" nzText="Preço"></nz-divider>
-
-  <nz-list nzSize="small" nzSplit="false" *ngIf="productCost && productTaxes">
+  } @if (productCost) {
+  <nz-divider nzText="Preço"></nz-divider>
+  } @if (productCost && productTaxes) {
+  <nz-list nzSize="small" nzSplit="false">
     <nz-list-item>
       <span nz-typography> <strong> Custo </strong> </span>
       <strong>
@@ -101,9 +105,11 @@
       {{ price | currency : "BRL" : "symbol" : "1.2-2" }}
     </nz-list-item>
   </nz-list>
+  } @if (!productTaxes) {
+  <div class="d-flex spaceBetween alignCenter">
+    @if (product) {
 
-  <div class="d-flex spaceBetween alignCenter" *ngIf="!productTaxes">
-    <div *ngIf="product">
+    <div>
       <h5 class="marginZero">Custo</h5>
       <h4 class="marginZero" nz-typography>
         <strong>{{
@@ -111,24 +117,23 @@
         }}</strong>
       </h4>
     </div>
+    } @if (showOption) {
 
     <button
       class="border-radius-08rem"
       nz-button
       nzType="default"
-      *ngIf="showOption"
       nzSize="large"
     >
       Selecionar
     </button>
+    }
   </div>
+  }
 </div>
 
-<div
-  class="d-flex alignCenter"
-  style="flex-direction: column"
-  *ngIf="form && productCost && productCost.markup.markupId"
->
+@if (form && productCost && productCost.markup.markupId) {
+<div class="d-flex alignCenter" style="flex-direction: column">
   <h4 class="central">Preço final</h4>
   <form nz-form [formGroup]="form">
     <nz-form-item class="central">
@@ -144,12 +149,11 @@
     </nz-form-item>
   </form>
 </div>
+} @if (productCost && productCost.markup.markupId) {
 
-<div
-  class="d-flex alignCenter"
-  *ngIf="productCost && productCost.markup.markupId"
->
-  <ng-container *ngIf="receitaLiquidaPrecoInput > 0; else deniedTemplate">
+<div class="d-flex alignCenter">
+  @if (receitaLiquidaPrecoInput > 0) {
+  <ng-container>
     <nz-avatar
       class="central"
       [nzSize]="64"
@@ -157,19 +161,21 @@
       nzIcon="check"
     ></nz-avatar>
   </ng-container>
-</div>
+  } @else {
 
-<ng-template #deniedTemplate>
-  <nz-avatar
-    class="central"
-    [nzSize]="64"
-    style="background-color: #ff3141"
-    nzIcon="close"
-  ></nz-avatar>
-</ng-template>
+  <ng-template #deniedTemplate>
+    <nz-avatar
+      class="central"
+      [nzSize]="64"
+      style="background-color: #ff3141"
+      nzIcon="close"
+    ></nz-avatar>
+  </ng-template>
+  }
+</div>
+} @if (isVisible) {
 
 <nz-modal
-  *ngIf="isVisible"
   [(nzVisible)]="isVisible"
   [nzTitle]="product.referenceName"
   [nzClosable]="true"
@@ -186,3 +192,4 @@
     />
   </ng-container>
 </nz-modal>
+}

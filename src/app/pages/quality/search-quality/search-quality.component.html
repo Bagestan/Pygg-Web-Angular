@@ -23,12 +23,14 @@
               class="w-100"
               name="firstCompany"
               formControlName="SelectedCompany"
-              ><nz-option
+            >
+              @for (company of companyOptions; track company) {
+              <nz-option
                 nzRequired
-                *ngFor="let company of companyOptions"
                 [nzValue]="company.CD_EMP"
                 [nzLabel]="company.OptionName"
               ></nz-option>
+              }
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -77,8 +79,9 @@
   </form>
 </div>
 
+@if (isModalVisible) {
 <app-modal-quality
-  *ngIf="isModalVisible"
   [isModalVisible]="isModalVisible"
   (isModalVisibleChange)="modalVisibility($event)"
 ></app-modal-quality>
+}

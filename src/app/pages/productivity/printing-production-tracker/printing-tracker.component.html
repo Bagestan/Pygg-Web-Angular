@@ -16,12 +16,14 @@
                 class="w-100"
                 name="firstCompany"
                 formControlName="SelectedCompany"
-                ><nz-option
+              >
+                @for (company of companyOptions; track company) {
+                <nz-option
                   nzRequired
-                  *ngFor="let company of companyOptions"
                   [nzValue]="company.CD_EMP"
                   [nzLabel]="company.OptionName"
                 ></nz-option>
+                }
               </nz-select>
             </nz-form-control>
           </nz-form-item>
@@ -70,14 +72,10 @@
     nzTitle="Apontamentos de Produção"
   ></nz-page-header>
 </ng-template>
-<section
-  *ngIf="
-    eficienceByMachinesDataSource &&
-    eficienceByPeriodDataSource &&
-    productivityByMachinesDataSource &&
-    productivityByPeriodDataSource
-  "
->
+
+@if ( eficienceByMachinesDataSource && eficienceByPeriodDataSource &&
+productivityByMachinesDataSource && productivityByPeriodDataSource) {
+<section>
   <h3 nz-typography class="chartTitle">Produtividade</h3>
   <div class="charts">
     <app-bar-chart
@@ -113,3 +111,4 @@
     ></app-bar-chart>
   </div>
 </section>
+}

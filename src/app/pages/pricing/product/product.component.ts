@@ -32,7 +32,7 @@ export class ProductComponent implements OnInit {
   @Input() productInfoLoading = true;
   @Input() showOption = true;
 
-  @Input() product!: Product;
+  @Input({ required: true }) product!: Product;
   @Input() productImg!: any;
   @Input() customer!: Customer;
   @Input() productCost!: ProductCost;

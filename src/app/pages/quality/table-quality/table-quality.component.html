@@ -40,9 +40,9 @@
     </tr>
   </thead>
   <tbody>
+    @for (data of table.data; track data) {
     <tr
       (click)="populateForm(data.ID_CLI, data.S_QUA)"
-      *ngFor="let data of table.data"
       [ngStyle]="{ color: data.RESOL ? TrueResol : FalseResol }"
     >
       <td>
@@ -54,11 +54,13 @@
       <td>{{ data.NM_CLI }}</td>
       <td>{{ data.DS_ART }}</td>
     </tr>
+    }
   </tbody>
 </nz-table>
 
+@if (isModalVisible) {
 <app-modal-quality
-  *ngIf="isModalVisible"
   [isModalVisible]="isModalVisible"
   (isModalVisibleChange)="modalVisibility($event)"
 ></app-modal-quality>
+}

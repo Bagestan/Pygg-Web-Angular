@@ -67,17 +67,19 @@
     </nz-row>
   </form>
 
+  @if (product) {
   <nz-card
-    *ngIf="product"
     (click)="openProduct()"
     class="border-radius-08rem"
     [nzBodyStyle]="{ padding: '1rem' }"
-    ><app-product
+  >
+    <app-product
       [product]="product"
       [productImg]="productImg"
       [path]="'pricing'"
     ></app-product>
   </nz-card>
+  }
 </div>
 
 <ng-template #suffixPercentage>

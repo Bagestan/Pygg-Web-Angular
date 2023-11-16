@@ -28,17 +28,18 @@
     </nz-form-item>
   </form>
 
-  <div class="result" *ngIf="clientList">
+  @if (clientList) {
+  <div class="result">
     <nz-list [nzSplit]="true">
-      <nz-list-item
-        *ngFor="let item of clientList"
-        (click)="selectCustomer(item)"
-      >
-        {{ item["id"] }} - {{ item["name"] }}
-      </nz-list-item>
+      @for (item of clientList; track item) {
+      <nz-list-item (click)="selectCustomer(item)">
+        {{ item["id"] }} - {{ item["name"] }} </nz-list-item
+      >}
     </nz-list>
-    <p *ngIf="clientListLength">
-      mostrando 5 items de {{ clientListLength }} encontrados
-    </p>
+
+    @if (clientListLength) {
+    <p>mostrando 5 items de {{ clientListLength }} encontrados</p>
+    }
   </div>
+  }
 </div>

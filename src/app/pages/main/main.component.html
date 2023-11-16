@@ -74,8 +74,8 @@
         </ul>
       </li>
 
+      @if (auth.getIsPermission()) {
       <li
-        *ngIf="auth.getIsPermission()"
         [(nzOpen)]="openMap['sub3']"
         (nzOpenChange)="openHandler('sub3')"
         nz-submenu
@@ -90,6 +90,7 @@
           </li>
         </ul>
       </li>
+      }
 
       <li
         [(nzOpen)]="openMap['sub4']"

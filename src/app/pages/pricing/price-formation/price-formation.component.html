@@ -18,7 +18,8 @@
     ></app-product>
   </nz-card>
 
-  <form nz-form [formGroup]="priceForm" *ngIf="!productTaxes">
+  @if (!productTaxes) {
+  <form nz-form [formGroup]="priceForm">
     <nz-row nzAlign="bottom" nzJustify="space-between">
       <nz-form-item nz-col nzXs="19" nzSm="21">
         <nz-form-control>
@@ -30,7 +31,6 @@
             nzLabelAlign="right"
             nzNoColon="true"
           ></nz-form-label>
-          <!-- *ngIf="priceService.markupInterest" -->
           <nz-select
             nzBorderless
             class="input border-radius-08rem"
@@ -38,11 +38,13 @@
             (ngModelChange)="updateMarkupInterest($event)"
             nzSize="large"
             [nzLoading]="markupOptionsLoading"
-            ><nz-option
-              *ngFor="let item of markupOptions"
+          >
+            @for (item of markupOptions; track item) {
+            <nz-option
               [nzValue]="item.ID_TAB"
               [nzLabel]="item.CD_DS"
             ></nz-option>
+            }
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -50,7 +52,9 @@
       <nz-form-item nz-col nzXs="4" nzSm="2">
         <div class="taxLabel">
           {{ markupInterest | number : "1.1-1" }}
-          <span *ngIf="markupInterest"> %</span>
+          @if (markupInterest) {
+          <span> %</span>
+          }
         </div>
       </nz-form-item>
     </nz-row>
@@ -68,18 +72,22 @@
             (ngModelChange)="updatePaymentInterest($event)"
             class="input border-radius-08rem"
             [nzLoading]="paymentOptionsLoading"
-            ><nz-option
-              *ngFor="let item of paymentOptions"
+          >
+            @for (item of paymentOptions; track item) {
+            <nz-option
               [nzValue]="item.ID_PGTO"
               [nzLabel]="item.CD_DS"
-            ></nz-option>
+            ></nz-option
+            >}
           </nz-select>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item nz-col nzXs="4" nzSm="2">
         <div class="taxLabel">
           {{ paymentInterest | number : "1.1-1" }}
-          <span *ngIf="paymentInterest"> %</span>
+          @if (paymentInterest) {
+          <span> %</span>
+          }
         </div>
       </nz-form-item>
     </nz-row>
@@ -122,4 +130,5 @@
       </nz-form-item>
     </nz-row>
   </form>
+  }
 </section>

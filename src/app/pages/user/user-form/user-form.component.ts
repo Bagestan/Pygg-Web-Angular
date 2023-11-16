@@ -25,6 +25,8 @@ export class UserFormComponent implements OnInit {
   password?: string;
   defaultUserActivated!: boolean;
 
+  tipLabel!: 'desativar' | 'ativar';
+
   protected destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -50,6 +52,8 @@ export class UserFormComponent implements OnInit {
     });
 
     this.onLoading(false);
+
+    this.tipLabel = this.form.get('disabled')?.value ? 'ativar' : 'desativar';
   }
 
   buildForm() {

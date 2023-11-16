@@ -9,12 +9,9 @@
       </nz-space>
     </nz-page-header-extra>
   </nz-page-header>
-  <nz-table
-    nzShowSizeChanger
-    *ngIf="usersList"
-    nzSize="small"
-    #userTable
-    [nzData]="usersList"
+
+  @if (usersList) {
+  <nz-table nzShowSizeChanger nzSize="small" #userTable [nzData]="usersList"
     ><thead>
       <tr>
         <th nzWidth="30px">
@@ -27,7 +24,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of userTable.data">
+      @for (data of userTable.data; track data) {
+      <tr>
         <td>
           <button
             nz-button
@@ -43,8 +41,10 @@
 
         <td (click)="openUser(data.email)">{{ data.company }}</td>
       </tr>
+      }
     </tbody>
   </nz-table>
+  }
 </div>
 
 <!--  -->

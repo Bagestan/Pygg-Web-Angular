@@ -32,6 +32,7 @@
         >VOLTAR
       </button>
       <nz-button-group nzGap="0.625rem">
+        @if (!tabIndex || editActionForm) {
         <button
           nz-button
           nzDanger
@@ -43,32 +44,28 @@
           (nzOnConfirm)="popConfirm()"
           [nzIcon]="iconTpl"
           [disabled]="disabledTab"
-          *ngIf="!tabIndex || editActionForm"
         >
           <span nz-icon nzType="delete" nzTheme="outline"></span>
         </button>
-
+        }
         <button
           nz-button
           nzType="primary"
           type="submit"
           (click)="primaryButton()"
         >
+          @if (tabIndex && !editActionForm) {
           <span
-            *ngIf="tabIndex && !editActionForm"
             class="marginZero"
             nz-icon
             nzType="plus"
             nzTheme="outline"
           ></span>
-
+          }
           {{ tabIndex && !editActionForm ? "AÇÃO" : "SALVAR" }}
-          <span
-            *ngIf="!tabIndex || editActionForm"
-            nz-icon
-            nzType="save"
-            nzTheme="outline"
-          ></span>
+          @if (!tabIndex || editActionForm) {
+          <span nz-icon nzType="save" nzTheme="outline"></span>
+          }
         </button>
       </nz-button-group>
     </div>

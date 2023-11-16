@@ -5,43 +5,43 @@
   [title]="chartTitle"
 >
   <dxo-export [enabled]="true"></dxo-export>
-  <ng-container
-    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].ProfitValue"
-    ><dxi-series
+  @if (dataSource && dataSource.length > 0 && dataSource[0].ProfitValue) {
+  <ng-container>
+    <dxi-series
       valueField="ProfitValue"
       name="Lucro"
       cornerRadius="5"
       color="#2ECC40"
     ></dxi-series>
   </ng-container>
-  <ng-container
-    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingValue"
-    ><dxi-series
+  } @if (dataSource && dataSource.length > 0 && dataSource[0].BillingValue) {
+  <ng-container>
+    <dxi-series
       valueField="BillingValue"
       name="Valor de Faturamento"
       cornerRadius="5"
       color="#2881db"
     ></dxi-series>
   </ng-container>
-  <ng-container
-    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].BillingQuantity"
-    ><dxi-series
+  } @if (dataSource && dataSource.length > 0 && dataSource[0].BillingQuantity) {
+  <ng-container>
+    <dxi-series
       valueField="BillingQuantity"
       name="Quantidade de Faturamento"
       cornerRadius="5"
     ></dxi-series>
   </ng-container>
-  <ng-container
-    *ngIf="
-      dataSource && dataSource.length > 0 && dataSource[0].ProfitPercentage
-    "
-    ><dxi-series
+  } @if (dataSource && dataSource.length > 0 && dataSource[0].ProfitPercentage)
+  {
+  <ng-container>
+    <dxi-series
       valueField="ProfitPercentage"
       name="Porcentagem de Lucro"
       cornerRadius="5"
       color="#34D084"
     ></dxi-series>
   </ng-container>
+  }
 
   <dxo-common-series-settings
     argumentField="{{ xAxis }}"

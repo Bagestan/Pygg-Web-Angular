@@ -1,6 +1,6 @@
 <dx-chart [dataSource]="dataSource" [title]="title">
+  @if (dataSource && dataSource.length > 0 && dataSource[0].valueField) {
   <dxi-series
-    *ngIf="dataSource && dataSource.length > 0 && dataSource[0].valueField"
     argumentField="argumentField"
     valueField="valueField"
     name="label"
@@ -8,6 +8,7 @@
     [color]="color"
     barWidth="50"
   ></dxi-series>
+  }
 
   <dxo-common-series-settings
     argumentField="argumentField"

@@ -1,98 +1,96 @@
-<ng-container *ngIf="editActionForm; then addActionForm; else actionsTable">
-</ng-container>
+@if (editActionForm) {
+<form nz-form nzLayout="vertical" [formGroup]="actionForm">
+  <h2>Cadastrar ação</h2>
 
-<ng-template #actionsTable>
-  <nz-table
-    #basicTable
-    [nzData]="actionList"
-    [nzLoading]="isLoading"
-    nzFrontPagination="false"
-    ><thead>
-      <tr>
-        <th>Data:</th>
-        <th>Ação:</th>
-        <th>Responsável</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of actionList" (click)="editAction(data)">
-        <td>
-          {{ data.D_ACA | date : "dd/MM/yyyy" }}
-        </td>
-        <td>{{ data.DS_ACA }}</td>
-        <td>{{ data.NM_RESP }}</td>
-      </tr>
-    </tbody>
-  </nz-table>
-</ng-template>
+  <nz-row nzGutter="16">
+    <nz-col nzXXl="8" nzXl="8" nzLg="8" nzMd="8" nzSm="8" nzXs="10">
+      <nz-form-item>
+        <nz-form-label nzRequired>Data</nz-form-label>
+        <nz-form-control
+          nzErrorTip="Campo obrigatório"
+          class="ant-form-item-control"
+          ><nz-date-picker
+            class="w-100"
+            nzFormat="dd/MM/yyy"
+            formControlName="D_ACA"
+          ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+    <nz-col nzXXl="8" nzXl="8" nzLg="8" nzMd="8" nzSm="8" nzXs="14">
+      <nz-form-item>
+        <nz-form-label nzRequired>Tipo</nz-form-label>
+        <nz-form-control nzErrorTip="error">
+          <nz-select nzDisabled class="w-100" formControlName="TP_ACA">
+            @for (action of actionOptions; track action) {
+            <nz-option
+              nzRequired
+              [nzValue]="action.ID_TP"
+              [nzLabel]="action.DS_TP"
+            ></nz-option
+            >}
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
 
-<ng-template #addActionForm>
-  <form nz-form nzLayout="vertical" [formGroup]="actionForm">
-    <h2>Cadastrar ação</h2>
+    <nz-col nzXXl="8" nzXl="8" nzLg="8" nzMd="8" nzSm="8" nzXs="24">
+      <nz-form-item>
+        <nz-form-label nzRequired>Responsável</nz-form-label>
+        <nz-form-control nzErrorTip="Campo obrigatório">
+          <nz-input-group>
+            <input
+              class="border-radius-08rem"
+              nzHasFeedback
+              nz-input
+              formControlName="NM_RESP"
+          /></nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
 
-    <nz-row nzGutter="16">
-      <nz-col nzXXl="8" nzXl="8" nzLg="8" nzMd="8" nzSm="8" nzXs="10">
-        <nz-form-item>
-          <nz-form-label nzRequired>Data</nz-form-label>
-          <nz-form-control
-            nzErrorTip="Campo obrigatório"
-            class="ant-form-item-control"
-            ><nz-date-picker
-              class="w-100"
-              nzFormat="dd/MM/yyy"
-              formControlName="D_ACA"
-            ></nz-date-picker>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col nzXXl="8" nzXl="8" nzLg="8" nzMd="8" nzSm="8" nzXs="14">
-        <nz-form-item>
-          <nz-form-label nzRequired>Tipo</nz-form-label>
-          <nz-form-control nzErrorTip="error">
-            <nz-select nzDisabled class="w-100" formControlName="TP_ACA">
-              <nz-option
-                nzRequired
-                *ngFor="let actions of actionOptions"
-                [nzValue]="actions.ID_TP"
-                [nzLabel]="actions.DS_TP"
-              ></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-
-      <nz-col nzXXl="8" nzXl="8" nzLg="8" nzMd="8" nzSm="8" nzXs="24">
-        <nz-form-item>
-          <nz-form-label nzRequired>Responsável</nz-form-label>
-          <nz-form-control nzErrorTip="Campo obrigatório">
-            <nz-input-group>
-              <input
-                class="border-radius-08rem"
-                nzHasFeedback
-                nz-input
-                formControlName="NM_RESP"
-            /></nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-
-      <nz-col nzXXl="24" nzXl="24" nzLg="24" nzMd="24" nzSm="24" nzXs="24">
-        <nz-form-item>
-          <nz-form-label nzRequired>Ação</nz-form-label>
-          <nz-form-control nzErrorTip="Campo obrigatório">
-            <nz-input-group>
-              <textarea
-                class="border-radius-08rem"
-                nzHasFeedback
-                nz-input
-                placeholder="Controlled autosize"
-                [nzAutosize]="{ minRows: 3, maxRows: 10 }"
-                formControlName="DS_ACA"
-              ></textarea>
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
-  </form>
-</ng-template>
+    <nz-col nzXXl="24" nzXl="24" nzLg="24" nzMd="24" nzSm="24" nzXs="24">
+      <nz-form-item>
+        <nz-form-label nzRequired>Ação</nz-form-label>
+        <nz-form-control nzErrorTip="Campo obrigatório">
+          <nz-input-group>
+            <textarea
+              class="border-radius-08rem"
+              nzHasFeedback
+              nz-input
+              placeholder="Controlled autosize"
+              [nzAutosize]="{ minRows: 3, maxRows: 10 }"
+              formControlName="DS_ACA"
+            ></textarea>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+  </nz-row>
+</form>
+} @else {
+<nz-table
+  #basicTable
+  [nzData]="actionList"
+  [nzLoading]="isLoading"
+  nzFrontPagination="false"
+  ><thead>
+    <tr>
+      <th>Data:</th>
+      <th>Ação:</th>
+      <th>Responsável</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of actionList; track data) {
+    <tr (click)="editAction(data)">
+      <td>
+        {{ data.D_ACA | date : "dd/MM/yyyy" }}
+      </td>
+      <td>{{ data.DS_ACA }}</td>
+      <td>{{ data.NM_RESP }}</td>
+    </tr>
+    }
+  </tbody>
+</nz-table>
+}

@@ -100,8 +100,6 @@ export class PriceFormationService {
   }
 
   customerSearch(searchPrompt: string) {
-    console.log('🚀 ~ searchPrompt:', searchPrompt);
-    console.log('🚀 ~ this.header:', this.header);
     return this.httpClient
       .post(
         `${this.API}quality/searchClientByName`,

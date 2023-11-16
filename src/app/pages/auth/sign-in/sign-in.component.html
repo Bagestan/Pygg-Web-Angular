@@ -31,13 +31,11 @@
               ></span>
             </ng-template>
             <ng-template #passwordError let-control>
-              <ng-container *ngIf="control.hasError('required')">
-                Por favor confirme sua senha!
-              </ng-container>
-
-              <ng-container *ngIf="control.hasError('minlength')">
-                Tamanho mínimo 8!
-              </ng-container>
+              @if (control.hasError('required')) {
+              <ng-container> Por favor confirme sua senha! </ng-container>
+              } @if (control.hasError('minlength')) {
+              <ng-container> Tamanho mínimo 8! </ng-container>
+              }
             </ng-template>
           </nz-input-group>
         </nz-form-control>

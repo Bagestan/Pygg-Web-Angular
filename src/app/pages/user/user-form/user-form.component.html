@@ -62,12 +62,11 @@
                   ></span>
                 </ng-template>
                 <ng-template #passwordError let-control>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Por favor confirme sua senha!
-                  </ng-container>
-                  <ng-container *ngIf="control.hasError('minlength')">
-                    Tamanho mínimo 8!
-                  </ng-container>
+                  @if (control.hasError('required')) {
+                  <ng-container> Por favor confirme sua senha! </ng-container>
+                  } @if (control.hasError('minlength')) {
+                  <ng-container> Tamanho mínimo 8! </ng-container>
+                  }
                 </ng-template>
               </nz-input-group>
             </nz-form-control>
@@ -93,32 +92,25 @@
         <nz-col nzXs="24" nzSm="24">
           <div class="d-flex checkbox">
             <nz-form-item>
-              <nz-form-control
-                nzErrorTip="Nome da empresa é obrigatório"
-                *ngIf="user"
-                ><nz-form-label>
+              @if (user) {
+              <nz-form-control nzErrorTip="Nome da empresa é obrigatório">
+                <nz-form-label>
                   Ativo:
                   <nz-switch
                     style="margin: 0.5rem"
                     nzSize="small"
                     formControlName="disabled"
                   ></nz-switch>
-                  <span
-                    nz-typography
-                    nzType="danger"
-                    *ngIf="
-                      this.form.get('disabled')?.value === defaultUserActivated
-                    "
-                    >Para
-                    {{
-                      this.form.get("disabled")?.value === false
-                        ? "desativar"
-                        : "ativar"
-                    }}
-                    o usuário é necessário alterar a senha
+
+                  @if ( this.form.get('disabled')?.value ===
+                  defaultUserActivated ) {
+                  <span nz-typography nzType="danger">
+                    Para {{ tipLabel }} o usuário é necessário alterar a senha
                   </span>
+                  }
                 </nz-form-label>
               </nz-form-control>
+              }
             </nz-form-item>
           </div>
         </nz-col>
@@ -151,7 +143,8 @@
   </nz-card>
   <nz-divider> </nz-divider>
 
-  <nz-descriptions *ngIf="user">
+  @if (user) {
+  <nz-descriptions>
     <nz-descriptions-item nzTitle="Ultimo Login">
       {{
         user.metadata?.lastSignInTime
@@ -160,6 +153,7 @@
       }}
     </nz-descriptions-item>
   </nz-descriptions>
+  }
 </div>
 
 <ng-template #Header>
