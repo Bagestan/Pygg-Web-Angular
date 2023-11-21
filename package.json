@@ -28,7 +28,7 @@
     "firebase": "^9.22.2",
     "jszip": "^3.10.1",
     "moment": "^2.29.4",
-    "ng-zorro-antd": "^15.1.0",
+    "ng-zorro-antd": "^17.0.1",
     "ngx-mask": "^14.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
