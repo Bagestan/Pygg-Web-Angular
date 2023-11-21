@@ -26,7 +26,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { DateFormatService } from './services/utils/date-format.service';
 import { SharedModule } from './pages/shared/shared.module';
 
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 
 registerLocaleData(Pt);
 

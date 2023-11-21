@@ -110,7 +110,10 @@ export class PriceFormationService {
         retry(2),
         timeout(10000),
         tap({
-          error: (error) => this.message.error(error),
+          error: (error) => {
+            console.log('🚀 ~ error:', error.message);
+            return this.message.error(error.message);
+          },
         })
       );
   }

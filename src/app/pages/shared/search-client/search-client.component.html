@@ -1,27 +1,27 @@
 <div class="wrapper">
   <h2 style="text-align: center" nz-typography>Pesquisar Cliente</h2>
 
-  <form nz-form [formGroup]="form">
+  <form nz-form [formGroup]="form" (ngSubmit)="submit()">
     <nz-form-item>
       <nz-form-control [nzSpan]="24">
         <nz-input-group
           class="input border-radius-1rem"
           [nzSuffix]="suffixTemplate"
-          ><input
+        >
+          <input
             type="text"
             nz-input
             nzBorderless
             formControlName="customerSearch"
-            (blur)="submit()"
-        /></nz-input-group>
+          />
+        </nz-input-group>
         <ng-template #suffixTemplate>
           <button
-            (click)="submit()"
             class="searchButton border-radius-08rem"
             nz-button
             nzType="default"
           >
-            <span nz-icon nzType="search" nzTheme="outline"> </span>
+            <span nz-icon nzType="search" nzTheme="outline"></span>
           </button>
         </ng-template>
       </nz-form-control>
@@ -33,8 +33,9 @@
     <nz-list [nzSplit]="true">
       @for (item of clientList; track item) {
       <nz-list-item (click)="selectCustomer(item)">
-        {{ item["id"] }} - {{ item["name"] }} </nz-list-item
-      >}
+        {{ item["id"] }} - {{ item["name"] }}
+      </nz-list-item>
+      }
     </nz-list>
 
     @if (clientListLength) {

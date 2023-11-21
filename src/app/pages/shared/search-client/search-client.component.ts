@@ -58,6 +58,7 @@ export class SearchClientComponent {
   }
 
   submit() {
+    this.message.loading('');
     this.formService.validateAllFormFields(this.form);
 
     const { customerSearch } = this.form.getRawValue();
