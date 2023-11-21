@@ -23,6 +23,7 @@ import { DxChartModule, DxPieChartModule } from 'devextreme-angular';
 import { LucratividadeComponent } from './lucratividae.component';
 import { LucratividadeRoutingModule } from './lucratividae-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { BarChartComponent } from '../shared/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [BarsComponent, LucratividadeComponent, DoughnutComponent],
@@ -48,6 +49,7 @@ import { SharedModule } from '../shared/shared.module';
     NzCascaderModule,
     DxChartModule,
     DxPieChartModule,
+    BarChartComponent,
   ],
   providers: [DatePipe],
 })

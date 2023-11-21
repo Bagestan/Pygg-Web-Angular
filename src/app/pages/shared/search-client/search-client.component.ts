@@ -3,9 +3,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { Subject, takeUntil } from 'rxjs';
+import { PriceFormationService } from 'src/app/services/price-formation.service';
 import { Customer } from 'src/app/services/shared/types';
 import { FormService } from 'src/app/services/utils/form.service';
-import { PriceFormationService } from '../../../../services/price-formation.service';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 interface IModalData {
   favoriteLibrary: string;
@@ -16,6 +24,16 @@ interface IModalData {
   selector: 'app-search-client',
   templateUrl: './search-client.component.html',
   styleUrls: ['./search-client.component.scss'],
+  standalone: true,
+  imports: [
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
+    NzListModule,
+    NzDividerModule,
+    ReactiveFormsModule,
+    NzFormModule,
+  ],
 })
 export class SearchClientComponent {
   protected destroy$: Subject<void> = new Subject<void>();

@@ -19,6 +19,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 import { DxChartModule } from 'devextreme-angular';
+import { BarChartComponent } from '../shared/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [PrintingTrackerComponent],
@@ -39,6 +40,7 @@ import { DxChartModule } from 'devextreme-angular';
     NzDividerModule,
     NzTypographyModule,
     DxChartModule,
+    BarChartComponent,
   ],
 })
 export class ProductivityModule {}

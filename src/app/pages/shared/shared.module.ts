@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { DxChartModule } from 'devextreme-angular';
-import { SearchClientComponent } from './Presentational-Components/search-client/search-client.component';
-import { BarChartComponent } from './Presentational-Components/bar-chart/bar-chart.component';
 
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -14,7 +12,7 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 @NgModule({
-  declarations: [BarChartComponent, SearchClientComponent],
+  declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -26,6 +24,6 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     NzListModule,
     NzDividerModule,
   ],
-  exports: [BarChartComponent],
+  exports: [],
 })
 export class SharedModule {}

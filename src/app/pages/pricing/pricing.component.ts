@@ -2,7 +2,7 @@ import { Component, ViewContainerRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject, take } from 'rxjs';
-import { SearchClientComponent } from '../shared/Presentational-Components/search-client/search-client.component';
+import { SearchClientComponent } from '../shared/search-client/search-client.component';
 import { Customer, Product } from 'src/app/services/shared/types';
 import { FirebirdService } from '../../services/firebird.service';
 import { FormService } from 'src/app/services/utils/form.service';
