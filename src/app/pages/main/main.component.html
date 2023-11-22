@@ -1,130 +1,188 @@
 <nz-layout class="app-layout">
-  <nz-sider
-    nzCollapsible
-    nzWidth="256px"
-    class="menu-sidebar"
-    [nzCollapsedWidth]="0"
-    [(nzCollapsed)]="isCollapsed"
-  >
-    <div class="sidebar-logo">
-      <img src="../assets/img/favicon.png" alt="logo" />
-      <h1>PYGG WEB</h1>
+  <nz-header class="d-flex spaceBetween">
+    <div class="d-flex sidebar-logo">
+      <img src="../assets/img/favicon.png" alt="logo" (click)="open()" />
+      <h1>Pygg</h1>
     </div>
+    <span
+      class="trigger"
+      nz-icon
+      [nzType]="visible ? 'menu-fold' : 'menu-unfold'"
+      (click)="open()"
+    ></span>
+  </nz-header>
 
-    <ul
-      nz-menu
-      nzTheme="dark"
-      nzMode="inline"
-      [nzInlineCollapsed]="isCollapsed"
-    >
-      <li
-        [(nzOpen)]="openMap['sub1']"
-        (nzOpenChange)="openHandler('sub1')"
-        nz-submenu
-        nzTitle="PCP"
-        nzIcon="form"
-      >
-        <ul>
-          <li nzMatchRouter nz-menu-item routerLink="/main/quality">
-            <span nz-icon nzType="exception"></span>
-            <span>Qualidade</span>
-          </li>
-          <li nz-submenu nzTitle="Produtividade" nzIcon="monitor">
-            <ul>
-              <li nzMatchRouter nz-menu-item routerLink="/main/productivity">
-                Estamparia
-              </li>
-              <li nzMatchRouter nz-menu-item routerLink="/main/Bordado">
-                Bordado
-              </li>
-              <li nzMatchRouter nz-menu-item routerLink="/main/Costura">
-                Costura
-              </li>
-              <li nzMatchRouter nz-menu-item routerLink="/main/Tituraria">
-                Tituraria
-              </li>
-              <li nzMatchRouter nz-menu-item routerLink="/main/Tecelagem">
-                Tecelagem
-              </li>
-              <li nzMatchRouter nz-menu-item routerLink="/main/Revisão">
-                <span nz-icon nzType="area-chart"></span> Revisão
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-
-      <li
-        [(nzOpen)]="openMap['sub2']"
-        (nzOpenChange)="openHandler('sub2')"
-        nz-submenu
-        nzOpen
-        nzTitle="Comercial"
-        nzIcon="form"
-      >
-        <ul>
-          <li nzMatchRouter nz-menu-item routerLink="/main/lucratividade/">
-            <span nz-icon nzType="area-chart"></span>
-            <span>Lucratividade</span>
-          </li>
-          <li nzMatchRouter nz-menu-item routerLink="/main/pricing/">
-            <span nz-icon nzType="wallet"></span>
-            <span>Precificação</span>
-          </li>
-        </ul>
-      </li>
-
-      @if (auth.getIsPermission()) {
-      <li
-        [(nzOpen)]="openMap['sub3']"
-        (nzOpenChange)="openHandler('sub3')"
-        nz-submenu
-        nzOpen
-        nzTitle="Tinturaria"
-        nzIcon="bg-colors"
-      >
-        <ul>
-          <li nzMatchRouter nz-menu-item routerLink="/main/calc">
-            <span nz-icon nzType="calculator"></span>
-            <span>Calculo Densidade</span>
-          </li>
-        </ul>
-      </li>
-      }
-
-      <li
-        [(nzOpen)]="openMap['sub4']"
-        (nzOpenChange)="openHandler('sub4')"
-        nz-submenu
-        nzOpen
-        nzTitle="Configurações"
-        nzIcon="setting"
-      >
-        <ul>
-          <li nzMatchRouter nz-menu-item routerLink="/main/user">
-            <span nz-icon nzType="user-add"></span>
-            <span>Usuário</span>
-          </li>
-          <li nzMatchRouter nz-menu-item routerLink="/main/db">
-            <span nz-icon nzType="cloud-server"></span>
-            <span>Banco de Dados</span>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <nz-row nzJustify="center" class="button--logout">
-      <nz-col>
-        <button nzType="primary" nz-button (click)="auth.signOut()">
-          <span nz-icon nzType="logout" nzTheme="outline"></span> Deslogar
-        </button>
-      </nz-col>
-    </nz-row>
-  </nz-sider>
-  <nz-layout>
-    <nz-content>
-      <div class="inner-content">
-        <router-outlet></router-outlet>
-      </div>
-    </nz-content>
-  </nz-layout>
+  <nz-content>
+    <div class="innerContent">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
 </nz-layout>
+
+<nz-drawer
+  [nzWidth]="320"
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  nzPlacement="left"
+  (nzOnClose)="close()"
+  [nzBodyStyle]="{ padding: 0, background: '#001529' }"
+>
+  <ng-container *nzDrawerContent>
+    <nz-sider nzWidth="320" nzTheme="dark">
+      <div class="d-flex spaceBetween drawerHeader">
+        <div class="sidebar-logo">
+          <img src="../assets/img/favicon.png" alt="logo" />
+          <h1 style="color: #fff">Pygg</h1>
+        </div>
+
+        <span
+          style="color: #fff"
+          (click)="close()"
+          nz-icon
+          nzType="close"
+          nzTheme="outline"
+        ></span>
+      </div>
+
+      <ul nz-menu nzTheme="dark" nzMode="inline">
+        <li
+          [(nzOpen)]="openMap['sub1']"
+          (nzOpenChange)="openHandler('sub1')"
+          nz-submenu
+          nzTitle="PCP"
+          nzIcon="form"
+        >
+          <ul>
+            <li
+              nzMatchRouter
+              nz-menu-item
+              (click)="navigateTo('/main/quality')"
+            >
+              <span nz-icon nzType="exception"></span>
+              <span>Qualidade</span>
+            </li>
+            <li nz-submenu nzTitle="Produtividade" nzIcon="monitor">
+              <ul>
+                <li
+                  nzMatchRouter
+                  nz-menu-item
+                  (click)="navigateTo('/main/productivity')"
+                >
+                  Estamparia
+                </li>
+                <li
+                  nzMatchRouter
+                  nz-menu-item
+                  (click)="navigateTo('/main/Bordado')"
+                >
+                  Bordado
+                </li>
+                <li
+                  nzMatchRouter
+                  nz-menu-item
+                  (click)="navigateTo('/main/Costura')"
+                >
+                  Costura
+                </li>
+                <li
+                  nzMatchRouter
+                  nz-menu-item
+                  (click)="navigateTo('/main/Tituraria')"
+                >
+                  Tituraria
+                </li>
+                <li
+                  nzMatchRouter
+                  nz-menu-item
+                  (click)="navigateTo('/main/Tecelagem')"
+                >
+                  Tecelagem
+                </li>
+                <li
+                  nzMatchRouter
+                  nz-menu-item
+                  (click)="navigateTo('/main/Revisão')"
+                >
+                  <span nz-icon nzType="area-chart"></span> Revisão
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li
+          [(nzOpen)]="openMap['sub2']"
+          (nzOpenChange)="openHandler('sub2')"
+          nz-submenu
+          nzOpen
+          nzTitle="Comercial"
+          nzIcon="form"
+        >
+          <ul>
+            <li
+              nzMatchRouter
+              nz-menu-item
+              (click)="navigateTo('/main/lucratividade/')"
+            >
+              <span nz-icon nzType="area-chart"></span>
+              <span>Lucratividade</span>
+            </li>
+            <li
+              nzMatchRouter
+              nz-menu-item
+              (click)="navigateTo('/main/pricing/')"
+            >
+              <span nz-icon nzType="wallet"></span>
+              <span>Precificação</span>
+            </li>
+          </ul>
+        </li>
+
+        @if (auth.getIsPermission()) {
+        <li
+          [(nzOpen)]="openMap['sub3']"
+          (nzOpenChange)="openHandler('sub3')"
+          nz-submenu
+          nzOpen
+          nzTitle="Tinturaria"
+          nzIcon="bg-colors"
+        >
+          <ul>
+            <li nzMatchRouter nz-menu-item (click)="navigateTo('/main/calc')">
+              <span nz-icon nzType="calculator"></span>
+              <span>Calculo Densidade</span>
+            </li>
+          </ul>
+        </li>
+        }
+
+        <li
+          [(nzOpen)]="openMap['sub4']"
+          (nzOpenChange)="openHandler('sub4')"
+          nz-submenu
+          nzOpen
+          nzTitle="Configurações"
+          nzIcon="setting"
+        >
+          <ul>
+            <li nzMatchRouter nz-menu-item (click)="navigateTo('/main/user/')">
+              <span nz-icon nzType="user-add"></span>
+              <span>Usuário</span>
+            </li>
+            <li nzMatchRouter nz-menu-item (click)="navigateTo('/main/db/')">
+              <span nz-icon nzType="cloud-server"></span>
+              <span>Banco de Dados</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <nz-row nzJustify="center" class="logoutButton">
+        <nz-col>
+          <button nzType="primary" nz-button (click)="auth.signOut()">
+            <span nz-icon nzType="logout" nzTheme="outline"></span> Deslogar
+          </button>
+        </nz-col>
+      </nz-row>
+    </nz-sider>
+  </ng-container>
+</nz-drawer>

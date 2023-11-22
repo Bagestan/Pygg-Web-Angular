@@ -73,11 +73,13 @@
     class="border-radius-08rem"
     [nzBodyStyle]="{ padding: '1rem' }"
   >
+    @defer (on immediate) {
     <app-product
       [product]="product"
       [productImg]="productImg"
       [path]="'pricing'"
     ></app-product>
+    }
   </nz-card>
   }
 </div>

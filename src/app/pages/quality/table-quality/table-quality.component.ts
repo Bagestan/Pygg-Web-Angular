@@ -83,12 +83,13 @@ export class TableQualityComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data: []) => {
-          this.message.remove();
           this.totalItems = data.length;
           if (this.totalItems > 0) {
             this.qualityTableData = data;
             this.isLoadingData = false;
           } else {
+            console.log('teste');
+
             this.message.info('Nenhum Registro encontrado');
             this.router.navigate(['main/quality']);
           }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,10 +8,17 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent {
-  isCollapsed = true;
-
   id!: number;
 
+  visible = false;
+
+  open(): void {
+    this.visible = true;
+  }
+
+  close(): void {
+    this.visible = false;
+  }
   openMap: { [name: string]: boolean } = {
     sub1: true,
     sub2: false,
@@ -20,7 +28,7 @@ export class MainComponent {
 
   nzSelected = true;
 
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService, private router: Router) {}
 
   openHandler(value: string): void {
     for (const key in this.openMap) {
@@ -28,5 +36,10 @@ export class MainComponent {
         this.openMap[key] = false;
       }
     }
+  }
+
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+    this.close();
   }
 }

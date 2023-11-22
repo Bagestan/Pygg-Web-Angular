@@ -25,12 +25,12 @@ nz-content {
   box-shadow: 0.125rem 0 0.375rem rgba(0, 21, 41, 0.35);
 }
 
-.header-trigger {
-  height: 4rem;
-  padding: 1.25rem 1.5rem;
-  font-size: 1.25rem;
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
   cursor: pointer;
-  transition: all 0.3s, padding 0s;
+  transition: color 0.3s;
 }
 
 .trigger:hover {
@@ -40,26 +40,22 @@ nz-content {
 .sidebar-logo {
   position: relative;
   height: 4rem;
-  padding-left: 1.5rem;
   overflow: hidden;
   line-height: 4rem;
-  background: #001529;
   transition: all 0.3s;
+  align-items: center;
 }
 
 .sidebar-logo img {
   display: inline-block;
   height: 2rem;
   width: 2rem;
-  vertical-align: middle;
 }
 
 .sidebar-logo h1 {
   display: inline-block;
   margin: 0 0 0 1.25rem;
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.875rem;
+  color: #000000;
   font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
   vertical-align: middle;
 }
@@ -68,34 +64,33 @@ nz-content {
   margin-top: 80vh;
 }
 
-.headerLogo {
-  display: block;
+.ant-drawer-header {
+  background-color: black;
 }
 
 nz-header {
-  padding: 0;
+  padding: 0 0 0 1rem;
   width: 100%;
   z-index: 2;
+  background: #ffffff;
 }
 
-.app-header {
-  position: relative;
-  height: 4rem;
-  padding: 0;
-  background: #fff;
-  box-shadow: 0 0.063rem 0.25rem rgba(0, 21, 41, 0.08);
-}
-
-.inner-content {
+.innerContent {
   padding: 1rem !important;
   background: #fff;
   height: calc(100vh - 2rem);
   overflow: auto;
 }
 
-.button--logout {
+.logoutButton {
   margin-top: auto !important;
   margin-bottom: 1.5rem;
+}
+
+.drawerHeader {
+  padding: 0 1rem;
+  overflow: hidden;
+  align-items: center;
 }
 
 @media only screen and (max-width: 575px) {

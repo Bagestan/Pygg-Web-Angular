@@ -58,7 +58,7 @@
   </tbody>
 </nz-table>
 
-@if (isModalVisible) {
+@defer (when isModalVisible) {
 <app-modal-quality
   [isModalVisible]="isModalVisible"
   (isModalVisibleChange)="modalVisibility($event)"

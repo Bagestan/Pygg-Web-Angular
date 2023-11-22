@@ -12,6 +12,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 @NgModule({
   declarations: [MainComponent],
@@ -27,6 +28,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzCardModule,
     NzDescriptionsModule,
     NzGridModule,
+    NzDrawerModule,
   ],
 })
 export class MainModule {}
