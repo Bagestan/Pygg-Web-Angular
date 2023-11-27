@@ -156,30 +156,23 @@ export class LucratividadeComponent implements OnInit {
   }
 
   getFieldOptions() {
-    const option = this.form.get('chartDataOptions')?.value[0];
-    switch (option) {
-      case 'result':
-        this.getDefaultFieldOptions();
-        break;
+    const selected = this.form.get('chartDataOptions')?.value[0];
 
-      case 'result':
-        this.getDefaultFieldOptions();
-        break;
+    type OptionActions = {
+      [key: string]: () => void;
+    };
 
-      case 'result':
-        this.getDefaultFieldOptions();
-        break;
-
-      case 'result':
-        this.getDefaultFieldOptions();
-        break;
-
-      case 'option':
+    const actions: OptionActions = {
+      result: () => this.getDefaultFieldOptions(),
+      option: () => {
         this.chartFieldsOptions = this.genericFieldsOptions;
         this.form.patchValue({ chartFields: this.chartFieldsOptions[0].value });
-        break;
+      },
+    };
+
+    if (actions[selected]) {
+      actions[selected]();
     }
-    return;
   }
 
   private getDefaultFieldOptions() {

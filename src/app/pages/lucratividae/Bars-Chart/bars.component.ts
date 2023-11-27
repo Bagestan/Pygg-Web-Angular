@@ -42,29 +42,15 @@ export class BarsComponent implements OnInit {
       });
     ChartsService.formEmitter.pipe(takeUntil(this.destroy$)).subscribe({
       next: (data: ChartFilter) => {
-        this.chartTitle = data.chartData;
+        const chartTitleMap: { [key: string]: string } = {
+          resultByClient: (this.chartTitle = 'Resultado por Cliente'),
+          resultByTreatment: (this.chartTitle = 'Resultado por Beneficiamento'),
+          resultByState: (this.chartTitle = 'Resultado por Estado'),
+          resultBySector: (this.chartTitle = 'Resultado por Ramo de Atividade'),
+        };
 
-        switch (data.chartData) {
-          case 'resultByClient':
-            this.chartTitle = 'Resultado por Cliente';
-            break;
-
-          case 'resultByTreatment':
-            this.chartTitle = 'Resultado por Beneficiamento';
-            break;
-
-          case 'resultByState':
-            this.chartTitle = 'Resultado por Estado';
-            break;
-
-          case 'resultBySector':
-            this.chartTitle = 'Resultado por Ramo de Atividade';
-            break;
-
-          default:
-            this.chartTitle = 'Grafico';
-            break;
-        }
+        this.chartTitle = chartTitleMap[data.chartData];
+        console.log('🚀 ~ this.chartTitle:', this.chartTitle);
       },
     });
   }
@@ -75,39 +61,32 @@ export class BarsComponent implements OnInit {
 
       ${arg.seriesName}:`,
     };
-    switch (arg.seriesName) {
-      case 'Lucro':
-        tooltipTxt.text += ` ${arg.value.toLocaleString('pt-BR', {
-          maximumFractionDigits: 0,
-          style: 'currency',
-          currency: 'BRL',
-        })}`;
-        break;
 
-      case 'Valor de Faturamento':
-        tooltipTxt.text += ` ${arg.value.toLocaleString('pt-BR', {
-          maximumFractionDigits: 0,
-          style: 'currency',
-          currency: 'BRL',
-        })}`;
-        break;
+    const tooltipTextMap: { [key: string]: string } = {
+      Lucro: ` ${arg.value.toLocaleString('pt-BR', {
+        maximumFractionDigits: 0,
+        style: 'currency',
+        currency: 'BRL',
+      })}`,
 
-      case 'Quantidade de Faturamento':
-        tooltipTxt.text += ` ${arg.value.toLocaleString('pt-BR', {
-          maximumFractionDigits: 0,
-        })}`;
-        break;
+      'Valor de Faturamento': ` ${arg.value.toLocaleString('pt-BR', {
+        maximumFractionDigits: 0,
+        style: 'currency',
+        currency: 'BRL',
+      })}`,
 
-      case 'Porcentagem de Lucro':
-        tooltipTxt.text += ` ${arg.value.toLocaleString('pt-BR', {
-          maximumFractionDigits: 2,
-        })}%`;
-        break;
+      'Quantidade de Faturamento': ` ${arg.value.toLocaleString('pt-BR', {
+        maximumFractionDigits: 0,
+      })}`,
 
-      default:
-        break;
-    }
+      'Porcentagem de Lucro': ` ${arg.value.toLocaleString('pt-BR', {
+        maximumFractionDigits: 2,
+      })}%`,
+    };
 
+    tooltipTxt.text += tooltipTextMap[arg.seriesName];
+
+    console.log('🚀 ~ tooltipTxt:', tooltipTxt);
     return tooltipTxt;
   }
 }

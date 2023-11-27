@@ -40,28 +40,21 @@ export class ChartsService {
   }
 
   chartDataEmitter(form: ChartFilter, chartData: any[]) {
-    switch (form.chartType) {
-      case 'bar':
-        ChartsService.barsChartDataEmitter.emit(chartData);
-        this.formEmitter(form);
-        break;
+    const chartTypeEmitterMap = {
+      bar: ChartsService.barsChartDataEmitter,
+      stackedBar: ChartsService.barsChartDataEmitter,
+      fullStackedBar: ChartsService.barsChartDataEmitter,
+      doughnut: ChartsService.doughnutChartDataEmitter,
+    };
 
-      case 'stackedBar':
-        ChartsService.barsChartDataEmitter.emit(chartData);
-        this.formEmitter(form);
-        break;
+    const emitter = chartTypeEmitterMap[form.chartType];
 
-      case 'fullStackedBar':
-        ChartsService.barsChartDataEmitter.emit(chartData);
-        this.formEmitter(form);
-        break;
-
-      case 'doughnut':
-        ChartsService.doughnutChartDataEmitter.emit(chartData);
-        this.formEmitter(form);
-        break;
+    if (emitter) {
+      emitter.emit(chartData);
+      this.formEmitter(form);
     }
   }
+
   formEmitter(form: ChartFilter) {
     ChartsService.formEmitter.emit(form);
   }
