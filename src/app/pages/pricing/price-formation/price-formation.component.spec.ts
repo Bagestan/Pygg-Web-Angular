@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PriceFormationComponent } from './PriceFormationComponent';
+import { PriceFormationComponent } from './price-formation.component';
 
 describe('PriceFormationComponent', () => {
   let component: PriceFormationComponent;

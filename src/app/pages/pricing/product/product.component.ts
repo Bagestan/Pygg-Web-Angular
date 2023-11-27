@@ -7,7 +7,13 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { PriceFormationService } from 'src/app/services/price-formation.service';
 import {
@@ -17,11 +23,28 @@ import {
   Taxes,
 } from 'src/app/services/shared/types';
 import { FormService } from 'src/app/services/utils/form.service';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzListModule,
+    NzDividerModule,
+    NzFormModule,
+    NzAvatarModule,
+    NzModalModule,
+    NzButtonModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductComponent implements OnInit {
@@ -53,7 +76,9 @@ export class ProductComponent implements OnInit {
     private fb: FormBuilder,
     public priceService: PriceFormationService,
     private formService: FormService
-  ) {}
+  ) {
+    console.log('🚀 ~ constructor:');
+  }
 
   imgModal(value: boolean) {
     this.isVisible = value;

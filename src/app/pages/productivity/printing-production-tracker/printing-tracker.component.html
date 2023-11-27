@@ -78,18 +78,21 @@ productivityByMachinesDataSource && productivityByPeriodDataSource) {
 <section>
   <h3 nz-typography class="chartTitle">Produtividade</h3>
   <div class="charts">
+    @defer (when productivityByMachinesDataSource) {
     <app-bar-chart
       class="chartByMachines"
       [dataSource]="productivityByMachinesDataSource"
       [color]="PeriodBarsChartColor"
       [dxoLegend]="false"
     ></app-bar-chart>
+    } @defer (when productivityByPeriodDataSource) {
     <app-bar-chart
       class="chartByPeriod"
       [dataSource]="productivityByPeriodDataSource"
       [color]="MachineBarsChartColor"
       [dxoLegend]="false"
     ></app-bar-chart>
+    }
   </div>
 
   <nz-divider></nz-divider>
@@ -97,18 +100,21 @@ productivityByMachinesDataSource && productivityByPeriodDataSource) {
   <h3 nz-typography class="chartTitle">Eficiência</h3>
 
   <div class="charts">
+    @defer (when eficienceByMachinesDataSource) {
     <app-bar-chart
       class="chartByMachines"
       [dataSource]="eficienceByMachinesDataSource"
       [color]="PeriodBarsChartColor"
       [dxoLegend]="false"
     ></app-bar-chart>
+    } @defer (when eficienceByPeriodDataSource) {
     <app-bar-chart
       class="chartByPeriod"
       [dataSource]="eficienceByPeriodDataSource"
       [color]="MachineBarsChartColor"
       [dxoLegend]="false"
     ></app-bar-chart>
+    }
   </div>
 </section>
 }

@@ -4,6 +4,7 @@
   </nz-page-header>
 
   <nz-card [nzBodyStyle]="{ padding: '1rem' }">
+    @defer (when product) {
     <app-product
       [product]="product"
       [productImg]="productImg"
@@ -15,7 +16,8 @@
       [price]="price"
       [showOption]="false"
       (outputPrice)="calcDespesasPrecoInput($event)"
-    ></app-product>
+    ></app-product
+    >}
   </nz-card>
 
   @if (!productTaxes) {

@@ -174,15 +174,13 @@
   }
 </div>
 } @if (isVisible) {
-
 <nz-modal
   [(nzVisible)]="isVisible"
   [nzTitle]="product.referenceName"
   [nzClosable]="true"
   [nzFooter]="null"
   (nzOnCancel)="imgModal(false)"
->
-  <ng-container *nzModalContent>
+  ><ng-container *nzModalContent>
     <img
       class="product-image d-flex central"
       width="100%"

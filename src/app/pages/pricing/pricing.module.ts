@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PricingRoutingModule } from './pricing-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { PricingComponent } from './pricing.component';
-import { ProductComponent } from './product/product.component';
 import { PriceFormationComponent } from './price-formation/price-formation.component';
 
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
@@ -27,10 +26,12 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzImageModule } from 'ng-zorro-antd/image';
 
 import { NgxMaskModule } from 'ngx-mask';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
-  declarations: [PricingComponent, ProductComponent, PriceFormationComponent],
+  declarations: [PricingComponent, PriceFormationComponent],
   imports: [
+    ProductComponent,
     SharedModule,
     CommonModule,
     ReactiveFormsModule,

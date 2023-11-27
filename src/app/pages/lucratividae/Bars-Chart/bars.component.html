@@ -57,4 +57,6 @@
   <dxo-legend [visible]="false"> </dxo-legend>
 </dx-chart>
 
+@defer (when dataSource) {
 <app-bar-chart [dataSource]="dataSource"></app-bar-chart>
+}
